@@ -20,7 +20,7 @@ public class Atom {
         String[] getPosAndCol = s.split("_");
         color = getPosAndCol[0];
         position = getPosAndCol[1];
-        System.out.println("Atom: " +color+" pos "+position+ " stringRep: " + s);
+        System.out.println("Atom: " +color+" pos: "+position+ " stringRep: " + s);
     }
 
     public Boolean equals(Atom other) {

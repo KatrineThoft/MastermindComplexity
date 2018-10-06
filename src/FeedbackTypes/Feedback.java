@@ -8,11 +8,13 @@ public abstract class Feedback {
     private String type;
     String guess;
     Set<String> positions = new HashSet<>();
+    Set<String> colors = new HashSet<>();
 
     public Feedback(String type, String guess){
         this.type = type;
         this.guess = guess;
-        positions.addAll(Arrays.asList( "x","y","z","w"));
+        positions.addAll(Arrays.asList("x","y","z","w"));
+        colors.addAll(Arrays.asList("R","O","Y","G","B","P"));
     }
 
     public String getType(){
