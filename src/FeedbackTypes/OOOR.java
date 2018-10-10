@@ -22,10 +22,6 @@ public class OOOR extends Feedback {
         return 0;
     }
 
-    @Override
-    public String prettyPrint() {
-        return null;
-    }
 
     @Override
     public int noSymbols() {

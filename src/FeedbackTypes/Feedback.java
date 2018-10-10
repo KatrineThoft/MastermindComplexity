@@ -31,8 +31,6 @@ public abstract class Feedback {
 
     public abstract int getBoolTransDepth();
 
-    public abstract String prettyPrint();
-
     public abstract int noSymbols();
 
     public abstract int noOperators();

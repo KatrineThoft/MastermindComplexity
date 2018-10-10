@@ -23,11 +23,6 @@ public class GGOR extends Feedback {
     }
 
     @Override
-    public String prettyPrint() {
-        return null;
-    }
-
-    @Override
     public int noSymbols() {
         return 0;
     }

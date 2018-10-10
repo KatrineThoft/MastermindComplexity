@@ -3,13 +3,17 @@ package FeedbackTypes;
 import java.util.Set;
 
 public class OORR extends Feedback{
+    String boolTrans;
+
     public OORR(String guess) {
         super("OORR", guess);
+        translate();
     }
+
 
     @Override
     public String getBoolTrans() {
-        return null;
+        return boolTrans;
     }
 
     @Override
@@ -41,4 +45,10 @@ public class OORR extends Feedback{
     public int noXOR() {
         return 0;
     }
+
+    private void translate() {
+
+
+    }
+
 }

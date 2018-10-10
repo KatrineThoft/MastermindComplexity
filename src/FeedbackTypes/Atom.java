@@ -17,6 +17,7 @@ public class Atom {
             isNegated = false;
         }
 
+
         String[] getPosAndCol = s.split("_");
         color = getPosAndCol[0];
         position = getPosAndCol[1];
@@ -29,9 +30,9 @@ public class Atom {
 
     public Atom getComplement(){
         if(isNegated){
-            return new Atom(color + " "+position);
+            return new Atom(color + "_"+position);
         } else {
-            return new Atom("!"+color + " "+position);
+            return new Atom("!"+color + "_"+position);
         }
     }
 }

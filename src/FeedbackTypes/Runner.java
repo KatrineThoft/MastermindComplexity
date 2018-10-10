@@ -8,9 +8,18 @@ public class Runner {
        //System.out.println(test1.getBoolTrans());
 
 
-       Feedback test2 = new ORRR("a_x,b_y,c_z,d_w");
+       //Feedback test2 = new ORRR("a_x,b_y,c_z,d_w");
 
-        System.out.println(test2.getBoolTrans());
+        //System.out.println(test2.getBoolTrans());
+
+
+        Feedback test3 = new GGOO("a_x,b_y,c_z,d_w");
+
+        System.out.println(test3.getBoolTrans());
+
+        //Feedback test4 = new GGGR("a_x,b_y,c_z,d_w");
+
+        //System.out.println(test3.getBoolTrans());
 
     }
 }
