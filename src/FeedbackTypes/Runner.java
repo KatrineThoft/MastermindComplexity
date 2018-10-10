@@ -15,11 +15,15 @@ public class Runner {
 
         Feedback test3 = new GGOO("a_x,b_y,c_z,d_w");
 
-        System.out.println(test3.getBoolTrans());*/
+        System.out.println(test3.getBoolTrans());
 
         Feedback test4 = new GGRR("a_x,b_y,c_z,d_w");
 
-        System.out.println(test4.getBoolTrans());
+        System.out.println(test4.getBoolTrans());*/
+
+        Feedback test5 = new GOOO("a_x,b_y,c_z,d_w");
+
+        System.out.println(test5.getBoolTrans());
 
     }
 }
