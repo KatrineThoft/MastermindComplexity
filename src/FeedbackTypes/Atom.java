@@ -10,8 +10,10 @@ public class Atom {
 
     public Atom(String s){
         stringRep = s;
+        String neg="";
         if(s.contains("!")) {
             isNegated = true;
+            neg = "!";
             s = s.replace("!","");
         } else{
             isNegated = false;
@@ -21,7 +23,7 @@ public class Atom {
         String[] getPosAndCol = s.split("_");
         color = getPosAndCol[0];
         position = getPosAndCol[1];
-        System.out.println("Atom: " +color+" pos: "+position+ " stringRep: " + s);
+       // System.out.println("Atom: " +color+" pos: "+position+ " stringRep: " +neg +s);
     }
 
     public Boolean equals(Atom other) {

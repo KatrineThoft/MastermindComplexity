@@ -57,34 +57,87 @@ public class GGOO extends Feedback{
 
         List<Atom> negAtoms = new ArrayList<>();
         for (Atom a: posAtoms) {
-            Atom x =a.getComplement();
-            posAtoms.add(x);
+            negAtoms.add(a.getComplement());
         }
 
-        String allAs = generateAtoms(posAtoms.get(0));
-        String allBs = generateAtoms(posAtoms.get(1));
-        String allCs = generateAtoms(posAtoms.get(2));
+        List<Atom> allAs = generateAtoms(posAtoms.get(0));
+        allAs.add(negAtoms.get(0));
+        List<Atom> allBs = generateAtoms(posAtoms.get(1));
+        allBs.add(negAtoms.get(1));
+        List<Atom> allCs = generateAtoms(posAtoms.get(2));
+        allCs.add(negAtoms.get(2));
         List<Atom> allDs = generateAtoms(posAtoms.get(3));
+        allDs.add(negAtoms.get(3));
+
+
+        //Generating clauses with !ax
+        String negACases = generateOrClauses(negAtoms.get(0),negAtoms.get(1),
+                allCs.subList(2,allCs.size()),allDs.subList(2,allDs.size()));
+
+        negACases += generateOrClauses(negAtoms.get(0),negAtoms.get(2),
+                allBs.subList(2,allCs.size()-1),allDs.subList(2,allDs.size()));
+
+
+        //getting all atoms in the clauses with ax and by
+        List<Atom> case1 = new ArrayList<>();
+        case1.add(allAs.get(0));
+        case1.add(allBs.get(0));
+
+        //getting all atoms in the clauses with ax and cz
+        List<Atom> case2 = new ArrayList<>();
+        case2.add(allAs.get(1));
+        case2.add(allCs.get(0));
+        case2.add(posAtoms.get(3));
+
+
+        String posACases = generateOrClauses(posAtoms.get(0),posAtoms.get(1),case1, posAtoms.subList(2,4));
+        posACases += generateOrClauses(posAtoms.get(0),posAtoms.get(2), case2.subList(0,2), case2.subList(2,3));
+
+
+
+        List<Atom> case3 = new ArrayList<>();
+        case3.add(allAs.get(2));
+        case3.add(allDs.get(0));
+        case3.add(allDs.get(3));
+
+
+        List<Atom> case4 = new ArrayList<>();
+        case4.add(allBs.get(1));
+        case4.add(allCs.get(1));
+        case4.add(posAtoms.get(3));
+
+        String bCases = generateOrClauses(negAtoms.get(1),negAtoms.get(2),case3.subList(0,2),case3.subList(2,3));
+        bCases += generateOrClauses(posAtoms.get(1),posAtoms.get(2),case4.subList(0,2),case4.subList(2,3));
+
+        boolTrans = negACases+posACases +bCases;
 
     }
 
     private List<Atom> generateAtoms(Atom a){
         List<Atom> res =new ArrayList<>();
-        for (String p:positions) {
-            if (!a.position.equals(p)){
-                res.add(new Atom(a.color+"_"+p));
+        String[] pos  = {"x","y","z","w"};
+        for (int i = 0; i <pos.length ; i++) {
+            if (!a.position.equals(pos[i])){
+                res.add(new Atom(a.color+"_"+pos[i]));
             }
         }
+
         return res;
     }
 
-    private String generateOrClauses(Atom a){
+    private String generateOrClauses(Atom a, Atom b, List<Atom> list1, List<Atom> list2){
         StringBuilder temp = new StringBuilder();
+        String ab = a.stringRep + " || " + b.stringRep;
 
+        for (Atom aList1 : list1) {
+            temp.append("(" + ab + " || " + aList1.stringRep + ") && \n");
+        }
 
+        for (Atom aList2 : list2) {
+            temp.append("(" + ab + " || " + aList2.stringRep + ") && \n");
+        }
 
-
-        return temp.toString();
+        return   temp.toString();
     }
     /*
     ( !a_x || d_y || !c_z) &&
