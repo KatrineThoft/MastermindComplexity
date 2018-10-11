@@ -59,9 +59,9 @@ public class GORR extends Feedback {
         }
 
         //String clauseString = generateNegAClauses(allPosAtomsList,  allNegAtomsList);
-        String clauseString = generatePosAClauses(allPosAtomsList,  allNegAtomsList);
-       /* clauseString += generateNegBClauses(allPosAtomsList,  allNegAtomsList);
-        clauseString += generatePosBClauses(allPosAtomsList,  allNegAtomsList);
+        // clauseString += generatePosAClauses(allPosAtomsList,  allNegAtomsList);
+       String clauseString = generateNegBClauses(allPosAtomsList,  allNegAtomsList);
+       /* clauseString += generatePosBClauses(allPosAtomsList,  allNegAtomsList);
         clauseString += generateNegCClauses(allPosAtomsList,  allNegAtomsList);
         clauseString += generatePosCClauses(allPosAtomsList,  allNegAtomsList);*/
 
@@ -106,7 +106,7 @@ public class GORR extends Feedback {
         case1.addAll(Blist.subList(0,2));
         case1.add(Blist.get(3));
         case1.addAll(Alist.subList(0,2));
-       // allCases.add(case1);
+        allCases.add(case1);
 
         List<Atom> case2 = new ArrayList<>();
         case2.add(Clist.get(0));
@@ -114,7 +114,7 @@ public class GORR extends Feedback {
         case2.addAll(Blist.subList(0,2));
         case2.add(Blist.get(3));
         case2.addAll(Alist.subList(1,3));
-       // allCases.add(case2);
+        allCases.add(case2);
 
         List<Atom> case3 = new ArrayList<>();
         case3.add(Clist.get(0));
@@ -123,14 +123,14 @@ public class GORR extends Feedback {
         case3.add(Blist.get(3));
         case3.add(Alist.get(0));
         case3.add(Alist.get(3));
-      //  allCases.add(case3);
+       allCases.add(case3);
 
         List<Atom> case4 = new ArrayList<>();
         case4.addAll(Clist.subList(0,2));
         case4.addAll(Blist.subList(0,2));
         case4.add(Blist.get(3));
         case4.addAll(Alist.subList(2,4));
-       // allCases.add(case4);
+       allCases.add(case4);
 
         List<Atom> case5 = new ArrayList<>();
         case5.add(Clist.get(0));
@@ -138,14 +138,14 @@ public class GORR extends Feedback {
         case5.add(Blist.get(0));
         case5.addAll(Blist.subList(3,5));
         case5.addAll(Alist.subList(0,2));
-        //allCases.add(case5);
+        allCases.add(case5);
 
         List<Atom> case6 = new ArrayList<>();
         case6.addAll(Clist.subList(0,2));
         case6.add(Blist.get(0));
         case6.addAll(Blist.subList(3,5));
         case6.addAll(Alist.subList(0,2));
-        //allCases.add(case6);
+        allCases.add(case6);
 
 
         List<Atom> case7 = new ArrayList<>();
@@ -154,7 +154,7 @@ public class GORR extends Feedback {
         case7.addAll(Blist.subList(3,5));
         case7.add(Alist.get(0));
         case7.add(Alist.get(3));
-       // allCases.add(case7);
+       allCases.add(case7);
 
         List<Atom> case8 = new ArrayList<>();
         case8.add(Clist.get(0));
@@ -162,24 +162,24 @@ public class GORR extends Feedback {
         case8.add(Blist.get(0));
         case8.addAll(Blist.subList(3,5));
         case8.addAll(Alist.subList(2,4));
-        //allCases.add(case8);
+        allCases.add(case8);
 
         List<Atom> case9 = new ArrayList<>();
         case9.addAll(Clist.subList(2,4));
         case9.addAll(Blist.subList(0,2));
         case9.add(Blist.get(3));
         case9.addAll(Alist.subList(0,2));
-        //allCases.add(case9);
+        allCases.add(case9);
 
         List<Atom> case10 = new ArrayList<>();
         case10.addAll(Clist.subList(1,3));
         case10.addAll(Blist.subList(0,2));
         case10.add(Blist.get(3));
         case10.addAll(Alist.subList(1,3));
-        //allCases.add(case10);
+        allCases.add(case10);
 
         List<Atom> case11 = new ArrayList<>();
-        case11.addAll(Clist.subList(2,4));
+        case11.addAll(Clist.subList(1,3));
         case11.addAll(Blist.subList(0,2));
         case11.add(Blist.get(3));
         case11.add(Alist.get(0));
@@ -187,40 +187,156 @@ public class GORR extends Feedback {
         allCases.add(case11);
 
         List<Atom> case12 = new ArrayList<>();
-        case12.addAll(Clist.subList(1,3));
+        case12.addAll(Clist.subList(2,4));
         case12.addAll(Blist.subList(0,2));
         case12.add(Blist.get(3));
-        case12.addAll(Alist.subList(1,3));
+        case12.addAll(Alist.subList(2,4));
         allCases.add(case12);
 
-        System.out.println("#cases: " +allCases.size());
+        List<Atom> case13 = new ArrayList<>();
+        case13.addAll(Clist.subList(1,3));
+        case13.add(Blist.get(0));
+        case13.addAll(Blist.subList(3,5));
+        case13.addAll(Alist.subList(0,2));
+        allCases.add(case13);
+
+        List<Atom> case14 = new ArrayList<>();
+        case14.addAll(Clist.subList(2,4));
+        case14.add(Blist.get(0));
+        case14.addAll(Blist.subList(3,5));
+        case14.addAll(Alist.subList(1,3));
+        allCases.add(case14);
+
+        List<Atom> case15 = new ArrayList<>();
+        case15.addAll(Clist.subList(2,4));
+        case15.add(Blist.get(0));
+        case15.addAll(Blist.subList(3,5));
+        case15.add(Alist.get(0));
+        case15.add(Alist.get(3));
+        allCases.add(case15);
+
+        List<Atom> case16 = new ArrayList<>();
+        case16.addAll(Clist.subList(1,3));
+        case16.add(Blist.get(0));
+        case16.addAll(Blist.subList(3,5));
+        case16.addAll(Alist.subList(2,4));
+        allCases.add(case16);
+
+        List<Atom> case17 = new ArrayList<>();
+        case17.add(Clist.get(0));
+        case17.add(Clist.get(3));
+        case17.add(Blist.get(1));
+        case17.addAll(Blist.subList(2,4));
+        case17.addAll(Alist.subList(0,2));
+        allCases.add(case17);
+
+        List<Atom> case18 = new ArrayList<>();
+        case18.addAll(Clist.subList(0,2));
+        case18.add(Blist.get(1));
+        case18.addAll(Blist.subList(2,4));
+        case18.addAll(Alist.subList(1,3));
+        allCases.add(case18);
+
+        List<Atom> case19 = new ArrayList<>();
+        case19.addAll(Clist.subList(0,2));
+        case19.addAll(Blist.subList(1,4));
+        case19.add(Alist.get(0));
+        case19.add(Alist.get(3));
+        allCases.add(case19);
+
+        List<Atom> case20 = new ArrayList<>();
+        case20.add(Clist.get(0));
+        case20.add(Clist.get(3));
+        case20.add(Blist.get(1));
+        case20.addAll(Blist.subList(2,4));
+        case20.addAll(Alist.subList(2,4));
+        allCases.add(case20);
+
+        List<Atom> case21 = new ArrayList<>();
+        case21.addAll(Clist.subList(0,2));
+        case21.addAll(Blist.subList(2,5));
+        case21.addAll(Alist.subList(0,2));
+        allCases.add(case21);
+
+        List<Atom> case22 = new ArrayList<>();
+        case22.add(Clist.get(0));
+        case22.add(Clist.get(3));
+        case22.addAll(Blist.subList(2,5));
+        case22.addAll(Alist.subList(1,3));
+        allCases.add(case22);
+
+        List<Atom> case23 = new ArrayList<>();
+        case23.add(Clist.get(0));
+        case23.add(Clist.get(3));
+        case23.addAll(Blist.subList(2,5));
+        case23.add(Alist.get(0));
+        case23.add(Alist.get(3));
+       allCases.add(case23);
+
+        List<Atom> case24 = new ArrayList<>();
+        case24.addAll(Clist.subList(0,2));
+        case24.addAll(Blist.subList(2,5));
+        case24.addAll(Alist.subList(2,4));
+       allCases.add(case24);
+
+        List<Atom> case25 = new ArrayList<>();
+        case25.add(Clist.get(2));
+        case25.add(Clist.get(1));
+        case25.addAll(Blist.subList(1,4));
+        case25.addAll(Alist.subList(0,2));
+        allCases.add(case25);
+
+        List<Atom> case26 = new ArrayList<>();
+        case26.addAll(Clist.subList(2,4));
+        case26.addAll(Blist.subList(1,4));
+        case26.addAll(Alist.subList(1,3));
+        allCases.add(case26);
+
+        List<Atom> case27 = new ArrayList<>();
+        case27.addAll(Clist.subList(2,4));
+        case27.addAll(Blist.subList(1,4));
+        case27.add(Alist.get(0));
+        case27.add(Alist.get(3));
+        allCases.add(case27);
+
+        List<Atom> case28 = new ArrayList<>();
+        case28.addAll(Clist.subList(1,3));
+        case28.addAll(Blist.subList(1,4));
+        case28.addAll(Alist.subList(2,4));
+        allCases.add(case28);
+
+        List<Atom> case29 = new ArrayList<>();
+        case29.addAll(Clist.subList(2,4));
+        case29.addAll(Blist.subList(2,5));
+        case29.addAll(Alist.subList(0,2));
+        allCases.add(case29);
+
+        List<Atom> case30 = new ArrayList<>();
+        case30.addAll(Clist.subList(1,3));
+        case30.addAll(Blist.subList(2,5));
+        case30.addAll(Alist.subList(1,3));
+        allCases.add(case30);
+
+        List<Atom> case31 = new ArrayList<>();
+        case31.addAll(Clist.subList(1,3));
+        case31.addAll(Blist.subList(2,5));
+        case31.add(Alist.get(0));
+        case31.add(Alist.get(3));
+        allCases.add(case31);
+
+        List<Atom> case32 = new ArrayList<>();
+        case32.addAll(Clist.subList(2,4));
+        case32.addAll(Blist.subList(2,5));
+        case32.addAll(Alist.subList(2,4));
+        allCases.add(case32);
+
+        //System.out.println("#cases: " +allCases.size());
         for (int i = 0; i < ((allCases.size())/2) ; i++) {
             res.append(generateMultiOrClauses(posA,posC, allCases.get(i), allCases.get(i + 1)));
         }
         return res.toString();
     }
-  /*    (a_x || !b_x || c_x || c_z || !b_z || a_z || !a_y || !c_y || b_y) &&
-            (a_x || !b_x || c_x || c_z || !b_z || a_z || a_y || c_y || b_y) &&
-            (a_x || !b_x || c_x || c_z || b_z || !a_z || !a_y || !c_y || b_y) &&
-            (a_x || !b_x || c_x || c_z || b_z || !a_z || a_y || c_y || b_y) &&
-            (a_x || !b_x || c_x || c_z || b_z || a_z || !a_y || c_y || b_y) &&
-            (a_x || !b_x || c_x || c_z || b_z || a_z || a_y || !c_y || b_y) &&
-            (a_x || b_x || !c_x || c_z || !b_z || !a_z || !a_y || c_y || b_y) &&
-            (a_x || b_x || !c_x || c_z || !b_z || !a_z || a_y || !c_y || b_y) &&
-            (a_x || b_x || !c_x || c_z || !b_z || a_z || !a_y || !c_y || b_y) &&
-            (a_x || b_x || !c_x || c_z || !b_z || a_z || a_y || c_y || b_y) &&
-            (a_x || b_x || !c_x || c_z || b_z || !a_z || !a_y || !c_y || b_y) &&
-            (a_x || b_x || !c_x || c_z || b_z || !a_z || a_y || c_y || b_y) &&
-            (a_x || b_x || !c_x || c_z || b_z || a_z || !a_y || c_y || b_y) &&
-            (a_x || b_x || !c_x || c_z || b_z || a_z || a_y || !c_y || b_y) &&
-            (a_x || b_x || c_x || c_z || !b_z || !a_z || !a_y || !c_y || b_y) &&
-            (a_x || b_x || c_x || c_z || !b_z || !a_z || a_y || c_y || b_y) &&
-            (a_x || b_x || c_x || c_z || !b_z || a_z || !a_y || c_y || b_y) &&
-            (a_x || b_x || c_x || c_z || !b_z || a_z || a_y || !c_y || b_y) &&
-            (a_x || b_x || c_x || c_z || b_z || !a_z || !a_y || c_y || b_y) &&
-            (a_x || b_x || c_x || c_z || b_z || !a_z || a_y || !c_y || b_y) &&
-            (a_x || b_x || c_x || c_z || b_z || a_z || !a_y || !c_y || b_y) &&
-            (a_x || b_x || c_x || c_z || b_z || a_z || a_y || c_y || b_y) && */
+
 
     private String generateNegAClauses(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
         Atom negA = negAtoms.get(0).get(0);
