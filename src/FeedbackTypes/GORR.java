@@ -60,17 +60,30 @@ public class GORR extends Feedback {
 
         //String clauseString = generateNegAClauses(allPosAtomsList,  allNegAtomsList);
         // clauseString += generatePosAClauses(allPosAtomsList,  allNegAtomsList);
-       String clauseString = generateNegBClauses(allPosAtomsList,  allNegAtomsList);
-       /* clauseString += generatePosBClauses(allPosAtomsList,  allNegAtomsList);
-        clauseString += generateNegCClauses(allPosAtomsList,  allNegAtomsList);
+       //String clauseString = generateNegBClauses(allPosAtomsList,  allNegAtomsList);
+       // String clauseString = generatePosBClauses(allPosAtomsList,  allNegAtomsList);
+        /*clauseString += generateNegCClauses(allPosAtomsList,  allNegAtomsList);
         clauseString += generatePosCClauses(allPosAtomsList,  allNegAtomsList);*/
 
+        Atom negD = allNegAtomsList.get(3).get(3);
+        Atom negA = allNegAtomsList.get(0).get(0);
+        Atom negB = allNegAtomsList.get(1).get(1);
+        Atom negC =allNegAtomsList.get(2).get(2);
+
+        String singleOrClauses = generateSingleOrClauses(negD,negC);
+        singleOrClauses += generateSingleOrClauses(negD,negB);
+        singleOrClauses += generateSingleOrClauses(negD,negA);
+        singleOrClauses += generateSingleOrClauses(negB,negC);
+        singleOrClauses += generateSingleOrClauses(negA,negC);
+        singleOrClauses += generateSingleOrClauses(negA,negB);
 
 
+        String multOr = generateOrClause(posAtoms);
 
-    boolTrans = clauseString;
+    boolTrans = singleOrClauses+multOr;
 
     }
+    
 
     private String generateNegCClauses(List<List<Atom>> allPosAtomsList, List<List<Atom>> allNegAtomsList) {
         return null;
@@ -210,8 +223,6 @@ public class GORR extends Feedback {
         }
         return res.toString();
     }
-
-
 
     private String generatePosAClauses(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
         StringBuilder res = new StringBuilder();
@@ -709,6 +720,7 @@ public class GORR extends Feedback {
     }
 
 
+
     private List<Atom> generateAtoms(Atom a, Boolean negated){
         List<Atom> res =new ArrayList<>();
         String[] pos  = {"x","y","z","w"};
@@ -728,9 +740,14 @@ public class GORR extends Feedback {
                 }
             }
         }
-
         return res;
     }
+
+    private String generateSingleOrClauses(Atom a, Atom b){
+        return "("+ a.stringRep + " || " + b.stringRep + ") && \n";
+    }
+
+
     private String generateMultiOrClauses(Atom a, Atom b, List<Atom> list1, List<Atom> list2){
         StringBuilder temp = new StringBuilder();
         StringBuilder temp2 = new StringBuilder();
@@ -851,6 +868,8 @@ public class GORR extends Feedback {
 ( !b_x || d_x || d_y || !c_z || b_w || !a_w || a_y) &&
 ( !b_x || d_x || d_y || !c_z || b_w || a_w || !a_y) &&
 
+
+------ done to here -----
 (b_x || !d_x || !d_y || !c_z || !b_w || !a_w || a_y) &&
 (b_x || !d_x || !d_y || !c_z || !b_w || a_w || !a_y) &&
 (b_x || !d_x || !d_y || !c_z || b_w || !a_w || !a_y) &&
@@ -901,7 +920,7 @@ public class GORR extends Feedback {
 (c_x || d_x || d_z || !c_w || a_w || !a_z || !b_y) &&
 (c_x || d_x || d_z || c_w || !a_w || !a_z || !b_y) &&
 (c_x || d_x || d_z || c_w || a_w || a_z || !b_y) &&
-
+------ done from here -----
 ( !d_w || !c_z) &&
 ( !d_w || !b_y) &&
 ( !c_z || !b_y)
