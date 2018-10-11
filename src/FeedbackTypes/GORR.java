@@ -182,8 +182,9 @@ public class GORR extends Feedback {
         case11.addAll(Clist.subList(2,4));
         case11.addAll(Blist.subList(0,2));
         case11.add(Blist.get(3));
-        case11.addAll(Alist.subList(0,2));
-        allCases.add(case11); 
+        case11.add(Alist.get(0));
+        case11.add(Alist.get(3));
+        allCases.add(case11);
 
         List<Atom> case12 = new ArrayList<>();
         case12.addAll(Clist.subList(1,3));
