@@ -197,7 +197,7 @@ public class GORR extends Feedback {
         for (int i = 0; i < ((allCases.size())/2) ; i++) {
             res.append(generateMultiOrClauses(posA,posC, allCases.get(i), allCases.get(i + 1)));
         }
-        return res.toString(); 
+        return res.toString();
     }
   /*    (a_x || !b_x || c_x || c_z || !b_z || a_z || !a_y || !c_y || b_y) &&
             (a_x || !b_x || c_x || c_z || !b_z || a_z || a_y || c_y || b_y) &&
