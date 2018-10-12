@@ -379,7 +379,7 @@ public class GORR extends Feedback {
         }
         return res.toString();
     }
-
+ 
     private String generateNegBClauses(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
         StringBuilder res = new StringBuilder();
         Atom negB = negAtoms.get(1).get(0);
