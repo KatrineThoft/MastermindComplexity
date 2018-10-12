@@ -60,12 +60,13 @@ public class GORR extends Feedback {
 
         //String clauseString = generateNegAClauses(allPosAtomsList,  allNegAtomsList);
         // clauseString += generatePosAClauses(allPosAtomsList,  allNegAtomsList);
-       //String clauseString = generateNegBClauses(allPosAtomsList,  allNegAtomsList);
-       // String clauseString = generatePosBClauses(allPosAtomsList,  allNegAtomsList);
-        /*clauseString += generateNegCClauses(allPosAtomsList,  allNegAtomsList);
-        clauseString += generatePosCClauses(allPosAtomsList,  allNegAtomsList);*/
+       // clauseString += generateNegBClauses(allPosAtomsList,  allNegAtomsList);
+       // clauseString+ = generatePosBClauses(allPosAtomsList,  allNegAtomsList);
+        // clauseString += generateNegCClauses(allPosAtomsList,  allNegAtomsList);
+        String clauseString = generatePosCClauses(allPosAtomsList,  allNegAtomsList);
 
-        Atom negD = allNegAtomsList.get(3).get(3);
+
+     /*   Atom negD = allNegAtomsList.get(3).get(3);
         Atom negA = allNegAtomsList.get(0).get(0);
         Atom negB = allNegAtomsList.get(1).get(1);
         Atom negC =allNegAtomsList.get(2).get(2);
@@ -75,26 +76,308 @@ public class GORR extends Feedback {
         singleOrClauses += generateSingleOrClauses(negD,negA);
         singleOrClauses += generateSingleOrClauses(negB,negC);
         singleOrClauses += generateSingleOrClauses(negA,negC);
-        singleOrClauses += generateSingleOrClauses(negA,negB);
-
+        singleOrClauses += generateSingleOrClauses(negA,negB);*/
 
         String multOr = generateOrClause(posAtoms);
 
-    boolTrans = singleOrClauses+multOr;
+        multOr.substring(0,multOr.lastIndexOf("&&"));
+
+    boolTrans = clauseString;
 
     }
-    
 
-    private String generateNegCClauses(List<List<Atom>> allPosAtomsList, List<List<Atom>> allNegAtomsList) {
-        return null;
+
+    private String generateNegCClauses(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
+        StringBuilder res = new StringBuilder();
+        Atom negC = negAtoms.get(2).get(0);
+        Atom negB = negAtoms.get(1).get(1);
+        List<Atom> Alist = Arrays.asList(negAtoms.get(0).get(2),negAtoms.get(0).get(3),
+                posAtoms.get(0).get(2),posAtoms.get(0).get(3));
+        List<Atom> Clist = Arrays.asList(negAtoms.get(2).get(3),posAtoms.get(2).get(3));
+        List<Atom> Dlist = Arrays.asList(negAtoms.get(3).get(0), negAtoms.get(3).get(2),
+                posAtoms.get(3).get(0),posAtoms.get(3).get(2));
+        List<List<Atom>> allCases = new ArrayList<>();
+
+        List<Atom> case1 = new ArrayList<>();
+        case1.addAll(Dlist.subList(0,2));
+        case1.add(Clist.get(0));
+        case1.addAll(Alist.subList(0,2));
+        allCases.add(case1);
+
+
+        List<Atom> case2 = new ArrayList<>();
+        case2.addAll(Dlist.subList(0,2));
+        case2.add(Clist.get(0));
+        case2.addAll(Alist.subList(2,4));
+        allCases.add(case2);
+
+        List<Atom> case3 = new ArrayList<>();
+        case3.addAll(Dlist.subList(0,2));
+        case3.add(Clist.get(1));
+        case3.addAll(Alist.subList(1,3));
+       allCases.add(case3);
+
+
+        List<Atom> case4 = new ArrayList<>();
+        case4.addAll(Dlist.subList(0,2));
+        case4.add(Clist.get(1));
+        case4.add(Alist.get(0));
+        case4.add(Alist.get(3));
+        allCases.add(case4);
+
+        List<Atom> case5 = new ArrayList<>();
+        case5.add(Dlist.get(0));
+        case5.add(Dlist.get(3));
+        case5.add(Clist.get(0));
+        case5.addAll(Alist.subList(1,3));
+        allCases.add(case5);
+
+
+        List<Atom> case6 = new ArrayList<>();
+        case6.add(Dlist.get(0));
+        case6.add(Dlist.get(3));
+        case6.add(Clist.get(0));
+        case6.add(Alist.get(0));
+        case6.add(Alist.get(3));
+        allCases.add(case6);
+
+        List<Atom> case7 = new ArrayList<>();
+        case7.add(Dlist.get(0));
+        case7.add(Dlist.get(3));
+        case7.add(Clist.get(1));
+        case7.addAll(Alist.subList(0,2));
+         allCases.add(case7);
+
+
+        List<Atom> case8 = new ArrayList<>();
+        case8.add(Dlist.get(0));
+        case8.add(Dlist.get(3));
+        case8.add(Clist.get(1));
+        case8.addAll(Alist.subList(2,4));
+         allCases.add(case8);
+
+        List<Atom> case9 = new ArrayList<>();
+        case9.addAll(Dlist.subList(1,3));
+        case9.add(Clist.get(0));
+        case9.addAll(Alist.subList(1,3));
+        allCases.add(case9);
+
+
+        List<Atom> case10 = new ArrayList<>();
+        case10.addAll(Dlist.subList(1,3));
+        case10.add(Clist.get(0));
+        case10.add(Alist.get(0));
+        case10.add(Alist.get(3));
+        allCases.add(case10);
+
+        List<Atom> case11 = new ArrayList<>();
+        case11.addAll(Dlist.subList(1,3));
+        case11.add(Clist.get(1));
+        case11.addAll(Alist.subList(0,2));
+        allCases.add(case11);
+
+
+        List<Atom> case12 = new ArrayList<>();
+        case12.addAll(Dlist.subList(1,3));
+        case12.add(Clist.get(1));
+        case12.addAll(Alist.subList(2,4));
+        allCases.add(case12);
+
+        List<Atom> case13 = new ArrayList<>();
+        case13.addAll(Dlist.subList(2,4));
+        case13.add(Clist.get(0));
+        case13.addAll(Alist.subList(0,2));
+       allCases.add(case13);
+
+
+        List<Atom> case14 = new ArrayList<>();
+        case14.addAll(Dlist.subList(2,4));
+        case14.add(Clist.get(0));
+        case14.addAll(Alist.subList(2,4));
+        allCases.add(case14);
+
+        List<Atom> case15 = new ArrayList<>();
+        case15.addAll(Dlist.subList(2,4));
+        case15.add(Clist.get(1));
+        case15.addAll(Alist.subList(1,3));
+        allCases.add(case15);
+
+
+        List<Atom> case16 = new ArrayList<>();
+        case16.addAll(Dlist.subList(2,4));
+        case16.add(Clist.get(1));
+        case16.add(Alist.get(0));
+        case16.add(Alist.get(3));
+        allCases.add(case16);
+
+
+        for (int i = 0; i < ((allCases.size())/2) ; i++) {
+            res.append(generateMultiOrClauses(negC,negB, allCases.get(i), allCases.get(i + 1)));
+        }
+
+        return res.toString();
     }
 
-    private String generatePosCClauses(List<List<Atom>> allPosAtomsList, List<List<Atom>> allNegAtomsList) {
-        return null;
+
+    private String generatePosCClauses(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
+        StringBuilder res = new StringBuilder();
+        Atom negB = negAtoms.get(1).get(0);
+        Atom posC = posAtoms.get(2).get(2);
+        List<Atom> Alist = Arrays.asList(negAtoms.get(0).get(1),negAtoms.get(0).get(3),
+                posAtoms.get(0).get(1),posAtoms.get(0).get(3));
+        List<Atom> Blist = Arrays.asList(negAtoms.get(1).get(3),posAtoms.get(1).get(3));
+        List<Atom> Dlist = Arrays.asList(negAtoms.get(3).get(0), negAtoms.get(3).get(1),
+                posAtoms.get(3).get(0),posAtoms.get(3).get(1));
+        List<List<Atom>> allCases = new ArrayList<>();
+
+        List<Atom> case1 = new ArrayList<>();
+
+        for (int i = 0; i < ((allCases.size())/2) ; i++) {
+            res.append(generateMultiOrClauses(posC, negB, allCases.get(i), allCases.get(i + 1)));
+        }
+
+        return res.toString();
     }
 
-    private String generatePosBClauses(List<List<Atom>> allPosAtomsList, List<List<Atom>> allNegAtomsList) {
-        return null;
+    /*
+(c_x || !d_x || !d_z || !c_w || !a_w || a_z || !b_y) &&
+(c_x || !d_x || !d_z || !c_w || a_w || !a_z || !b_y) &&
+(c_x || !d_x || !d_z || c_w || !a_w || !a_z || !b_y) &&
+(c_x || !d_x || !d_z || c_w || a_w || a_z || !b_y) &&
+(c_x || !d_x || d_z || !c_w || !a_w || !a_z || !b_y) &&
+(c_x || !d_x || d_z || !c_w || a_w || a_z || !b_y) &&
+(c_x || !d_x || d_z || c_w || !a_w || a_z || !b_y) &&
+(c_x || !d_x || d_z || c_w || a_w || !a_z || !b_y) &&
+(c_x || d_x || !d_z || !c_w || !a_w || !a_z || !b_y) &&
+(c_x || d_x || !d_z || !c_w || a_w || a_z || !b_y) &&
+(c_x || d_x || !d_z || c_w || !a_w || a_z || !b_y) &&
+(c_x || d_x || !d_z || c_w || a_w || !a_z || !b_y) &&
+(c_x || d_x || d_z || !c_w || !a_w || a_z || !b_y) &&
+(c_x || d_x || d_z || !c_w || a_w || !a_z || !b_y) &&
+(c_x || d_x || d_z || c_w || !a_w || !a_z || !b_y) &&
+(c_x || d_x || d_z || c_w || a_w || a_z || !b_y) &&
+     */
+
+    private String generatePosBClauses(List<List<Atom>>  posAtoms, List<List<Atom>> negAtoms) {
+        StringBuilder res = new StringBuilder();
+        Atom posB = posAtoms.get(1).get(0);
+        Atom negC = negAtoms.get(2).get(2);
+        List<Atom> Alist = Arrays.asList(negAtoms.get(0).get(1),negAtoms.get(0).get(3),
+                posAtoms.get(0).get(1),posAtoms.get(0).get(3));
+        List<Atom> Blist = Arrays.asList(negAtoms.get(1).get(3),posAtoms.get(1).get(3));
+        List<Atom> Dlist = Arrays.asList(negAtoms.get(3).get(0), negAtoms.get(3).get(1),
+                posAtoms.get(3).get(0),posAtoms.get(3).get(1));
+        List<List<Atom>> allCases = new ArrayList<>();
+
+        List<Atom> case1 = new ArrayList<>();
+        case1.addAll(Dlist.subList(0,2));
+        case1.add(Blist.get(0));
+        case1.addAll(Alist.subList(1,3));
+        allCases.add(case1);
+
+        List<Atom> case2 = new ArrayList<>();
+        case2.addAll(Dlist.subList(0,2));
+        case2.add(Blist.get(0));
+        case2.add(Alist.get(0));
+        case2.add(Alist.get(3));
+        allCases.add(case2);
+
+        List<Atom> case3 = new ArrayList<>();
+        case3.addAll(Dlist.subList(0,2));
+        case3.add(Blist.get(1));
+        case3.addAll(Alist.subList(0,2));
+        allCases.add(case3);
+
+        List<Atom> case4 = new ArrayList<>();
+        case4.addAll(Dlist.subList(0,2));
+        case4.add(Blist.get(1));
+        case4.addAll(Alist.subList(2,4));
+       allCases.add(case4);
+
+        List<Atom> case5 = new ArrayList<>();
+        case5.add(Dlist.get(0));
+        case5.add(Dlist.get(3));
+        case5.add(Blist.get(0));
+        case5.addAll(Alist.subList(0,2));
+        allCases.add(case5);
+
+        List<Atom> case6 = new ArrayList<>();
+        case6.add(Dlist.get(0));
+        case6.add(Dlist.get(3));
+        case6.add(Blist.get(0));
+        case6.addAll(Alist.subList(2,4));
+        allCases.add(case6);
+
+        List<Atom> case7 = new ArrayList<>();
+        case7.add(Dlist.get(0));
+        case7.add(Dlist.get(3));
+        case7.add(Blist.get(1));
+        case7.addAll(Alist.subList(1,3));
+        allCases.add(case7);
+
+        List<Atom> case8 = new ArrayList<>();
+        case8.add(Dlist.get(0));
+        case8.add(Dlist.get(3));
+        case8.add(Blist.get(1));
+        case8.add(Alist.get(0));
+        case8.add(Alist.get(3));
+        allCases.add(case8);
+
+        List<Atom> case9 = new ArrayList<>();
+        case9.addAll(Dlist.subList(1,3));
+        case9.add(Blist.get(0));
+        case9.addAll(Alist.subList(0,2));
+        allCases.add(case9);
+
+        List<Atom> case10 = new ArrayList<>();
+        case10.addAll(Dlist.subList(1,3));
+        case10.add(Blist.get(0));
+        case10.addAll(Alist.subList(2,4));
+        allCases.add(case10);
+
+        List<Atom> case11 = new ArrayList<>();
+        case11.addAll(Dlist.subList(1,3));
+        case11.add(Blist.get(1));
+        case11.addAll(Alist.subList(1,3));
+        allCases.add(case11);
+
+        List<Atom> case12 = new ArrayList<>();
+        case12.addAll(Dlist.subList(1,3));
+        case12.add(Blist.get(1));
+        case12.add(Alist.get(0));
+        case12.add(Alist.get(3));
+        allCases.add(case12);
+
+        List<Atom> case13 = new ArrayList<>();
+        case13.addAll(Dlist.subList(2,4));
+        case13.add(Blist.get(0));
+        case13.addAll(Alist.subList(1,3));
+        allCases.add(case13);
+
+        List<Atom> case14 = new ArrayList<>();
+        case14.addAll(Dlist.subList(2,4));
+        case14.add(Blist.get(0));
+        case14.add(Alist.get(0));
+        case14.add(Alist.get(3));
+        allCases.add(case14);
+
+        List<Atom> case15 = new ArrayList<>();
+        case15.addAll(Dlist.subList(2,4));
+        case15.add(Blist.get(1));
+        case15.addAll(Alist.subList(0,2));
+        allCases.add(case15);
+
+        List<Atom> case16 = new ArrayList<>();
+        case16.addAll(Dlist.subList(2,4));
+        case16.add(Blist.get(1));
+        case16.addAll(Alist.subList(2,4));
+        allCases.add(case16);
+
+
+        for (int i = 0; i < ((allCases.size())/2) ; i++) {
+            res.append(generateMultiOrClauses(posB, negC, allCases.get(i), allCases.get(i + 1)));
+        }
+        return res.toString();
     }
 
     private String generateNegBClauses(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
@@ -783,126 +1066,10 @@ public class GORR extends Feedback {
         return res + "\n";
     }
 }
+
 /*
-( !a_x || !d_y || !d_z || !c_w || !b_w || !b_z || !c_y) &&
-( !a_x || !d_y || !d_z || !c_w || !b_w || b_z || c_y) &&
-( !a_x || !d_y || !d_z || !c_w || b_w || !b_z || c_y) &&
-( !a_x || !d_y || !d_z || !c_w || b_w || b_z || !c_y) &&
-( !a_x || !d_y || !d_z || c_w || !b_w || !b_z || c_y) &&
-( !a_x || !d_y || !d_z || c_w || !b_w || b_z || !c_y) &&
-( !a_x || !d_y || !d_z || c_w || b_w || !b_z || !c_y) &&
-( !a_x || !d_y || !d_z || c_w || b_w || b_z || c_y) &&
-( !a_x || !d_y || d_z || !c_w || !b_w || !b_z || c_y) &&
-( !a_x || !d_y || d_z || !c_w || !b_w || b_z || !c_y) &&
-( !a_x || !d_y || d_z || !c_w || b_w || !b_z || !c_y) &&
-( !a_x || !d_y || d_z || !c_w || b_w || b_z || c_y) &&
-( !a_x || !d_y || d_z || c_w || !b_w || !b_z || !c_y) &&
-( !a_x || !d_y || d_z || c_w || !b_w || b_z || c_y) &&
-( !a_x || !d_y || d_z || c_w || b_w || !b_z || c_y) &&
-( !a_x || !d_y || d_z || c_w || b_w || b_z || !c_y) &&
-( !a_x || d_y || !d_z || !c_w || !b_w || !b_z || c_y) &&
-( !a_x || d_y || !d_z || !c_w || !b_w || b_z || !c_y) &&
-( !a_x || d_y || !d_z || !c_w || b_w || !b_z || !c_y) &&
-( !a_x || d_y || !d_z || !c_w || b_w || b_z || c_y) &&
-( !a_x || d_y || !d_z || c_w || !b_w || !b_z || !c_y) &&
-( !a_x || d_y || !d_z || c_w || !b_w || b_z || c_y) &&
-( !a_x || d_y || !d_z || c_w || b_w || !b_z || c_y) &&
-( !a_x || d_y || !d_z || c_w || b_w || b_z || !c_y) &&
-( !a_x || d_y || d_z || !c_w || !b_w || !b_z || !c_y) &&
-( !a_x || d_y || d_z || !c_w || !b_w || b_z || c_y) &&
-( !a_x || d_y || d_z || !c_w || b_w || !b_z || c_y) &&
-( !a_x || d_y || d_z || !c_w || b_w || b_z || !c_y) &&
-( !a_x || d_y || d_z || c_w || !b_w || !b_z || c_y) &&
-( !a_x || d_y || d_z || c_w || !b_w || b_z || !c_y) &&
-( !a_x || d_y || d_z || c_w || b_w || !b_z || !c_y) &&
-( !a_x || d_y || d_z || c_w || b_w || b_z || c_y) &&
-
-
-(a_x || !b_x || !c_x || c_z || !b_z || !a_z || !a_y || !c_y || b_y) &&
-(a_x || !b_x || !c_x || c_z || !b_z || !a_z || a_y || c_y || b_y) &&
-(a_x || !b_x || !c_x || c_z || !b_z || a_z || !a_y || c_y || b_y) &&
-(a_x || !b_x || !c_x || c_z || !b_z || a_z || a_y || !c_y || b_y) &&
-(a_x || !b_x || !c_x || c_z || b_z || !a_z || !a_y || c_y || b_y) &&
-(a_x || !b_x || !c_x || c_z || b_z || !a_z || a_y || !c_y || b_y) &&
-(a_x || !b_x || !c_x || c_z || b_z || a_z || !a_y || !c_y || b_y) &&
-(a_x || !b_x || !c_x || c_z || b_z || a_z || a_y || c_y || b_y) &&
-(a_x || !b_x || c_x || c_z || !b_z || !a_z || !a_y || c_y || b_y) &&
-(a_x || !b_x || c_x || c_z || !b_z || !a_z || a_y || !c_y || b_y) &&
-(a_x || !b_x || c_x || c_z || !b_z || a_z || !a_y || !c_y || b_y) &&
-(a_x || !b_x || c_x || c_z || !b_z || a_z || a_y || c_y || b_y) &&
-(a_x || !b_x || c_x || c_z || b_z || !a_z || !a_y || !c_y || b_y) &&
-(a_x || !b_x || c_x || c_z || b_z || !a_z || a_y || c_y || b_y) &&
-(a_x || !b_x || c_x || c_z || b_z || a_z || !a_y || c_y || b_y) &&
-(a_x || !b_x || c_x || c_z || b_z || a_z || a_y || !c_y || b_y) &&
-(a_x || b_x || !c_x || c_z || !b_z || !a_z || !a_y || c_y || b_y) &&
-(a_x || b_x || !c_x || c_z || !b_z || !a_z || a_y || !c_y || b_y) &&
-(a_x || b_x || !c_x || c_z || !b_z || a_z || !a_y || !c_y || b_y) &&
-(a_x || b_x || !c_x || c_z || !b_z || a_z || a_y || c_y || b_y) &&
-(a_x || b_x || !c_x || c_z || b_z || !a_z || !a_y || !c_y || b_y) &&
-(a_x || b_x || !c_x || c_z || b_z || !a_z || a_y || c_y || b_y) &&
-(a_x || b_x || !c_x || c_z || b_z || a_z || !a_y || c_y || b_y) &&
-(a_x || b_x || !c_x || c_z || b_z || a_z || a_y || !c_y || b_y) &&
-(a_x || b_x || c_x || c_z || !b_z || !a_z || !a_y || !c_y || b_y) &&
-(a_x || b_x || c_x || c_z || !b_z || !a_z || a_y || c_y || b_y) &&
-(a_x || b_x || c_x || c_z || !b_z || a_z || !a_y || c_y || b_y) &&
-(a_x || b_x || c_x || c_z || !b_z || a_z || a_y || !c_y || b_y) &&
-(a_x || b_x || c_x || c_z || b_z || !a_z || !a_y || c_y || b_y) &&
-(a_x || b_x || c_x || c_z || b_z || !a_z || a_y || !c_y || b_y) &&
-(a_x || b_x || c_x || c_z || b_z || a_z || !a_y || !c_y || b_y) &&
-(a_x || b_x || c_x || c_z || b_z || a_z || a_y || c_y || b_y) &&
-
-( !b_x || !d_x || !d_y || !c_z || !b_w || !a_w || !a_y) &&
-( !b_x || !d_x || !d_y || !c_z || !b_w || a_w || a_y) &&
-( !b_x || !d_x || !d_y || !c_z || b_w || !a_w || a_y) &&
-( !b_x || !d_x || !d_y || !c_z || b_w || a_w || !a_y) &&
-( !b_x || !d_x || d_y || !c_z || !b_w || !a_w || a_y) &&
-( !b_x || !d_x || d_y || !c_z || !b_w || a_w || !a_y) &&
-( !b_x || !d_x || d_y || !c_z || b_w || !a_w || !a_y) &&
-( !b_x || !d_x || d_y || !c_z || b_w || a_w || a_y) &&
-( !b_x || d_x || !d_y || !c_z || !b_w || !a_w || a_y) &&
-( !b_x || d_x || !d_y || !c_z || !b_w || a_w || !a_y) &&
-( !b_x || d_x || !d_y || !c_z || b_w || !a_w || !a_y) &&
-( !b_x || d_x || !d_y || !c_z || b_w || a_w || a_y) &&
-( !b_x || d_x || d_y || !c_z || !b_w || !a_w || !a_y) &&
-( !b_x || d_x || d_y || !c_z || !b_w || a_w || a_y) &&
-( !b_x || d_x || d_y || !c_z || b_w || !a_w || a_y) &&
-( !b_x || d_x || d_y || !c_z || b_w || a_w || !a_y) &&
-
-
 ------ done to here -----
-(b_x || !d_x || !d_y || !c_z || !b_w || !a_w || a_y) &&
-(b_x || !d_x || !d_y || !c_z || !b_w || a_w || !a_y) &&
-(b_x || !d_x || !d_y || !c_z || b_w || !a_w || !a_y) &&
-(b_x || !d_x || !d_y || !c_z || b_w || a_w || a_y) &&
-(b_x || !d_x || d_y || !c_z || !b_w || !a_w || !a_y) &&
-(b_x || !d_x || d_y || !c_z || !b_w || a_w || a_y) &&
-(b_x || !d_x || d_y || !c_z || b_w || !a_w || a_y) &&
-(b_x || !d_x || d_y || !c_z || b_w || a_w || !a_y) &&
-(b_x || d_x || !d_y || !c_z || !b_w || !a_w || !a_y) &&
-(b_x || d_x || !d_y || !c_z || !b_w || a_w || a_y) &&
-(b_x || d_x || !d_y || !c_z || b_w || !a_w || a_y) &&
-(b_x || d_x || !d_y || !c_z || b_w || a_w || !a_y) &&
-(b_x || d_x || d_y || !c_z || !b_w || !a_w || a_y) &&
-(b_x || d_x || d_y || !c_z || !b_w || a_w || !a_y) &&
-(b_x || d_x || d_y || !c_z || b_w || !a_w || !a_y) &&
-(b_x || d_x || d_y || !c_z || b_w || a_w || a_y) &&
 
-( !c_x || !d_x || !d_z || !c_w || !a_w || !a_z || !b_y) &&
- ( !c_x || !d_x || !d_z || !c_w || a_w || a_z || !b_y) &&
- ( !c_x || !d_x || !d_z || c_w || !a_w || a_z || !b_y) &&
- ( !c_x || !d_x || !d_z || c_w || a_w || !a_z || !b_y) &&
- ( !c_x || !d_x || d_z || !c_w || !a_w || a_z || !b_y) &&
- ( !c_x || !d_x || d_z || !c_w || a_w || !a_z || !b_y) &&
-( !c_x || !d_x || d_z || c_w || !a_w || !a_z || !b_y) &&
-( !c_x || !d_x || d_z || c_w || a_w || a_z || !b_y) &&
-( !c_x || d_x || !d_z || !c_w || !a_w || a_z || !b_y) &&
-( !c_x || d_x || !d_z || !c_w || a_w || !a_z || !b_y) &&
-( !c_x || d_x || !d_z || c_w || !a_w || !a_z || !b_y) &&
-( !c_x || d_x || !d_z || c_w || a_w || a_z || !b_y) &&
-( !c_x || d_x || d_z || !c_w || !a_w || !a_z || !b_y) &&
-( !c_x || d_x || d_z || !c_w || a_w || a_z || !b_y) &&
-( !c_x || d_x || d_z || c_w || !a_w || a_z || !b_y) &&
-( !c_x || d_x || d_z || c_w || a_w || !a_z || !b_y) &&
 
 (c_x || !d_x || !d_z || !c_w || !a_w || a_z || !b_y) &&
 (c_x || !d_x || !d_z || !c_w || a_w || !a_z || !b_y) &&
@@ -921,12 +1088,5 @@ public class GORR extends Feedback {
 (c_x || d_x || d_z || c_w || !a_w || !a_z || !b_y) &&
 (c_x || d_x || d_z || c_w || a_w || a_z || !b_y) &&
 ------ done from here -----
-( !d_w || !c_z) &&
-( !d_w || !b_y) &&
-( !c_z || !b_y)
-(a_x || d_w || c_z || b_y) &&
- (!a_x || !d_w) &&
- ( !a_x || !c_z) &&
- ( !a_x || !b_y) &&
 
  */
