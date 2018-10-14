@@ -27,11 +27,15 @@ public class Runner {
 
        Feedback test6 = new GORR("a_x,b_y,c_z,d_w");
 
-        System.out.println(test6.getBoolTrans());*/
+        System.out.println(test6.getBoolTrans());
 
         Feedback test7 = new GRRR("a_x,b_y,c_z,d_w");
 
-        System.out.println(test7.getBoolTrans());
+        System.out.println(test7.getBoolTrans());*/
+
+        Feedback test8 = new OORR("a_x,b_y,c_z,d_w");
+
+        System.out.println(test8.getBoolTrans());
 
     }
 }
