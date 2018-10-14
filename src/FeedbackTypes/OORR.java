@@ -106,7 +106,7 @@ public class OORR extends Feedback{
         List<Atom> case2 = new ArrayList<>();
         case2.add(Dlist.get(2));
 
-        //Cases w. neg Ax and neg Cx
+        //Cases w. neg Ax and neg Cx 
         List<Atom> case3 = new ArrayList<>();
         case3.addAll(Alist.subList(1,4));
         case3.add(Clist.get(3));
