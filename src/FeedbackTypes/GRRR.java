@@ -50,14 +50,8 @@ public class GRRR extends Feedback {
         for (Atom a : atoms) {
             temp.append(a.stringRep + " || ");
         }
-        return temp.substring(0,temp.lastIndexOf("||"))+") &&";
+        return temp.substring(0, temp.lastIndexOf("||")) + ") &&";
     }
-/*
-
-
-   ( !c_z || !d_w)
- */
-
 
     @Override
     public String getBoolTrans() {

@@ -46,4 +46,252 @@ public class OORR extends Feedback{
 
     }
 
+    /* OBS: c_y = x
+    ( !a_x || !b_x || !d_y) &&
+    ( !a_x || !b_x || !d_z) &&
+
+    ( !a_x || !c_x || !a_z || c_w || a_y || !a_w) &&
+    ( !a_x || !c_x || !a_z || !a_y || a_w || c_y) &&
+    ( !a_x || !c_x || a_z || !c_w || !x) &&
+    ( !a_x || !c_x || a_z || c_w || !a_y || !a_w || c_y) &&
+    ( !a_x || !c_x || !c_w || a_w || c_y) &&
+    ( !a_x || !c_x || c_w || a_y || !c_y) &&
+
+    ( !a_x || c_x || !a_z || !c_w || !a_y || c_y) &&
+    ( !a_x || c_x || !a_z || c_w || !a_w || !c_y) &&
+     ( !a_x || c_x || a_z || !c_w || a_y || c_y) &&
+     ( !a_x || c_x || a_z || c_w || a_w || !c_y) &&
+     ( !a_x || c_x || !c_w || !a_y || !a_w || !c_y) &&
+     ( !a_x || c_x || !c_w || a_y || a_w || !c_y) &&
+
+    ( !a_x || !d_x || !b_w) &&
+    ( !a_x || !d_x || !b_z) &&
+
+    ( !a_x || !d_y || !b_w) &&
+     ( !a_x || !d_y || !b_z) &&
+
+     ( !a_x || !d_z || !b_w) &&
+
+     ( !a_x || a_z || a_y || a_w) &&
+
+      (a_x || !b_x || !c_x || d_w || b_w || !c_w || b_y || !a_w || c_y || c_z) &&
+      (a_x || !b_x || !c_x || d_w || c_w || !a_y || b_y || !c_y || c_z) &&
+      (a_x || !b_x || c_x || d_w || !b_w || !b_z || !a_z || c_w || b_y || a_w || !c_y || c_z) &&
+      (a_x || !b_x || c_x || d_w || !b_w || !b_z || a_z || c_w || b_y || !a_w || !c_y || c_z) &&
+      (a_x || !b_x || c_x || d_w || b_w || b_z || !a_z || c_w || b_y || a_w || !c_y || c_z) &&
+    (a_x || !b_x || c_x || d_w || b_w || b_z || a_z || c_w || b_y || !a_w || !c_y || c_z) &&
+    (a_x || !b_x || c_x || d_w || b_z || !a_z || !c_w || a_y || b_y || c_y || c_z) &&
+    (a_x || !b_x || c_x || d_w || b_z || a_z || !c_w || !a_y || b_y || c_y || c_z) &&
+
+    (a_x || b_x || !c_x || d_w || !b_w || !c_w || b_y || !a_w || c_y || c_z) &&
+    (a_x || b_x || c_x || d_w || !b_w || b_z || !a_z || c_w || b_y || a_w || !c_y || c_z) &&
+    (a_x || b_x || c_x || d_w || !b_w || b_z || a_z || c_w || b_y || !a_w || !c_y || c_z) &&
+    (a_x || b_x || c_x || d_w || b_w || !b_z || !a_z || c_w || b_y || a_w || !c_y || c_z) &&
+    (a_x || b_x || c_x || d_w || b_w || !b_z || a_z || c_w || b_y || !a_w || !c_y || c_z) &&
+    (a_x || b_x || c_x || d_w || !b_z || !a_z || !c_w || a_y || b_y || c_y || c_z) &&
+    (a_x || b_x || c_x || d_w || !b_z || a_z || !c_w || !a_y || b_y || c_y || c_z) &&
+
+    (a_x || !c_x || d_w || !b_w || b_z || !a_z || c_w || !a_y || b_y || !a_w || c_y || c_z) &&
+    (a_x || !c_x || d_w || !b_w || b_z || !a_z || c_w || a_y || b_y || a_w || c_y || c_z) &&
+    (a_x || !c_x || d_w || !b_w || b_z || a_z || c_w || !a_y || b_y || a_w || c_y || c_z) &&
+    (a_x || !c_x || d_w || !b_w || b_z || a_z || c_w || a_y || b_y || !a_w || c_y || c_z) &&
+    (a_x || !c_x || d_w || b_w || !b_z || !a_z || c_w || !a_y || b_y || !a_w || c_y || c_z) &&
+    (a_x || !c_x || d_w || b_w || !b_z || !a_z || c_w || a_y || b_y || a_w || c_y || c_z) &&
+    (a_x || !c_x || d_w || b_w || !b_z || a_z || c_w || !a_y || b_y || a_w || c_y || c_z) &&
+    (a_x || !c_x || d_w || b_w || !b_z || a_z || c_w || a_y || b_y || !a_w || c_y || c_z) && (a_x || !c_x || d_w || !b_z || !a_z || !c_w || b_y || !c_y || c_z) && (a_x || c_x || d_w || !b_w || !c_w || !a_y || b_y || a_w || !c_y || c_z) && (a_x || c_x || d_w || !b_w || !c_w || a_y || b_y || !a_w || !c_y || c_z) &&
+
+    ( !b_x || !c_x || !b_w || !c_w || a_w || c_y) &&
+    ( !b_x || !c_x || b_w || b_z || a_z || c_w || a_y || a_w || c_y) &&
+
+    ( !b_x || c_x || d_x || d_y || d_z || !b_z || a_z || a_y || x) &&
+    ( !b_x || c_x || d_x || d_y || !b_w || c_w || a_y || a_w || c_y) &&
+    ( !b_x || c_x || d_x || d_z || b_w || !b_z || a_z || c_w || a_w) &&
+    ( !b_x || c_x || d_x || d_z || b_w || !b_z || a_z || c_w || c_y) &&
+    ( !b_x || c_x || d_x || !b_w || b_z || a_z || c_w || a_w) &&
+    ( !b_x || c_x || d_x || !b_w || b_z || c_w || a_w || c_y) &&
+    ( !b_x || c_x || !b_w || b_z || !a_z || c_w || !a_w || !c_y) &&
+    ( !b_x || c_x || b_w || !b_z || !a_z || c_w || !a_w || !c_y) &&
+    ( !b_x || c_x || !b_z || !a_z || !c_w || !a_y || c_y) &&
+
+    ( !b_x || !d_x || d_y || !d_z || !b_z) &&
+    ( !b_x || !d_x || d_y || d_z || b_w || b_z) &&
+    ( !b_x || !d_x || !d_z || b_w || !b_z) &&
+    ( !b_x || d_x || !d_y || d_z || b_w || !b_z) &&
+    ( !b_x || d_x || !d_y || !b_w || b_z) &&
+    ( !b_x || d_x || d_y || !d_z || !b_w) &&
+
+    ( !b_x || !d_y || !d_z || b_w || b_z) &&
+    ( !b_x || !d_y || !d_w) &&
+    ( !b_x || !d_y || !c_w) &&
+    ( !b_x || !d_y || !b_y) &&
+     ( !b_x || !d_y || !c_y) &&
+     ( !b_x || !d_y || !c_z) &&
+
+    ( !b_x || !d_z || !d_w) &&
+    ( !b_x || !d_z || !c_w) &&
+    ( !b_x || !d_z || !b_y) &&
+    ( !b_x || !d_z || !c_y) &&
+    ( !b_x || !d_z || !c_z) &&
+
+     (b_x || !c_x || d_x || d_y || c_w || a_y || !c_y) &&
+     (b_x || !c_x || d_x || b_w || !c_w || a_w || c_y) &&
+
+     (b_x || c_x || !d_x || !d_y || d_z || a_y || c_y) &&
+     (b_x || c_x || !d_x || d_y || !d_z || b_z || a_z) &&
+     (b_x || c_x || d_x || d_y || d_z || b_z || !a_z || !a_y || c_y) &&
+     (b_x || c_x || d_x || d_y || d_z || b_z || a_z || a_y || c_y) &&
+     (b_x || c_x || d_x || d_y || b_w || c_w || !a_y || !a_w || c_y) &&
+     (b_x || c_x || d_x || d_y || b_w || c_w || a_y || a_w || c_y) &&
+     (b_x || c_x || d_x || d_z || b_w || b_z || !a_z || c_w || !a_w) &&
+     (b_x || c_x || d_x || d_z || b_w || b_z || a_z || c_w || a_w) &&
+    (b_x || c_x || d_z || !b_w || !b_z || !a_z || c_w || !a_w) &&
+     (b_x || c_x || d_z || !b_w || !b_z || a_z || c_w || a_w) &&
+     (b_x || c_x || b_w || b_z || a_z || c_w || !a_y || a_w || !c_y) &&
+
+     (b_x || !d_x || !d_y || d_z || !b_w) &&
+     (b_x || !d_x || !d_y || b_w || !b_z) &&
+     (b_x || !d_x || d_y || !d_z || !b_w || b_z) &&
+
+     (b_x || d_x || !d_y || d_z || b_w || b_z || a_z || !a_y || a_w) &&
+     (b_x || d_x || d_y || !d_z || b_w || !b_z) &&
+
+     (b_x || !d_y || d_z || !b_w || !b_z) &&
+
+     ( !c_x || !d_x || !d_y || c_w || !c_y) &&
+     ( !c_x || !d_x || d_y || d_z || c_w || c_y) &&
+
+     ( !c_x || !d_y || !b_w) &&
+    ( !c_x || !d_y || !b_z) &&
+    ( !c_x || !d_y || !a_z) &&
+    ( !c_x || !d_y || !a_y) &&
+    ( !c_x || !d_y || !a_w) &&
+
+    ( !c_x || !d_z || !b_w) &&
+    ( !c_x || !d_z || !b_z) &&
+    ( !c_x || !d_z || !a_z) &&
+    ( !c_x || !d_z || !a_y) &&
+    ( !c_x || !d_z || !a_w) &&
+
+    ( !c_x || d_z || b_z || a_z || !c_w || !c_y) &&
+
+     ( !c_x || !d_w || !a_z || c_w || a_y || !a_w) &&
+     ( !c_x || !d_w || !a_z || !a_y || a_w || c_y) &&
+     ( !c_x || !d_w || a_z || !c_w || !c_y) &&
+    ( !c_x || !d_w || a_z || c_w || !a_y || !a_w || c_y) &&
+    ( !c_x || !d_w || !c_w || a_w || c_y) &&
+    ( !c_x || !d_w || c_w || a_y || !x) &&
+
+    ( !c_x || !b_w || !b_z || !a_z || c_w || !a_y || a_w || c_y) &&
+    ( !c_x || !b_w || !b_z || a_z || c_w || !a_y || !a_w || c_y) &&
+
+    ( !c_x || !a_z || c_w || a_y || !b_y || !a_w) &&
+    ( !c_x || !a_z || c_w || a_y || !a_w || !c_z) &&
+     ( !c_x || !a_z || !a_y || !b_y || a_w || c_y) &&
+     ( !c_x || !a_z || !a_y || a_w || c_y || !c_z) &&
+
+     ( !c_x || a_z || !c_w || !b_y || !c_y) &&
+     ( !c_x || a_z || !c_w || !c_y || !c_z) &&
+     ( !c_x || a_z || c_w || !a_y || !b_y || !a_w || c_y) &&
+     ( !c_x || a_z || c_w || !a_y || !a_w || c_y || !c_z) &&
+
+     ( !c_x || !c_w || !b_y || a_w || c_y) &&
+     ( !c_x || !c_w || a_w || c_y || !c_z) &&
+
+     ( !c_x || c_w || a_y || !b_y || !c_y) &&
+     ( !c_x || c_w || a_y || !c_y || !c_z) &&
+
+   (c_x || d_x || !d_y || d_z || c_w || !c_y) &&
+    (c_x || d_y || b_w || !c_w || a_y || a_w || !c_y) &&
+    (c_x || b_w || !c_w || !a_y || !a_w || !c_y) &&
+
+    (c_x || !d_w || !a_z || !c_w || !a_y || c_y) &&
+    (c_x || !d_w || !a_z || c_w || !a_w || !c_y) &&
+    (c_x || !d_w || a_z || !c_w || a_y || c_y) &&
+    (c_x || !d_w || a_z || c_w || a_w || !c_y) &&
+    (c_x || !d_w || !c_w || !a_y || !a_w || !c_y) &&
+    (c_x || !d_w || !c_w || a_y || a_w || !c_y) &&
+
+    (c_x || !a_z || !c_w || !a_y || !b_y || c_y) &&
+     (c_x || !a_z || !c_w || !a_y || c_y || !c_z) &&
+     (c_x || !a_z || c_w || !b_y || !a_w || !c_y) &&
+     (c_x || !a_z || c_w || !a_w || !c_y || !c_z) &&
+
+     (c_x || a_z || !c_w || a_y || !b_y || c_y) &&
+     (c_x || a_z || !c_w || a_y || c_y || !c_z) &&
+     (c_x || a_z || c_w || !b_y || a_w || !c_y) &&
+     (c_x || a_z || c_w || a_w || !c_y || !c_z) &&
+     (c_x || !c_w || !a_y || !b_y || !a_w || !x) &&
+     (c_x || !c_w || !a_y || !a_w || !c_y || !c_z) &&
+     (c_x || !c_w || a_y || !b_y || a_w || !c_y) &&
+     (c_x || !c_w || a_y || a_w || !c_y || !c_z) &&
+
+     ( !d_x || !d_y || !d_z || b_w || c_w || a_w) &&
+     ( !d_x || d_y || d_z || !b_w || !b_z) &&
+
+     ( !d_x || !d_w || !b_w) &&
+     ( !d_x || !d_w || !b_z) &&
+
+     ( !d_x || !b_w || !c_w) &&
+     ( !d_x || !b_w || !b_y) &&
+     ( !d_x || !b_w || !c_y) &&
+     ( !d_x || !b_w || !c_z) &&
+
+     ( !d_x || !b_z || !c_w) &&
+     ( !d_x || !b_z || !b_y) &&
+     ( !d_x || !b_z || !c_y) &&
+     ( !d_x || !b_z || !c_z) &&
+
+     ( !d_x || !a_z || !c_w) &&
+     ( !d_x || !a_z || !c_y) &&
+
+     ( !d_x || !c_w || !a_y) &&
+     ( !d_x || !c_w || !a_w) &&
+     ( !d_x || !a_y || !x) &&
+     ( !d_x || !a_w || !cy) &&
+     (d_x || !d_y || !d_z || !b_w || b_z) &&
+     (d_x || !d_y || !d_z || b_z || !a_z || !a_y) &&
+     (d_x || !d_y || !d_z || b_z || a_z || a_y || x) &&
+
+     ( !d_y || !d_w || !b_w) &&
+     ( !d_y || !d_w || !b_z) &&
+
+    ( !d_y || !b_w || !c_w) &&
+    ( !d_y || !b_w || !b_y) &&
+    ( !d_y || !b_w || !c_z) &&
+
+    ( !d_y || !b_z || !c_w) &&
+    ( !d_y || !b_z || !b_y) &&
+     ( !d_y || !b_z || !c_y) &&
+    ( !d_y || !b_z || !c_z) &&
+
+    ( !d_y || !a_z || !c_w) &&
+    ( !d_y || !c_w || !a_w) &&
+
+    (d_y || d_z || !b_w || !b_z || !a_z || c_w || a_y || !a_w || x) &&
+    (d_y || d_z || !b_w || !b_z || a_z || c_w || a_y || a_w || x) &&
+    (d_y || d_z || b_w || b_z || !a_z || c_w || !a_y || a_w || x) &&
+    (d_y || d_z || b_w || b_z || !a_z || c_w || a_y || !a_w || x) &&
+    (d_y || d_z || b_w || b_z || a_z || c_w || !a_y || !a_w || c_y) &&
+    (d_y || d_z || b_w || b_z || a_z || c_w || a_y || a_w || c_y) &&
+
+    ( !d_z || !d_w || !b_w) &&
+    ( !d_z || !b_w || !c_w) &&
+    ( !d_z || !b_w || !b_y) &&
+    ( !d_z || !b_w || !c_y) &&
+    ( !d_z || !b_w || !c_z) &&
+
+    ( !d_z || !a_z || !c_w) &&
+    ( !d_z || !a_z || !c_y) && (
+
+     !d_z || !c_w || !a_y) &&
+     ( !d_z || !c_w || !a_w) &&
+
+     ( !d_z || !a_w || !c_y) &&
+
+     ( !d_w || a_z || a_y || a_w) &&
+
+     (a_z || a_y || !b_y || a_w) &&
+    (a_z || a_y || a_w || !c_z)
+     */
+
 }
