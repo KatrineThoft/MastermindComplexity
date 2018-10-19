@@ -64,21 +64,52 @@ public class OORR extends Feedback{
 
         StringBuilder res = new StringBuilder();
 
-        /*res.append(generateNegAClauses(allNegAtomsList,allPosAtomsList));
+        res.append(generateNegAClauses(allNegAtomsList,allPosAtomsList));
         res.append(generatePosAClauses(allNegAtomsList,allPosAtomsList));
         res.append(generateNegBClauses(allNegAtomsList,allPosAtomsList));
         res.append(generatePosBClauses(allNegAtomsList,allPosAtomsList));
         res.append(generateNegCClauses(allNegAtomsList,allPosAtomsList));
-       res.append(generatePosCClauses(allNegAtomsList,allPosAtomsList));
+        res.append(generatePosCClauses(allNegAtomsList,allPosAtomsList));
         res.append(generateNegDxClauses(allNegAtomsList,allPosAtomsList));
         res.append(generatePosDxClauses(allNegAtomsList,allPosAtomsList));
         res.append(generateNegDyClauses(allNegAtomsList,allPosAtomsList));
-        res.append(generatePosDyClauses(allNegAtomsList,allPosAtomsList));*/
-
+        res.append(generatePosDyClauses(allNegAtomsList,allPosAtomsList));
         res.append(generateNegDzClauses(allNegAtomsList,allPosAtomsList));
+        res.append(generatePosAzClauses(allNegAtomsList,allPosAtomsList));
+
         boolTrans = res.substring(0,res.lastIndexOf("&&"));
 
     }
+
+    private String generatePosAzClauses(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
+        StringBuilder temp = new StringBuilder();
+        Atom posA = posAtoms.get(0).get(2);
+        Atom posAy = posAtoms.get(0).get(1);
+        Atom posAw = posAtoms.get(0).get(3);
+        Atom negBy= negAtoms.get(1).get(1);
+        Atom negCz = negAtoms.get(2).get(2);
+        Atom negDw = negAtoms.get(3).get(3);
+
+        List<Atom> case1 = new ArrayList<>();
+        case1.add(posAw);
+        case1.add(negDw);
+
+        List<Atom> case2 = new ArrayList<>();
+        case2.add(posAw);
+        case2.add(negBy);
+
+        List<Atom> case3 = new ArrayList<>();
+        case3.add(posA);
+        case3.add(posAy);
+        case3.add(posAw);
+        case3.add(negCz);
+
+        temp.append(generateMultiOrClauses(posA, posAy,case1, case2));
+        temp.append(generateOrClause(case3));
+
+        return temp.toString();
+    }
+
 
     private String generateNegDzClauses(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
         StringBuilder temp = new StringBuilder();
