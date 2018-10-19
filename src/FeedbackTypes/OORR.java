@@ -67,16 +67,20 @@ public class OORR extends Feedback{
         /*res.append(generateNegAClauses(allNegAtomsList,allPosAtomsList));
         res.append(generatePosAClauses(allNegAtomsList,allPosAtomsList));
         res.append(generateNegBClauses(allNegAtomsList,allPosAtomsList));
-        res.append(generatePosBClauses(allNegAtomsList,allPosAtomsList));*/
-        res.append(generateNegCClauses(allNegAtomsList,allPosAtomsList));
-       /* res.append(generatePosCClauses(allNegAtomsList,allPosAtomsList));
-        res.append(generateNegDxClauses(allNegAtomsList,allPosAtomsList));
+        res.append(generatePosBClauses(allNegAtomsList,allPosAtomsList));
+        res.append(generateNegCClauses(allNegAtomsList,allPosAtomsList));*/
+       res.append(generatePosCClauses(allNegAtomsList,allPosAtomsList));
+       /* res.append(generateNegDxClauses(allNegAtomsList,allPosAtomsList));
         res.append(generatePosDxClauses(allNegAtomsList,allPosAtomsList));
         res.append(generateNegDyClauses(allNegAtomsList,allPosAtomsList));
         res.append(generatePosDyClauses(allNegAtomsList,allPosAtomsList));*/
 
         boolTrans = res.substring(0,res.lastIndexOf("&&"));
 
+    }
+
+    private String generatePosCClauses(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
+        return null;
     }
 
     private String generateNegCClauses(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
@@ -1178,48 +1182,6 @@ public class OORR extends Feedback{
 
 
     /* OBS: c_y = x
-     ( !c_x || !d_x || !d_y || c_w || !c_y) &&
-     ( !c_x || !d_x || d_y || d_z || c_w || c_y) &&
-
-     ( !c_x || !d_y || !b_w) &&
-    ( !c_x || !d_y || !b_z) &&
-    ( !c_x || !d_y || !a_z) &&
-    ( !c_x || !d_y || !a_y) &&
-    ( !c_x || !d_y || !a_w) &&
-
-    ( !c_x || !d_z || !b_w) &&
-    ( !c_x || !d_z || !b_z) &&
-    ( !c_x || !d_z || !a_z) &&
-    ( !c_x || !d_z || !a_y) &&
-    ( !c_x || !d_z || !a_w) &&
-
-    ( !c_x || d_z || b_z || a_z || !c_w || !c_y) &&
-
-     ( !c_x || !d_w || !a_z || c_w || a_y || !a_w) &&
-     ( !c_x || !d_w || !a_z || !a_y || a_w || c_y) &&
-     ( !c_x || !d_w || a_z || !c_w || !c_y) &&
-    ( !c_x || !d_w || a_z || c_w || !a_y || !a_w || c_y) &&
-    ( !c_x || !d_w || !c_w || a_w || c_y) &&
-    ( !c_x || !d_w || c_w || a_y || !x) &&
-
-    ( !c_x || !b_w || !b_z || !a_z || c_w || !a_y || a_w || c_y) &&
-    ( !c_x || !b_w || !b_z || a_z || c_w || !a_y || !a_w || c_y) &&
-
-    ( !c_x || !a_z || c_w || a_y || !b_y || !a_w) &&
-    ( !c_x || !a_z || c_w || a_y || !a_w || !c_z) &&
-     ( !c_x || !a_z || !a_y || !b_y || a_w || c_y) &&
-     ( !c_x || !a_z || !a_y || a_w || c_y || !c_z) &&
-
-     ( !c_x || a_z || !c_w || !b_y || !c_y) &&
-     ( !c_x || a_z || !c_w || !c_y || !c_z) &&
-     ( !c_x || a_z || c_w || !a_y || !b_y || !a_w || c_y) &&
-     ( !c_x || a_z || c_w || !a_y || !a_w || c_y || !c_z) &&
-
-     ( !c_x || !c_w || !b_y || a_w || c_y) &&
-     ( !c_x || !c_w || a_w || c_y || !c_z) &&
-
-     ( !c_x || c_w || a_y || !b_y || !c_y) &&
-     ( !c_x || c_w || a_y || !c_y || !c_z) &&
 
    (c_x || d_x || !d_y || d_z || c_w || !c_y) &&
     (c_x || d_y || b_w || !c_w || a_y || a_w || !c_y) &&
