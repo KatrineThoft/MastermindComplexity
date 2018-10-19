@@ -68,15 +68,39 @@ public class OORR extends Feedback{
         res.append(generatePosAClauses(allNegAtomsList,allPosAtomsList));
         res.append(generateNegBClauses(allNegAtomsList,allPosAtomsList));
         res.append(generatePosBClauses(allNegAtomsList,allPosAtomsList));
-        res.append(generateNegCClauses(allNegAtomsList,allPosAtomsList));*/
-       res.append(generatePosCClauses(allNegAtomsList,allPosAtomsList));
-       /* res.append(generateNegDxClauses(allNegAtomsList,allPosAtomsList));
-        res.append(generatePosDxClauses(allNegAtomsList,allPosAtomsList));
+        res.append(generateNegCClauses(allNegAtomsList,allPosAtomsList));
+       res.append(generatePosCClauses(allNegAtomsList,allPosAtomsList));*/
+        res.append(generateNegDxClauses(allNegAtomsList,allPosAtomsList));
+        /*res.append(generatePosDxClauses(allNegAtomsList,allPosAtomsList));
         res.append(generateNegDyClauses(allNegAtomsList,allPosAtomsList));
         res.append(generatePosDyClauses(allNegAtomsList,allPosAtomsList));*/
 
         boolTrans = res.substring(0,res.lastIndexOf("&&"));
 
+    }
+
+    private String generateNegDxClauses(List<List<Atom>> negAtoms,  List<List<Atom>> posAtoms) {
+        StringBuilder temp = new StringBuilder();
+        Atom posC = posAtoms.get(2).get(0);
+        Atom negCw = negAtoms.get(2).get(3);
+        Atom posCw = posAtoms.get(2).get(3);
+
+        List<Atom> Alist = Arrays.asList(negAtoms.get(0).get(1),negAtoms.get(0).get(2), negAtoms.get(0).get(3),
+                posAtoms.get(0).get(1), posAtoms.get(0).get(2),posAtoms.get(0).get(3));
+        List<Atom> Blist = Arrays.asList(negAtoms.get(1).get(1), posAtoms.get(1).get(3));
+        List<Atom> Clist = Arrays.asList(negAtoms.get(2).get(1), negAtoms.get(2).get(2),
+                posAtoms.get(2).get(1));
+        List<Atom> Dlist = Arrays.asList(negAtoms.get(3).get(1), negAtoms.get(3).get(3),
+                posAtoms.get(3).get(0), posAtoms.get(3).get(1), posAtoms.get(3).get(2));
+
+        List<List<Atom>> allCases = new ArrayList<>();
+
+        
+        for (int i = 6; i <allCases.size(); i++) {
+            temp.append(generateMultiOrClauses(posC, negCw, allCases.get(i), allCases.get(i + 1)));
+            i++;
+        }
+        return temp.toString();
     }
 
     private String generatePosCClauses(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
@@ -200,18 +224,38 @@ public class OORR extends Feedback{
         case17.add(Dlist.get(3));
         allCases.add(case17);
 
-        /*
+        List<Atom> case18 = new ArrayList<>();
+        case18.add(Alist.get(0));
+        case18.add(Alist.get(2));
+        case18.add(Blist.get(1));
+        case18.add(Clist.get(0));
+        allCases.add(case18);
 
+        List<Atom> case19 = new ArrayList<>();
+        case19.addAll(Alist.subList(3,5));
+        case19.add(Clist.get(2));
+        case19.add(Dlist.get(1));
+        allCases.add(case19);
 
+        List<Atom> case20 = new ArrayList<>();
+        case20.add(Alist.get(0));
+        case20.add(Alist.get(2));
+        case20.add(Clist.get(0));
+        case20.add(Dlist.get(1));
+        allCases.add(case20);
 
+        List<Atom> case21 = new ArrayList<>();
+        case21.add(Alist.get(3));
+        case21.add(Alist.get(5));
+        case21.add(Clist.get(0));
+        case21.add(Dlist.get(1));
+        allCases.add(case21);
 
-         */
-
-       /* temp.append(generateOrClause(case1));
+        temp.append(generateOrClause(case1));
        for (int i = 0; i <6; i++) {
             temp.append(generateMultiOrClauses(posC, posCw, allCases.get(i), allCases.get(i + 1)));
             i++;
-        }*/
+        }
        for (int i = 6; i <allCases.size(); i++) {
             temp.append(generateMultiOrClauses(posC, negCw, allCases.get(i), allCases.get(i + 1)));
             i++;
@@ -219,15 +263,6 @@ public class OORR extends Feedback{
         return temp.toString();
     }
 
-    /*
-
- (c_x || b_w || !c_w || !a_y || !a_w || !c_y) &&
-  (c_x || !d_w || a_z || !c_w || a_y || c_y) &&
-
- (c_x || !d_w || !c_w || !a_y || !a_w || !c_y) &&
- (c_x || !d_w || !c_w || a_y || a_w || !c_y) &&
-
-     */
     private String generateNegCClauses(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
         StringBuilder temp = new StringBuilder();
         Atom negC = negAtoms.get(2).get(0);
