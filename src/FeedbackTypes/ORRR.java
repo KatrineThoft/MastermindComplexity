@@ -15,11 +15,6 @@ public class ORRR extends Feedback {
     }
 
     @Override
-    public int getBoolTransDepth() {
-        return 0;
-    }
-
-    @Override
     public int noXOR() {
         return 0;
     }

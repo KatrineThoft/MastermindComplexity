@@ -38,22 +38,22 @@ public class Runner {
        Feedback test7 = new GRRR("a_x,b_y,c_z,d_w");
 
         System.out.println(test7.getBoolTrans());
-        System.out.println(test7.noClauses());
+        System.out.println(test7.noClauses());*/
 
        Feedback test8 = new OORR("a_x,b_y,c_z,d_w");
 
         System.out.println(test8.getBoolTrans());
-        System.out.println(test8.noClauses());
+        System.out.println(test8.noAndOperators());
 
-        Feedback test9 = new OOOO("a_x,b_y,c_z,d_w");
+        /*Feedback test9 = new OOOO("a_x,b_y,c_z,d_w");
 
         System.out.println(test9.getBoolTrans());
-        System.out.println(test9.noClauses());*/
+        System.out.println(test9.noClauses());
 
         Feedback test10 = new GGGR("a_x,b_y,c_z,d_w");
 
         System.out.println(test10.getBoolTrans());
-        System.out.println(test10.noOperators());
+        System.out.println(test10.getBoolTransDepth());*/
 
 
     }

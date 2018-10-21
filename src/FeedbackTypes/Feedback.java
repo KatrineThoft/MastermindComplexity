@@ -16,7 +16,8 @@ public abstract class Feedback {
         this.type = type;
         this.guess = guess;
         positions.addAll(Arrays.asList("x","y","z","w"));
-        colors.addAll(Arrays.asList("R","O","Y","G","B","P"));
+        //colors.addAll(Arrays.asList("R","O","Y","G","B","P"));
+        colors.addAll(Arrays.asList("a","b","c","d","e","f"));
     }
 
     public String getType(){
@@ -45,20 +46,34 @@ public abstract class Feedback {
         return (int) count/2;
     }
 
+    public  int noAndOperators(){
+        String temp = boolTrans.replace("&&","&");
+        long count = temp.chars().filter(ch -> ch == '&').count();
+        return (int)count;
+    }
+
     public int noSymbols() {
-        String res, temp1,temp2, temp3;
-        temp1 = boolTrans.replace(" ","");
-        temp2 = temp1.replace("!","");
-        temp1 = temp2.replace("&&","&");
-        temp2= temp1.replace("||","|");
-        temp1 = temp2.replace("x","");
-        temp2= temp1.replace("y","");
-        temp1 = temp2.replace("z","");
-        temp2= temp1.replace("w","");
-        res = temp2.replace("_","");
+        String res;
+        res=removeAllUnesserayInfo(true);
               return res.length();
     }
 
+    //Not necessary all have depth one
+    public int getBoolTransDepth(){
+        int depth=0;
+        String temp= removeAllUnesserayInfo(false);
+        for (String s:colors) {
+            temp = temp.replace(s,"");
+        }
+
+        for (int i = 0; i < temp.length()-1;i++) {
+            if (temp.charAt(i) == '(' && temp.charAt(i+1) !=')'){
+                depth++;
+            }
+        }
+
+        return depth;
+    }
 
     public String getBoolTrans(){
         return boolTrans;
@@ -66,9 +81,25 @@ public abstract class Feedback {
 
     public Set<Clause> getClauses(){ return clauses; }
 
-    public abstract int getBoolTransDepth();
-
     public abstract int noXOR();
+
+    private String removeAllUnesserayInfo(Boolean countSymbols){
+        String temp1,temp2;
+        temp1 = boolTrans.replace(" ","");
+        temp2 = temp1.replace("!","");
+        if(countSymbols) {
+            temp1 = temp2.replace("&&", "&");
+            temp2 = temp1.replace("||", "|");
+        } else{
+            temp1 = temp2.replace("&&", "");
+            temp2 = temp1.replace("||", "");
+        }
+        temp1= temp2.replace("\n","");
+        for (String s:positions) {
+            temp1 = temp1.replace(s,"");
+        }
+       return temp1.replace("_","");
+    }
 
 
 

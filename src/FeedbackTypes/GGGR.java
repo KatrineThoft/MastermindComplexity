@@ -12,10 +12,6 @@ public class GGGR extends Feedback {
         translate();
     }
 
-    @Override
-    public int getBoolTransDepth() {
-        return 0;
-    }
 
     @Override
     public int noXOR() {
@@ -59,7 +55,7 @@ public class GGGR extends Feedback {
         formula.addAll(atomList);
         formula.addAll(posAtoms);
 
-        super.boolTrans = res;
+        super.boolTrans = res.substring(0,res.lastIndexOf("\n "));
     }
       /*
     ( !a_x || !b_y || !c_z || !d_w) &&
@@ -77,7 +73,6 @@ public class GGGR extends Feedback {
 
       private String createOrClauses(List<Atom> atomList, Atom x){
           StringBuilder temp2 = new StringBuilder();
-          temp2.append("(");
           for (int i = 1; i < atomList.size(); i++) {
               Atom a = atomList.get(i);
               if (!x.equals(a)) {

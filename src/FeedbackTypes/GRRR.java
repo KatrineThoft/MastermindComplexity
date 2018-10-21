@@ -56,12 +56,6 @@ public class GRRR extends Feedback {
         return temp.substring(0, temp.lastIndexOf("||")) + ") && \n";
     }
 
-
-    @Override
-    public int getBoolTransDepth() {
-        return 0;
-    }
-
     @Override
     public int noXOR() {
         return 0;

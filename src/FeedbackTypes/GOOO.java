@@ -11,13 +11,6 @@ public class GOOO extends Feedback {
         super.clauses =clauses;
     }
 
-
-    @Override
-    public int getBoolTransDepth() {
-        return 0;
-    }
-
-
     @Override
     public int noXOR() {
         return 0;
