@@ -16,15 +16,6 @@ public class OORR extends Feedback{
         return 0;
     }
 
-    @Override
-    public int noSymbols() {
-        return 0;
-    }
-
-    @Override
-    public int noOperators() {
-        return 0;
-    }
 
     @Override
     public int noXOR() {

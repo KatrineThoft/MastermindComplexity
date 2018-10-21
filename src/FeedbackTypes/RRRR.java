@@ -6,27 +6,16 @@ import java.util.List;
 import java.util.Set;
 
 public class RRRR extends Feedback {
-    String boolTrans;
-
+    Set<Clause> clauses = new HashSet<>();
     public RRRR(String guess) {
         super("RRRR", guess);
         translate();
+        super.clauses =clauses;
     }
 
 
     @Override
     public int getBoolTransDepth() {
-        return 0;
-    }
-
-
-    @Override
-    public int noSymbols() {
-        return 0;
-    }
-
-    @Override
-    public int noOperators() {
         return 0;
     }
 
@@ -60,12 +49,21 @@ public class RRRR extends Feedback {
             }
         }
 
-        //Creating a string with all
+        addClause(formula);
+        //Creating a string with all atoms
         StringBuilder trans = new StringBuilder();
         for (Atom a: formula) {
             trans.append(a.stringRep + " && ");
         }
 
-        boolTrans = trans.substring(0,trans.lastIndexOf("&&"));
+        super.boolTrans = trans.substring(0,trans.lastIndexOf("&&"));
+    }
+
+    private void addClause(Set<Atom> list){
+        for (Atom a: list) {
+            Set<Atom> atomSet = new HashSet<>();
+            atomSet.add(a);
+            clauses.add(new Clause(atomSet));
+        }
     }
 }

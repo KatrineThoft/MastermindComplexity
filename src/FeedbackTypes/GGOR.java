@@ -13,16 +13,6 @@ public class GGOR extends Feedback {
     }
 
     @Override
-    public int noSymbols() {
-        return 0;
-    }
-
-    @Override
-    public int noOperators() {
-        return 0;
-    }
-
-    @Override
     public int noXOR() {
         return 0;
     }
