@@ -1,10 +1,18 @@
 package FeedbackTypes;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class OOOO extends Feedback{
+    Set<Clause> clauses = new HashSet<>();
     public OOOO(String guess) {
         super("OOOO", guess);
+        translate();
+        super.clauses = clauses;
+    }
+
+    private void translate() {
+        super.boolTrans = "Hejsa!";
     }
 
     @Override

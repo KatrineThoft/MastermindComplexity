@@ -1,15 +1,16 @@
 package FeedbackTypes;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class GRRR extends Feedback {
-    String boolTrans;
-
+    Set<Clause> clauses = new HashSet<>();
     public GRRR(String guess) {
         super("GRRR", guess);
         translate();
+        super.clauses =clauses;
     }
 
     private void translate() {
@@ -37,10 +38,11 @@ public class GRRR extends Feedback {
 
         res.append(generateSingleOrClauses(negAtoms.get(2),negAtoms.get(3)));
 
-        boolTrans = res.substring(0,res.lastIndexOf("&&"));
+        super.boolTrans = res.substring(0,res.lastIndexOf("&&"));
     }
 
     private String generateSingleOrClauses(Atom a, Atom b) {
+        addClause(a,b);
         return "(" + a.stringRep + " || " + b.stringRep + ") && \n";
     }
 
@@ -50,7 +52,8 @@ public class GRRR extends Feedback {
         for (Atom a : atoms) {
             temp.append(a.stringRep + " || ");
         }
-        return temp.substring(0, temp.lastIndexOf("||")) + ") &&";
+        addClauseFromList(atoms);
+        return temp.substring(0, temp.lastIndexOf("||")) + ") && \n";
     }
 
 
@@ -74,6 +77,18 @@ public class GRRR extends Feedback {
         return 0;
     }
 
+
+    private void addClause(Atom a, Atom b){
+        Set<Atom> atomSet = new HashSet<>();
+        atomSet.add(a);
+        atomSet.add(b);
+        clauses.add(new Clause(atomSet));
+    }
+    private void addClauseFromList(List<Atom> list){
+        Set<Atom> atomSet = new HashSet<>();
+        atomSet.addAll(list);
+        clauses.add(new Clause(atomSet));
+    }
     /*( !a_x || !b_y) &&
     ( !a_x || !c_z) &&
     ( !a_x || !d_w) &&

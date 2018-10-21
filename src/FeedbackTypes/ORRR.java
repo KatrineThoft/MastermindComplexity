@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 public class ORRR extends Feedback {
-    String boolTrans;
+    Set<Clause> clauses;
 
     public ORRR(String guess) {
         super("ORRR", guess);
         translate();
+        super.clauses = clauses;
     }
 
     @Override
@@ -92,7 +93,7 @@ public class ORRR extends Feedback {
         trans.append(addCases(case3,posB)+"XOR \n");
         trans.append(addCases(case4,posA)+")");
 
-        boolTrans = trans.toString();
+        super.boolTrans = trans.toString();
     }
 
     private String addCases(Set<Atom> negAtoms, Set<Atom> posAtoms) {

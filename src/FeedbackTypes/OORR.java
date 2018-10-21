@@ -1,17 +1,14 @@
 package FeedbackTypes;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.IntStream;
+import java.util.*;
 
 public class OORR extends Feedback{
-    String boolTrans;
+    Set<Clause> clauses = new HashSet<>();
 
     public OORR(String guess) {
         super("OORR", guess);
         translate();
+        super.clauses = clauses;
     }
 
     @Override
@@ -67,7 +64,7 @@ public class OORR extends Feedback{
         res.append(generateNegDzClauses(allNegAtomsList,allPosAtomsList));
         res.append(generatePosAzClauses(allNegAtomsList,allPosAtomsList));
 
-        boolTrans = res.substring(0,res.lastIndexOf("&&"));
+        super.boolTrans = res.substring(0,res.lastIndexOf("&&"));
 
     }
 
@@ -1601,9 +1598,6 @@ public class OORR extends Feedback{
         return temp.toString();
     }
 
-    private String generateSingleOrClauses(Atom a, Atom b){
-        return "("+ a.stringRep + " || " + b.stringRep + ") && \n";
-    }
 
 
 
@@ -1616,6 +1610,7 @@ public class OORR extends Feedback{
         for (Atom aList1 : list1) {
             temp.append(aList1.stringRep + " || ");
         }
+        addClause(a,b,list1);
 
         String res = temp.substring(0,temp.lastIndexOf("||"));
         res+=") && \n";
@@ -1625,6 +1620,7 @@ public class OORR extends Feedback{
         for (Atom aList2 : list2) {
             temp2.append(aList2.stringRep + " || ");
         }
+        addClause(a,b,list2);
 
         res+= temp2.substring(0,temp2.lastIndexOf("||")) + ") && \n";
         return res;
@@ -1642,6 +1638,7 @@ public class OORR extends Feedback{
             for (Atom at : list) {
                 temp += at.stringRep + " || ";
             }
+            addClause4Atoms(a,b,c,d,list);
             temp2.append(temp.substring(0,temp.lastIndexOf("||")) +") && \n");
         }
         return temp2.toString();
@@ -1654,7 +1651,7 @@ public class OORR extends Feedback{
         for (Atom a: atoms ) {
             temp.append(a.stringRep + " || ");
         }
-
+        addClause(atoms.get(0),atoms.get(0),atoms);
         String res = temp.substring(0,temp.lastIndexOf("||")) + ") &&";
         return res + "\n";
     }
@@ -1681,5 +1678,21 @@ public class OORR extends Feedback{
         return res;
     }
 
+    private void addClause(Atom a, Atom b, List<Atom> list){
+        Set<Atom> atomSet = new HashSet<>();
+        atomSet.add(a);
+        atomSet.add(b);
+        atomSet.addAll(list);
+        clauses.add(new Clause(atomSet));
+    }
 
+    private void addClause4Atoms(Atom a, Atom b,Atom c, Atom d, List<Atom> list){
+        Set<Atom> atomSet = new HashSet<>();
+        atomSet.add(a);
+        atomSet.add(b);
+        atomSet.add(c);
+        atomSet.add(d);
+        atomSet.addAll(list);
+        clauses.add(new Clause(atomSet));
+    }
 }
