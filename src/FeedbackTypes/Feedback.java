@@ -16,8 +16,8 @@ public abstract class Feedback {
         this.type = type;
         this.guess = guess;
         positions.addAll(Arrays.asList("x","y","z","w"));
-        //colors.addAll(Arrays.asList("R","O","Y","G","B","P"));
-        colors.addAll(Arrays.asList("a","b","c","d","e","f"));
+        colors.addAll(Arrays.asList("R","O","Y","G","B","P"));
+        //colors.addAll(Arrays.asList("a","b","c","d","e","f"));
     }
 
     public String getType(){
@@ -52,13 +52,19 @@ public abstract class Feedback {
         return (int)count;
     }
 
+    public  int noOrOperators(){
+        String temp = boolTrans.replace("||","|");
+        long count = temp.chars().filter(ch -> ch == '|').count();
+        return (int)count;
+    }
+
     public int noSymbols() {
         String res;
         res=removeAllUnesserayInfo(true);
               return res.length();
     }
 
-    //Not necessary all have depth one
+    //Not necessary all have depth one in CNF form
     public int getBoolTransDepth(){
         int depth=0;
         String temp= removeAllUnesserayInfo(false);
