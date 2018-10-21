@@ -16,22 +16,24 @@ public class Runner {
         Feedback test3 = new GGOO("a_x,b_y,c_z,d_w");
 
         System.out.println(test3.getBoolTrans());
-        System.out.println(test3.noAtoms());*/
+        System.out.println(test3.noAtoms());
 
         Feedback test4 = new GGRR("a_x,b_y,c_z,d_w");
 
         System.out.println(test4.getBoolTrans());
         System.out.println(test4.noAtoms());
 
-        /*Feedback test5 = new GOOO("a_x,b_y,c_z,d_w");
+        Feedback test5 = new GOOO("a_x,b_y,c_z,d_w");
 
         System.out.println(test5.getBoolTrans());
+        System.out.println(test5.noAtoms());*/
 
        Feedback test6 = new GORR("a_x,b_y,c_z,d_w");
 
         System.out.println(test6.getBoolTrans());
+        System.out.println(test6.noClauses());
 
-        Feedback test7 = new GRRR("a_x,b_y,c_z,d_w");
+       /* Feedback test7 = new GRRR("a_x,b_y,c_z,d_w");
 
         System.out.println(test7.getBoolTrans());
 

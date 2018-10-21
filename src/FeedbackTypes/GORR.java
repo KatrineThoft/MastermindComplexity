@@ -1,15 +1,13 @@
 package FeedbackTypes;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class GORR extends Feedback {
-    String boolTrans;
+    Set<Clause> clauses = new HashSet<>();
     public GORR(String guess) {
         super("GORR", guess);
         translate();
+        super.clauses = clauses;
     }
 
     @Override
@@ -72,7 +70,7 @@ public class GORR extends Feedback {
 
         String multOr = generateOrClause(posAtoms);
 
-    boolTrans = clauseString +singleOrClauses+ multOr.substring(0,multOr.lastIndexOf("&&"));
+    super.boolTrans = clauseString +singleOrClauses+ multOr.substring(0,multOr.lastIndexOf("&&"));
 
     }
 
@@ -1103,6 +1101,7 @@ public class GORR extends Feedback {
     }
 
     private String generateSingleOrClauses(Atom a, Atom b){
+        addClause(a,b,b);
         return "("+ a.stringRep + " || " + b.stringRep + ") && \n";
     }
 
@@ -1116,6 +1115,7 @@ public class GORR extends Feedback {
         for (Atom aList1 : list1) {
             temp.append(aList1.stringRep + " || ");
         }
+        addClauseFromList(a,b,list1);
 
         String res = temp.substring(0,temp.lastIndexOf("||"));
         res+=") && \n";
@@ -1125,6 +1125,7 @@ public class GORR extends Feedback {
         for (Atom aList2 : list2) {
             temp2.append(aList2.stringRep + " || ");
         }
+        addClauseFromList(a,b,list2);
 
         res+= temp2.substring(0,temp2.lastIndexOf("||")) + ") && \n";
         return res;
@@ -1137,9 +1138,24 @@ public class GORR extends Feedback {
         for (Atom a: atoms ) {
             temp.append(a.stringRep + " || ");
         }
-
+        addClauseFromList(atoms.get(0),atoms.get(0),atoms);
         String res = temp.substring(0,temp.lastIndexOf("||")) + ") &&";
         return res + "\n";
+    }
+
+    private void addClause(Atom a, Atom b, Atom c){
+        Set<Atom> atomSet = new HashSet<>();
+        atomSet.add(a);
+        atomSet.add(b);
+        atomSet.add(c);
+        clauses.add(new Clause(atomSet));
+    }
+    private void addClauseFromList(Atom a, Atom b, List<Atom> list){
+        Set<Atom> atomSet = new HashSet<>();
+        atomSet.add(a);
+        atomSet.add(b);
+        atomSet.addAll(list);
+        clauses.add(new Clause(atomSet));
     }
 }
 

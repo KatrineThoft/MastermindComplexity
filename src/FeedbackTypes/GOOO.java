@@ -1,16 +1,14 @@
 package FeedbackTypes;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class GOOO extends Feedback {
-    String boolTrans;
+    Set<Clause> clauses = new HashSet<>();
 
     public GOOO(String guess) {
         super("GOOO", guess);
         translate();
+        super.clauses =clauses;
     }
 
 
@@ -143,7 +141,7 @@ public class GOOO extends Feedback {
         String posCString = generateOrClause(Arrays.asList(posC.get(2),posC.get(3),posD.get(2),posD.get(3)));
         posCString += generateOrClause(Arrays.asList(posC.get(2),posB.get(1),posB.get(2),posC.get(1)));
 
-        boolTrans = negAString +posAString +negBString+posBString+posDString +negDString +negCString+ posCString;
+        super.boolTrans = negAString +posAString +negBString+posBString+posDString +negDString +negCString+ posCString;
 
     }
 
@@ -180,10 +178,12 @@ public class GOOO extends Feedback {
 
         for (Atom aList1 : list1) {
             temp.append("(" + ab + " || " + aList1.stringRep + ") && \n");
+            addClause(a,b,aList1);
         }
 
         for (Atom aList2 : list2) {
             temp.append("(" + ab + " || " + aList2.stringRep + ") && \n");
+           addClause(a,b,aList2);
         }
 
         return temp.toString();
@@ -191,6 +191,7 @@ public class GOOO extends Feedback {
     }
 
     private String generateSingleOrClauses(Atom a, Atom b){
+        addClause(a,b,b);
         return "("+ a.stringRep + " || " + b.stringRep + ") && \n";
     }
 
@@ -200,9 +201,24 @@ public class GOOO extends Feedback {
         for (Atom a: atoms ) {
             temp.append(a.stringRep + " || ");
         }
+        addClauseFromList(atoms);
 
        String res = temp.substring(0,temp.lastIndexOf("||")) + ") &&";
         return res + "\n";
+    }
+
+    private void addClauseFromList(List<Atom> list){
+        Set<Atom> atomSet = new HashSet<>();
+        atomSet.addAll(list);
+        clauses.add(new Clause(atomSet));
+    }
+
+    private void addClause(Atom a, Atom b, Atom c){
+        Set<Atom> atomSet = new HashSet<>();
+        atomSet.add(a);
+        atomSet.add(b);
+        atomSet.add(c);
+        clauses.add(new Clause(atomSet));
     }
 
     /*
