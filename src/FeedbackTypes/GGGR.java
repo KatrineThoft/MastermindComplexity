@@ -1,14 +1,11 @@
 
 package FeedbackTypes;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class GGGR extends Feedback {
-    String boolTrans;
     Set<Atom> formula = new HashSet<>();
+    Set<Clause> clauses = new HashSet<>();
 
     public GGGR(String guess) {
         super("FeedbackTypes.GGGR",guess);
@@ -16,25 +13,12 @@ public class GGGR extends Feedback {
     }
 
     @Override
-    public String getBoolTrans() {
-        return boolTrans;
-    }
-
-    @Override
-    public Set<String> splitBoolTrans() {
-        return null;
-    }
-
-    @Override
     public int getBoolTransDepth() {
         return 0;
     }
 
-
     @Override
-    public int noSymbols() {
-        return 0;
-    }
+    public int noSymbols() { return 0; }
 
     @Override
     public int noOperators() {
@@ -46,17 +30,23 @@ public class GGGR extends Feedback {
         return 0;
     }
 
+
     private void translate(){
         String[] atomString= guess.split(",");
         List<Atom> atomList = new ArrayList<>();
         StringBuilder temp = new StringBuilder();
         temp.append("(");
         //Getting the complement, since the original atom is not used in bool. trans.
+        Clause clause = new Clause();
+
         for (String s: atomString) {
             Atom a = new Atom("!"+s);
             atomList.add(a);
             temp.append(a.stringRep + "||");
+            clause.addAtom(a);
         }
+       clauses.add(clause);
+
 
         String res = temp.substring(0,temp.lastIndexOf("||")) + ") && \n";
 
@@ -77,7 +67,7 @@ public class GGGR extends Feedback {
         formula.addAll(atomList);
         formula.addAll(posAtoms);
 
-        boolTrans = res;
+        super.boolTrans = res;
     }
       /*
     ( !a_x || !b_y || !c_z || !d_w) &&
@@ -97,8 +87,13 @@ public class GGGR extends Feedback {
           StringBuilder temp2 = new StringBuilder();
           temp2.append("(");
           for (int i = 1; i < atomList.size(); i++) {
-              if (!x.equals(atomList.get(i))) {
-                  temp2.append("(" + x.stringRep + " || " + atomList.get(i).stringRep + ") && ");
+              Atom a = atomList.get(i);
+              if (!x.equals(a)) {
+                  temp2.append("(" + x.stringRep + " || " + a.stringRep + ") && ");
+                  Set<Atom> atomset = new HashSet<>();
+                  atomset.add(x);
+                  atomset.add(a);
+                  clauses.add(new Clause(atomset));
               }
           }
 

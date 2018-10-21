@@ -6,30 +6,19 @@ import java.util.List;
 import java.util.Set;
 
 public class GGOO extends Feedback{
-    String boolTrans;
-    Set<Atom> allAtoms;
+    Set<Clause> clauses = new HashSet<>();
 
     public GGOO(String guess) {
         super("GGOO", guess);
         translate();
+        super.clauses = clauses;
     }
 
-
-    @Override
-    public String getBoolTrans() {
-        return boolTrans;
-    }
-
-    @Override
-    public Set<String> splitBoolTrans() {
-        return null;
-    }
 
     @Override
     public int getBoolTransDepth() {
         return 0;
     }
-
 
     @Override
     public int noSymbols() {
@@ -45,6 +34,7 @@ public class GGOO extends Feedback{
     public int noXOR() {
         return 0;
     }
+
 
     private void translate() {
         String[] atomString= guess.split(",");
@@ -109,7 +99,7 @@ public class GGOO extends Feedback{
         String bCases = generateOrClauses(negAtoms.get(1),negAtoms.get(2),case3.subList(0,2),case3.subList(2,3));
         bCases += generateOrClauses(posAtoms.get(1),posAtoms.get(2),case4.subList(0,2),case4.subList(2,3));
 
-        boolTrans = negACases+posACases +bCases;
+        super.boolTrans = negACases+posACases +bCases;
 
     }
 
@@ -131,13 +121,23 @@ public class GGOO extends Feedback{
 
         for (Atom aList1 : list1) {
             temp.append("(" + ab + " || " + aList1.stringRep + ") && \n");
+            addClause(a,b,aList1);
         }
 
         for (Atom aList2 : list2) {
             temp.append("(" + ab + " || " + aList2.stringRep + ") && \n");
+            addClause(a,b,aList2);
         }
 
         return   temp.toString();
+    }
+
+    private void addClause(Atom a, Atom b, Atom c){
+        Set<Atom> atomSet = new HashSet<>();
+        atomSet.add(a);
+        atomSet.add(b);
+        atomSet.add(c);
+        clauses.add(new Clause(atomSet));
     }
     /*
     ( !a_x || d_y || !c_z) &&

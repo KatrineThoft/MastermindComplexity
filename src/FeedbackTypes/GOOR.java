@@ -8,16 +8,6 @@ public class GOOR extends Feedback {
     }
 
     @Override
-    public String getBoolTrans() {
-        return null;
-    }
-
-    @Override
-    public Set<String> splitBoolTrans() {
-        return null;
-    }
-
-    @Override
     public int getBoolTransDepth() {
         return 0;
     }
@@ -36,4 +26,5 @@ public class GOOR extends Feedback {
     public int noXOR() {
         return 0;
     }
+
 }

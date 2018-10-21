@@ -8,16 +8,6 @@ public class OOOO extends Feedback{
     }
 
     @Override
-    public String getBoolTrans() {
-        return null;
-    }
-
-    @Override
-    public Set<String> splitBoolTrans() {
-        return null;
-    }
-
-    @Override
     public int getBoolTransDepth() {
         return 0;
     }
@@ -37,6 +27,8 @@ public class OOOO extends Feedback{
     public int noXOR() {
         return 0;
     }
+
+
     /*
     ! a_x  &&  ! b_y&& !d_w && && ! c_z &&
     ( ! b_x  || ! c_x  || ! d_x  || !d_y || d_z || ! b_z || ! a_z || ! a_y || ! c_y) &&

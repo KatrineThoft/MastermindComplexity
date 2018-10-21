@@ -6,9 +6,11 @@ import java.util.Set;
 
 public abstract class Feedback {
     private String type;
+    String boolTrans;
     String guess;
     Set<String> positions = new HashSet<>();
     Set<String> colors = new HashSet<>();
+    Set<Clause> clauses=new HashSet<>();
 
     public Feedback(String type, String guess){
         this.type = type;
@@ -25,9 +27,23 @@ public abstract class Feedback {
         return guess;
     }
 
-    public abstract String getBoolTrans();
+    public int noAtoms(){
+        Set<Atom> allUniqueAtoms = new HashSet<>();
+        for (Clause c: clauses) {
+            allUniqueAtoms.addAll(c.atoms);
+        }
+        return allUniqueAtoms.size();
+    }
 
-    public abstract Set<String> splitBoolTrans();
+    public int noClauses(){
+        return clauses.size();
+    }
+
+    public String getBoolTrans(){
+        return boolTrans;
+    }
+
+    public Set<Clause> getClauses(){ return clauses; }
 
     public abstract int getBoolTransDepth();
 
@@ -36,6 +52,7 @@ public abstract class Feedback {
     public abstract int noOperators();
 
     public abstract int noXOR();
+
 
 
 

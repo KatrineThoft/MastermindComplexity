@@ -14,16 +14,6 @@ public class ORRR extends Feedback {
     }
 
     @Override
-    public String getBoolTrans() {
-        return boolTrans;
-    }
-
-    @Override
-    public Set<String> splitBoolTrans() {
-        return null;
-    }
-
-    @Override
     public int getBoolTransDepth() {
         return 0;
     }
@@ -43,6 +33,7 @@ public class ORRR extends Feedback {
     public int noXOR() {
         return 0;
     }
+
 
     private void translate(){
         //Creating atom objects from the input string

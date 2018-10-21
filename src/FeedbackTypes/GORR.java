@@ -13,16 +13,6 @@ public class GORR extends Feedback {
     }
 
     @Override
-    public String getBoolTrans() {
-        return boolTrans;
-    }
-
-    @Override
-    public Set<String> splitBoolTrans() {
-        return null;
-    }
-
-    @Override
     public int getBoolTransDepth() {
         return 0;
     }
@@ -41,6 +31,8 @@ public class GORR extends Feedback {
     public int noXOR() {
         return 0;
     }
+
+
 
     private void translate(){
         String[] atomString= guess.split(",");

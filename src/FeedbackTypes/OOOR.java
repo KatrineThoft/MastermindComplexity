@@ -7,15 +7,6 @@ public class OOOR extends Feedback {
         super("OOOR", guess);
     }
 
-    @Override
-    public String getBoolTrans() {
-        return null;
-    }
-
-    @Override
-    public Set<String> splitBoolTrans() {
-        return null;
-    }
 
     @Override
     public int getBoolTransDepth() {
@@ -37,4 +28,5 @@ public class OOOR extends Feedback {
     public int noXOR() {
         return 0;
     }
+
 }

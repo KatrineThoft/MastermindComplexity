@@ -53,15 +53,6 @@ public class GRRR extends Feedback {
         return temp.substring(0, temp.lastIndexOf("||")) + ") &&";
     }
 
-    @Override
-    public String getBoolTrans() {
-        return boolTrans;
-    }
-
-    @Override
-    public Set<String> splitBoolTrans() {
-        return null;
-    }
 
     @Override
     public int getBoolTransDepth() {
