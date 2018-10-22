@@ -3,7 +3,8 @@ package FeedbackTypes;
 public class Runner {
 
     public static void main(String[] args){
-        String guess = "R_x,O_y,Y_z,G_w";
+       // String guess = "R_x,O_y,Y_z,G_w";
+        String guess = "a_x,b_y,c_z,d_w";
       /* Feedback test1 = new RRRR(guess);
 
        System.out.println(test1.getBoolTrans());
@@ -39,7 +40,7 @@ public class Runner {
        Feedback test7 = new GRRR(guess);
 
         System.out.println(test7.getBoolTrans());
-        System.out.println(test7.noClauses());*/
+        System.out.println(test7.noClauses());
 
        Feedback test8 = new OORR(guess);
 
@@ -56,6 +57,9 @@ public class Runner {
         System.out.println(test10.getBoolTrans());
         System.out.println(test10.getBoolTransDepth());*/
 
+        Feedback test11 = new OOOO(guess);
+
+        System.out.println(test11.getBoolTrans());
 
     }
 }
