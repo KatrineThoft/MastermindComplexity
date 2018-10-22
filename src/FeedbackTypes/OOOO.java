@@ -36,14 +36,95 @@ public class OOOO extends Feedback{
         case1.add(allNegAtomsList.get(2).get(2));
         case1.add(allNegAtomsList.get(3).get(3));
 
-        //res.append(generateAndClause(case1));
+        /*res.append(generateAndClause(case1));
 
-        res.append(generateNegBCases(allNegAtomsList,allPosAtomsList));
+        res.append(generateNegBNegCCases(allNegAtomsList,allPosAtomsList));*/
+
+        res.append(generateNegBPosCCases(allNegAtomsList,allPosAtomsList));
 
         super.boolTrans = res.substring(0,res.lastIndexOf("&&"));
     }
 
-    private String generateNegBCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
+    private String generateNegBPosCCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
+        StringBuilder temp = new StringBuilder();
+        Atom negB = negAtoms.get(1).get(0);
+        Atom posC = posAtoms.get(2).get(0);
+
+        List<Atom> Alist = Arrays.asList(negAtoms.get(0).get(1),negAtoms.get(0).get(2),negAtoms.get(0).get(3),
+                posAtoms.get(0).get(1),posAtoms.get(0).get(2),posAtoms.get(0).get(3));
+        List<Atom> Blist = Arrays.asList(negAtoms.get(1).get(2),negAtoms.get(1).get(3),
+                posAtoms.get(1).get(2),posAtoms.get(1).get(3));
+        List<Atom> Clist = Arrays.asList(negAtoms.get(2).get(1),negAtoms.get(2).get(3),
+                posAtoms.get(2).get(1),posAtoms.get(2).get(3));
+        List<Atom> Dlist = Arrays.asList(negAtoms.get(3).get(0),negAtoms.get(3).get(1),negAtoms.get(3).get(2),
+                posAtoms.get(3).get(0),posAtoms.get(3).get(1),posAtoms.get(3).get(2));
+
+        List<List<Atom>> allCases = new ArrayList<>();
+
+        /*List<Atom> case1 = new ArrayList<>();
+        case1.addAll(Blist.subList(1,3));
+        case1.addAll(Clist.subList(0,2));
+        case1.addAll(Dlist.subList(0,2));
+        case1.add(Dlist.get(5));
+        allCases.add(case1);
+
+        List<Atom> case2 = new ArrayList<>();
+        case2.addAll(Alist.subList(1,4));
+        case2.add(Blist.get(0));
+        case2.add(Blist.get(3));
+        case2.addAll(Clist.subList(0,2));
+        case2.addAll(Dlist.subList(0,2));
+        case2.add(Dlist.get(5));
+        allCases.add(case2);
+
+        List<Atom> case3 = new ArrayList<>();
+        case3.addAll(Alist.subList(0,2));
+        case3.add(Blist.get(0));
+        case3.add(Clist.get(2));
+        case3.addAll(Dlist.subList(0,2));
+        case3.add(Dlist.get(5));
+        allCases.add(case3);
+
+        List<Atom> case4 = new ArrayList<>();
+        case4.add(Alist.get(0));
+        case4.add(Alist.get(2));
+        case4.addAll(Blist.subList(0,2));
+        case4.addAll(Clist.subList(0,2));
+        case4.addAll(Dlist.subList(0,2))
+        allCases.add(case4);*/
+        List<Atom> case5 = new ArrayList<>();
+        case5.add(Alist.get(3));
+        case5.add(Alist.get(5));
+        case5.add(Blist.get(1));
+        case5.addAll(Clist.subList(0,2));
+        case5.addAll(Dlist.subList(0,2));
+        allCases.add(case5);
+
+        List<Atom> case6 = new ArrayList<>();
+        case6.addAll(Alist.subList(1,3));
+        case6.addAll(Blist.subList(1,3));
+        case6.add(Dlist.get(0));
+        case6.add(Dlist.get(2));
+        case6.add(Dlist.get(4));
+        allCases.add(case6);
+
+        for (int i = 0; i <allCases.size() ; i++) {
+            temp.append(generateMultiOrClauses(negB, posC,allCases.get(i), allCases.get(i+1)));
+            i++;
+        }
+        return temp.toString();
+    }
+
+    /*
+ ! d_x  || !d_z ||  c_w || ! b_w ||  b_z || ! a_w || ! a_z) &&
+ ! d_x  || !d_z ||  c_w ||  b_w || ! b_z) &&
+ ! d_x  || !d_z || ! b_z ||  a_z) &&
+ d_x  || !d_y || !d_z || ! b_z || ! a_z || ! a_y ||  c_y) &&
+    d_x  || d_y || ! c_w || ! b_z || ! a_w || ! a_y || ! c_y) &&
+  ! c_w || ! b_z || ! a_w ||  a_z || ! a_y || ! c_y) &&
+     */
+
+    private String generateNegBNegCCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
         StringBuilder temp = new StringBuilder();
         Atom negB = negAtoms.get(1).get(0);
         Atom negC = negAtoms.get(2).get(0);
@@ -60,7 +141,7 @@ public class OOOO extends Feedback{
         List<List<Atom>> allCases = new ArrayList<>();
 
 
-       /*List <Atom> case1 = new ArrayList<>();
+       List <Atom> case1 = new ArrayList<>();
        case1.addAll(Alist.subList(0,2));
        case1.add(Blist.get(0));
        case1.add(Clist.get(0));
@@ -157,7 +238,7 @@ public class OOOO extends Feedback{
         case12.add(Clist.get(1));
         case12.add(Dlist.get(3));
         case12.add(Dlist.get(5));
-        allCases.add(case12);*/
+        allCases.add(case12);
 
         List <Atom> case13 = new ArrayList<>();
         case13.add(Alist.get(5));
@@ -173,25 +254,60 @@ public class OOOO extends Feedback{
         case14.addAll(Clist.subList(0,2));
         case14.add(Dlist.get(3));
         allCases.add(case14);
+
+        List <Atom> case15 = new ArrayList<>();
+        case15.add(Alist.get(3));
+        case15.add(Alist.get(5));
+        case15.add(Blist.get(1));
+        case15.add(Clist.get(1));
+        case15.add(Dlist.get(3));
+        allCases.add(case15);
+
+        List <Atom> case16 = new ArrayList<>();
+        case16.addAll(Blist.subList(1,3));
+        case16.addAll(Clist.subList(1,3));
+        case16.add(Dlist.get(5));
+        allCases.add(case16);
+
+        List <Atom> case17 = new ArrayList<>();
+        case17.add(Alist.get(3));
+        case17.addAll(Blist.subList(1,3));
+        case17.addAll(Clist.subList(1,3));
+        allCases.add(case17);
+
+        List <Atom> case18 = new ArrayList<>();
+        case18.add(Alist.get(3));
+        case18.add(Alist.get(5));
+        case18.add(Blist.get(1));
+        case18.addAll(Clist.subList(1,3));
+        allCases.add(case18);
+
+        List <Atom> case19 = new ArrayList<>();
+        case19.addAll(Alist.subList(1,4));
+        case19.add(Blist.get(0));
+        case19.add(Blist.get(3));
+        case19.addAll(Clist.subList(1,3));
+        allCases.add(case19);
+
+        List <Atom> case20 = new ArrayList<>();
+        case20.add(Alist.get(0));
+        case20.add(Alist.get(2));
+        case20.add(Alist.get(4));
+        case20.addAll(Blist.subList(1,3));
+        case20.add(Clist.get(0));
+        allCases.add(case20);
         for (int i = 0; i <allCases.size() ; i++) {
             temp.append(generateMultiOrClauses(negB, negC,allCases.get(i), allCases.get(i+1)));
             i++;
         }
         return temp.toString();
     }
-/*         d_x  || ! c_w || ! b_w ||  a_w ||  a_y) &&
-(      || d_z || ! c_w || ! b_w ||  b_z ||  c_y) &&
-(      || ! c_w || ! b_w ||  b_z ||  a_y ||  c_y) &&
-(      || ! c_w || ! b_w ||  a_w ||  a_y ||  c_y) &&
-(      || ! c_w ||  b_w || ! b_z || ! a_w || ! a_z ||  a_y ||  c_y) &&
-(      || ! b_w ||  b_z || ! a_w ||  a_z || ! a_y || ! c_y) &&
- */
+
 
     @Override
     public int noXOR() {
         return 8;
     }
-
 
 
 
@@ -303,26 +419,6 @@ public class OOOO extends Feedback{
 
 
     /*
-    ( ! b_x  || ! c_x  || ! d_x  || !d_y || d_z || ! b_z || ! a_z || ! a_y || ! c_y) &&
-    ( ! b_x  || ! c_x  || ! d_x  || !d_y || ! c_w || ! b_w || ! b_z || ! a_w || ! a_y ||  c_y) &&
-    ( ! b_x  || ! c_x  || ! d_x  || !d_y ||  c_w || ! b_w || ! a_w || ! a_y || ! c_y) &&
-    ( ! b_x  || ! c_x  || ! d_x  || d_y || !d_z || ! b_z || ! a_z || ! a_y || ! c_y) &&
-    ( ! b_x  || ! c_x  || ! d_x  || !d_z || ! c_w ||  b_w || ! b_z || ! a_w || ! a_z) &&
-    ( ! b_x  || ! c_x  ||  d_x  || !d_y || !d_z ||  c_w || ! b_w ||  b_z || ! a_w || ! a_z ||  a_y || ! c_y) &&
-    ( ! b_x  || ! c_x  ||  d_x  || !d_y || !d_z ||  c_w ||  b_w || ! b_z || ! c_y) &&
-    ( ! b_x  || ! c_x  ||  d_x  || !d_y || !d_z || ! b_z || ! a_z || ! a_y || ! c_y) &&
-    ( ! b_x  || ! c_x  ||  d_x  || !d_y || !d_z || ! b_z ||  a_z ||  a_y || ! c_y) &&
-    ( ! b_x  || ! c_x  ||  d_x  || d_y ||  c_w || ! b_w || ! a_w || ! a_y || ! c_y) &&
-    ( ! b_x  || ! c_x  ||  d_x  || d_z || ! c_w || ! b_w ||  b_z) &&
-    ( ! b_x  || ! c_x  ||  d_x  || d_z || ! c_w ||  b_w || ! b_z || ! a_w || ! a_z) &&
-    ( ! b_x  || ! c_x  ||  d_x  || ! c_w || ! b_w || ! b_z ||  a_w) &&
-    ( ! b_x  || ! c_x  ||  d_x  || ! c_w || ! b_w ||  b_z || ! a_w || ! a_y || ! c_y) &&
-    ( ! b_x  || ! c_x  ||  d_x  || ! c_w || ! b_w ||  a_w ||  a_y) &&
-    ( ! b_x  || ! c_x  || d_z || ! c_w || ! b_w ||  b_z ||  c_y) &&
-    ( ! b_x  || ! c_x  || ! c_w || ! b_w ||  b_z ||  a_y ||  c_y) &&
-    ( ! b_x  || ! c_x  || ! c_w || ! b_w ||  a_w ||  a_y ||  c_y) &&
-    ( ! b_x  || ! c_x  || ! c_w ||  b_w || ! b_z || ! a_w || ! a_z ||  a_y ||  c_y) &&
-    ( ! b_x  || ! c_x  || ! b_w ||  b_z || ! a_w ||  a_z || ! a_y || ! c_y) &&
 
     ( ! b_x  ||  c_x  || ! d_x  || !d_y || d_z || ! c_w || ! b_w ||  b_z || ! c_y) &&
     ( ! b_x  ||  c_x  || ! d_x  || !d_y || d_z || ! c_w ||  b_w || ! b_z || ! a_w || ! a_z ||  a_y || ! c_y) &&
@@ -337,13 +433,14 @@ public class OOOO extends Feedback{
     ( ! b_x  ||  c_x  ||  d_x  || d_y || ! c_w || ! b_z || ! a_w || ! a_y || ! c_y) &&
     ( ! b_x  ||  c_x  || ! c_w || ! b_z || ! a_w ||  a_z || ! a_y || ! c_y) &&
 
-    ( ! b_x  || ! d_x  || !d_y || !d_z || ! c_w || ! b_w ||  a_w || ! a_z || ! a_y || ! c_y) &&
+
     ( ! b_x  || ! d_x  || !d_y || d_z ||  b_w || ! b_z ||  a_w || ! a_z || ! a_y) &&
     ( ! b_x  || ! d_x  || d_y || !d_z || ! b_w ||  b_z || ! a_w || ! a_z ||  a_y) &&
     ( ! b_x  || ! d_x  || d_y || !d_z ||  b_w || ! b_z) &&
     ( ! b_x  || ! d_x  || d_y || !d_z || ! b_z ||  a_z ||  a_y) &&
 
     ( ! b_x  ||  d_x  || !d_y || !d_z || ! b_z ||  a_w || ! a_z || ! a_y) &&
+    ( ! b_x  || ! d_x  || !d_y || !d_z || ! c_w || ! b_w ||  a_w || ! a_z || ! a_y || ! c_y) &&
     ( ! b_x  || !d_y || !d_z || ! c_w || ! b_w || ! b_z || ! a_w ||  a_z || ! a_y || ! c_y) &&
     ( ! b_x  || d_y || ! c_w ||  b_w || ! b_z || ! a_w || ! a_y || ! c_y) &&
 
@@ -359,7 +456,6 @@ public class OOOO extends Feedback{
     ( b_x  || ! c_x  ||  d_x  || ! c_w || ! b_w || ! b_z || ! a_w || ! a_z) &&
 
     ( b_x  ||  c_x  || ! d_x  || !d_z || ! b_w || ! b_z || ! a_w || ! a_z) &&
-    ( b_x  ||  c_x  || ! d_x  || !d_z ||  c_y) &&
     ( b_x  ||  c_x  ||  d_x  || d_z) &&
     ( b_x  ||  c_x  ||  d_x  ||  c_w) &&
     ( b_x  ||  c_x  ||  d_x  ||  b_z) &&
@@ -371,21 +467,23 @@ public class OOOO extends Feedback{
     ( b_x  ||  c_x  ||  a_y ||  c_y) &&
 
     ( b_x  || ! d_x  || !d_z ||  b_w ||  a_w) &&
+    ( b_x  ||  c_x  || ! d_x  || !d_z ||  c_y) &&
+
 
     ( b_x  ||  d_x  || !d_y || !d_z ||  c_w || ! b_w || ! b_z || ! a_w ||  a_z || ! a_y) &&
-    ( b_x  ||  d_x  || !d_y || !d_z ||  b_z || ! a_z || ! a_y) &&
     ( b_x  ||  d_x  || d_y ||  c_w ||  b_w) &&
     ( b_x  ||  d_x  || d_y ||  a_y) &&
     ( b_x  ||  d_x  || d_z ||  b_w ||  a_w) &&
 
+    ( b_x  ||  d_x  || !d_y || !d_z ||  b_z || ! a_z || ! a_y) &&
     ( b_x  || !d_y || !d_z ||  b_z || ! a_z || ! a_y ||  c_y) &&
 
     ( b_x  || ! b_w || ! b_z || ! a_w || ! a_z ||  a_y) &&
+    ( b_x  ||  b_z ||  a_z ||  a_y) &&
+
 
     ( b_x  ||  b_w ||  b_z) &&
     ( b_x  ||  b_w ||  a_w ||  a_y) &&
-
-    ( b_x  ||  b_z ||  a_z ||  a_y) &&
 
     ( ! c_x  || ! d_x  || !d_y || !d_z || ! c_w || ! a_w || ! a_z ||  a_y || ! c_y) &&
     ( ! c_x  || ! d_x  || !d_y || d_z || ! c_w || ! a_w ||  a_z || ! a_y ||  c_y) &&
@@ -395,7 +493,9 @@ public class OOOO extends Feedback{
     ( ! c_x  || ! d_x  || d_y || !d_z ||  a_w || ! a_z || ! a_y || ! c_y) &&
     ( ! c_x  ||  d_x  || !d_y || !d_z || ! c_w ||  b_w || ! a_w ||  a_z || ! a_y ||  c_y) &&
     ( ! c_x  ||  d_x  || d_y || ! c_w || ! b_w || ! b_z ||  c_y) &&
+
     ( ! c_x  ||  d_x  || ! c_w || ! b_w || ! b_z ||  a_w ||  a_z) &&
+
     ( c_x  || ! d_x  || d_y || !d_z ||  c_y) &&
     ( c_x  || ! d_x  || !d_z ||  a_w ||  a_z) &&
 
