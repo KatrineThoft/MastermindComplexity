@@ -17,7 +17,7 @@ public class GOOR extends Feedback {
 
     @Override
     public int noXOR() {
-        return 0;
+        return 74;
     }
 
     private void addClause(Atom a, Atom b, Atom c){

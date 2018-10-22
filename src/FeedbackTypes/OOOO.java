@@ -18,7 +18,7 @@ public class OOOO extends Feedback{
 
     @Override
     public int noXOR() {
-        return 0;
+        return 8;
     }
 
 

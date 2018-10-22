@@ -12,7 +12,7 @@ public class GGRR extends Feedback {
 
     @Override
     public int noXOR() {
-        return 0;
+        return 6;
     }
 
 

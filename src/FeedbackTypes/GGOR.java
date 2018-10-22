@@ -9,7 +9,7 @@ public class GGOR extends Feedback {
 
     @Override
     public int noXOR() {
-        return 0;
+        return 11;
     }
 
 
