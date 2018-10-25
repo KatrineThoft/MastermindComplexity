@@ -64,6 +64,18 @@ public abstract class Feedback {
               return res.length();
     }
 
+    public int longestOrClause(){
+        int max = 0;
+        for (Clause c: clauses
+             ) {
+            if(c.noOfAtoms()-1 > max){
+                max = c.noOfAtoms() -1;
+            }
+        }
+
+        return max;
+    }
+
     //Not necessary all have depth one in CNF form
     public int getBoolTransDepth(){
         int depth=0;
