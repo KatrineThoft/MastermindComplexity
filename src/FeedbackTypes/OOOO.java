@@ -122,8 +122,6 @@ public class OOOO extends Feedback{
         return temp.toString();
 
     }
-
-
     private String generateDyCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
         StringBuilder temp = new StringBuilder();
         Atom negDy = negAtoms.get(3).get(1);
@@ -1124,8 +1122,6 @@ public class OOOO extends Feedback{
         return 8;
     }
 
-
-
     private String generateMultiOrClauses(Atom a, Atom b, List<Atom> list1, List<Atom> list2){
         StringBuilder temp = new StringBuilder();
         StringBuilder temp2 = new StringBuilder();
@@ -1153,23 +1149,6 @@ public class OOOO extends Feedback{
     }
 
 
-    private String generate4OrClauses(Atom a, Atom b,Atom c,Atom d, List<List<Atom>> cases){
-        StringBuilder temp2 = new StringBuilder();
-        String ab = a.stringRep + " || " + b.stringRep + " || " + c.stringRep + " || " + d.stringRep;
-
-        for (List<Atom> list:cases
-                ) {
-            String temp ="(" + ab + " || ";
-            for (Atom at : list) {
-                temp += at.stringRep + " || ";
-            }
-            addClause4Atoms(a,b,c,d,list);
-            temp2.append(temp.substring(0,temp.lastIndexOf("||")) +") && \n");
-        }
-        return temp2.toString();
-
-    }
-
     private  String generateOrClause(List<Atom> atoms){
         StringBuilder temp = new StringBuilder();
         temp.append("(");
@@ -1190,7 +1169,6 @@ public class OOOO extends Feedback{
         addClause(atoms.get(0),atoms.get(0),atoms);
         return temp.toString() + "&&\n";
     }
-
 
     private List<Atom> generateAtoms(Atom a, Boolean negated){
         List<Atom> res =new ArrayList<>();
@@ -1231,24 +1209,4 @@ public class OOOO extends Feedback{
         atomSet.addAll(list);
         clauses.add(new Clause(atomSet));
     }
-
-
-    /*
-
-     (d_z ||  c_w || ! b_w || ! b_z || ! a_w || ! a_z) &&
-     (d_z ||  c_w ||  b_w ||  b_z) &&
-     (d_z ||  c_w ||  a_w ||  a_z) &&
-     (d_z ||  b_z ||  a_z)
-
-     ( c_w || ! b_w || ! b_z || ! a_w || ! a_z ||  a_y ||  c_y) &&
-     ( c_w ||  b_w ||  b_z ||  c_y) &&
-     ( c_w ||  b_w ||  a_w)  &&
-
-    ( b_w ||  b_z ||  a_w ||  a_z) &&
-    ( b_w ||  b_z ||  a_z ||  c_y) &&
-
-    ( b_z ||  a_z ||  a_y ||  c_y) &&
-    ( a_w ||  a_z ||  a_y)
-
-     */
 }
