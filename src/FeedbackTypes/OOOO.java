@@ -36,7 +36,7 @@ public class OOOO extends Feedback{
         case1.add(allNegAtomsList.get(2).get(2));
         case1.add(allNegAtomsList.get(3).get(3));
 
-        /*res.append(generateAndClause(case1));
+        res.append(generateAndClause(case1));
         res.append(generateNegBNegCCases(allNegAtomsList,allPosAtomsList));
         res.append(generateNegBPosCCases(allNegAtomsList,allPosAtomsList));
         res.append(generateNegBRestCases(allNegAtomsList,allPosAtomsList));
@@ -44,27 +44,85 @@ public class OOOO extends Feedback{
         res.append(generatePosBRestCases(allNegAtomsList,allPosAtomsList));
         res.append(generateNegCCases(allNegAtomsList,allPosAtomsList));
         res.append(generatePosCCases(allNegAtomsList,allPosAtomsList));
-        res.append(generateDxCases(allNegAtomsList,allPosAtomsList));*/
+        res.append(generateDxCases(allNegAtomsList,allPosAtomsList));
         res.append(generateDyCases(allNegAtomsList,allPosAtomsList));
+        res.append(generateRestCases(allNegAtomsList,allPosAtomsList));
 
 
         super.boolTrans = res.substring(0,res.lastIndexOf("&&"));
-    }/*
-     (d_z ||  c_w || ! b_w || ! b_z || ! a_w || ! a_z) &&
-     (d_z ||  c_w ||  b_w ||  b_z) &&
-     (d_z ||  c_w ||  a_w ||  a_z) &&
-     (d_z ||  b_z ||  a_z)
+    }
 
-     ( c_w || ! b_w || ! b_z || ! a_w || ! a_z ||  a_y ||  c_y) &&
-     ( c_w ||  b_w ||  b_z ||  c_y) &&
-     ( c_w ||  b_w ||  a_w)  &&
+    private String generateRestCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
+        StringBuilder temp = new StringBuilder();
+        Atom posDz = posAtoms.get(3).get(2);
+        Atom posCw = posAtoms.get(2).get(3);
+        Atom posBw = posAtoms.get(1).get(3);
+        Atom posCy = posAtoms.get(2).get(1);
+        Atom posAw = posAtoms.get(0).get(3);
+        Atom posAz = posAtoms.get(0).get(2);
+        Atom posAy = posAtoms.get(0).get(1);
 
-    ( b_w ||  b_z ||  a_w ||  a_z) &&
-    ( b_w ||  b_z ||  a_z ||  c_y) &&
 
-    ( b_z ||  a_z ||  a_y ||  c_y) &&
-    ( a_w ||  a_z ||  a_y)
-*/
+
+        List<Atom> Alist = Arrays.asList(negAtoms.get(0).get(2), negAtoms.get(0).get(3),
+                posAtoms.get(0).get(1), posAtoms.get(0).get(2), posAtoms.get(0).get(3));
+        List<Atom> Blist = Arrays.asList(negAtoms.get(1).get(2), negAtoms.get(1).get(3),
+                posAtoms.get(1).get(2));
+
+        List<Atom> case1 = new ArrayList<>();
+        case1.addAll(Alist.subList(0,2));
+        case1.addAll(Blist.subList(0,2));
+
+        List<Atom> case2 = new ArrayList<>();
+        case2.add(Blist.get(2));
+        case2.add(posBw);
+
+        List<Atom> case3a = new ArrayList<>();
+        case3a.add(posAw);
+        case3a.add(posCw);
+
+        List<Atom> case3b = new ArrayList<>();
+        case3b.add(Blist.get(2));
+
+
+        List<Atom> case4 = new ArrayList<>();
+        case4.addAll(Alist.subList(0,3));
+        case4.addAll(Blist.subList(0,2));
+
+        List<Atom> case5 = new ArrayList<>();
+        case5.add(posBw);
+        case5.add(Blist.get(2));
+
+        List<Atom> case6 = new ArrayList<>();
+        case6.add(posCw);
+        case6.add(posAw);
+        case6.add(posBw);
+
+        List<Atom> case7 = new ArrayList<>();
+        case7.add(posAw);
+        case7.add(Blist.get(2));
+
+        List<Atom> case8 = new ArrayList<>();
+        case8.add(Blist.get(2));
+        case8.add(posCy);
+
+        List<Atom> case9 = new ArrayList<>();
+        case9.add(Blist.get(2));
+        case9.add(posCy);
+
+        List<Atom> case10 = new ArrayList<>();
+        case10.add(posAw);
+
+        temp.append(generateMultiOrClauses(posDz, posCw, case1, case2));
+        temp.append(generateMultiOrClauses(posDz, posAz, case3a, case3b));
+        temp.append(generateMultiOrClauses(posCw, posCy, case4, case5));
+        temp.append(generateOrClause(case6));
+        temp.append(generateMultiOrClauses(posBw, posAz, case7, case8));
+        temp.append(generateMultiOrClauses(posAz, posAy, case9, case10));
+        return temp.toString();
+
+    }
+
 
     private String generateDyCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
         StringBuilder temp = new StringBuilder();
@@ -270,7 +328,6 @@ public class OOOO extends Feedback{
             temp.append(generateOrClause(case8));
             return temp.toString();
      }
-
     private String generatePosCCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
         StringBuilder temp = new StringBuilder();
         Atom posC = posAtoms.get(2).get(0);
@@ -356,8 +413,6 @@ public class OOOO extends Feedback{
         temp.append(generateOrClause(case13));
         return temp.toString();
     }
-
-
     private String generateNegCCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
         StringBuilder temp = new StringBuilder();
         Atom negC = negAtoms.get(2).get(0);
@@ -532,7 +587,6 @@ public class OOOO extends Feedback{
 
         return temp.toString();
     }
-
     private String generatePosBAndCCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
         StringBuilder temp = new StringBuilder();
         Atom posB = posAtoms.get(1).get(0);
@@ -695,7 +749,6 @@ public class OOOO extends Feedback{
         }
         return temp.toString();
     }
-
     private String generateNegBRestCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
         StringBuilder temp = new StringBuilder();
         Atom negB = negAtoms.get(1).get(0);
@@ -771,7 +824,6 @@ public class OOOO extends Feedback{
         temp.append(generateMultiOrClauses(negB, negA,case7, case8));
         return temp.toString();
     }
-
     private String generateNegBPosCCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
         StringBuilder temp = new StringBuilder();
         Atom negB = negAtoms.get(1).get(0);
@@ -887,7 +939,6 @@ public class OOOO extends Feedback{
         }
         return temp.toString();
     }
-
     private String generateNegBNegCCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
         StringBuilder temp = new StringBuilder();
         Atom negB = negAtoms.get(1).get(0);
