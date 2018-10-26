@@ -10,6 +10,7 @@ public class GGGR extends Feedback {
     public GGGR(String guess) {
         super("FeedbackTypes.GGGR",guess);
         translate();
+        super.clauses = clauses;
     }
 
 

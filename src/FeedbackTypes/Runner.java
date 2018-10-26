@@ -5,7 +5,7 @@ public class Runner {
     public static void main(String[] args){
       // String guess = "R_x,O_y,Y_z,G_w";
         String guess = "a_x,b_y,c_z,d_w";
-        Feedback test1 = new OOOO(guess);
+        Feedback test1 = new GGOR(guess);
 
         System.out.println("Boolean Translation of " +test1.getType() +":\n"+test1.getBoolTrans() +"\n");
         /*System.out.println("No. symbols in Bool. Trans.: "+test1.noSymbols());
