@@ -14,7 +14,18 @@ public class OOOR extends Feedback {
     private void translate() {
         super.boolTrans = "Heya!";
     }
-
+/*!a_x &&
+!b_y &&
+!c_z &&
+!d_w&&
+( !a_w || !d_y || !a_z || c_w) &&
+ ( !a_w || a_z || !c_x) &&
+  (a_w || d_y || !a_z || !c_x) &&
+  (a_w || !a_z || !c_x ||c_w) &&
+( !d_y || !a_z || c_x || c_w) &&
+!b_x &&
+!b_z
+ */
 
     @Override
     public int noXOR() {

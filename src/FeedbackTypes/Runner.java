@@ -18,10 +18,6 @@ public class Runner {
 
 
 
-
-
-
-
       /*
       String guess = "a_x,b_y,c_z,d_w";
       //%OOOO,  OOOR, ORRR, GOOR, GGOR;

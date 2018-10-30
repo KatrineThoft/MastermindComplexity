@@ -17,8 +17,76 @@ public class ORRR extends Feedback {
     @Override
     public int noXOR() {
         return 11;
-    }
-
+    } /*
+    ! c_x &&
+    ( ! d_x || !d_z || d_y) &&
+    ( ! d_x || d_z || !d_y) &&
+    ( ! d_x || !a_w) &&
+    ( ! d_x || !b_w) &&
+    ( ! d_x || !a_z) &&
+    ( ! d_x || !c_y) &&
+    ( ! d_x || !a_y) &&
+    ( ! d_x || !b_x) &&
+    ( ! d_x || !b_z) &&
+     ( ! d_x || !c_x) &&
+    ( ! d_x ||  c_w) &&
+    ( d_x || !d_z || !d_y) &&
+    ( d_x || d_z || a_w || b_w || d_y || a_z || c_y || a_y || b_x || b_z || c_x ||  c_w) &&
+    ( !d_z || !a_w) &&
+    ( !d_z || !b_w) &&
+     ( !d_z || !a_z) &&
+     ( !d_z || !c_y) &&
+     ( !d_z || !a_y) &&
+     ( !d_z || !b_x) &&
+      ( !d_z || !b_z) &&
+     ( !d_z || !c_x) &&
+     ( !d_z ||  c_w) &&
+     !d_w&&
+     ( !a_w || !b_w) &&
+      ( !a_w || !d_y) &&
+       ( !a_w || !a_z || a_y) &&
+      ( !a_w || a_z || !a_y) &&
+      ( !a_w || !c_y) &&
+      ( !a_w || !b_x) &&
+      ( !a_w || !b_z) &&
+      ( !a_w || !c_x) &&
+       (a_w || !a_z || !a_y) &&
+        !b_y &&
+         ( !b_w || !d_y) &&
+          ( !b_w || !a_z) &&
+           ( !b_w || !c_y) &&
+            ( !b_w || !a_y) &&
+    ( !b_w || !b_x || b_z) &&
+    ( !b_w || b_x || !b_z) &&
+     ( !b_w || !c_x)   &&
+     ( !b_w ||  c_w) &&
+      (b_w || !b_x || !b_z) &&
+       ( !d_y || !a_z) &&
+      ( !d_y || !c_y) &&
+       ( !d_y || !a_y) &&
+    ( !d_y || !b_x) &&
+    ( !d_y || !b_z) &&
+    ( !d_y || !c_x) &&
+    ( !d_y ||  c_w) &&
+     ( !a_z || !c_y) &&
+     ( !a_z || !b_x) &&
+     ( !a_z || !b_z) &&
+     ( !a_z || !c_x) &&
+     ( !c_y || !a_y) &&
+     ( !c_y || !b_x) &&
+      ( !c_y || !b_z) &&
+       ( !c_y || !c_x ||  c_w) &&
+       ( !c_y || c_x ||  c_w) &&
+       (c_y || !c_x ||  c_w) &&
+       ( !a_y || !b_x) &&
+       ( !a_y || !b_z) &&
+        ( !a_y || !c_x) &&
+        ( !b_x || !c_x) &&
+        ( !b_x ||  c_w) &&
+        !a_x &&
+        ( !b_z || !c_x) &&
+         ( !b_z ||  c_w)
+*/
 
     private void translate(){
         //Creating atom objects from the input string

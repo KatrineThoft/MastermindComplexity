@@ -8,8 +8,6 @@ public class GGOR extends Feedback {
         super("GGOR", guess);
         translate();
         super.clauses = clauses;
-
-
     }
 
     private void translate() {
