@@ -1,12 +1,9 @@
 package FeedbackTypes;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ORRR extends Feedback {
-    Set<Clause> clauses;
+    Set<Clause> clauses= new HashSet<>();
 
     public ORRR(String guess) {
         super("ORRR", guess);
@@ -17,78 +14,328 @@ public class ORRR extends Feedback {
     @Override
     public int noXOR() {
         return 11;
-    } /*
-    ! c_x &&
-    ( ! d_x || !d_z || d_y) &&
-    ( ! d_x || d_z || !d_y) &&
-    ( ! d_x || !a_w) &&
-    ( ! d_x || !b_w) &&
-    ( ! d_x || !a_z) &&
-    ( ! d_x || !c_y) &&
-    ( ! d_x || !a_y) &&
-    ( ! d_x || !b_x) &&
-    ( ! d_x || !b_z) &&
-     ( ! d_x || !c_x) &&
-    ( ! d_x ||  c_w) &&
-    ( d_x || !d_z || !d_y) &&
-    ( d_x || d_z || a_w || b_w || d_y || a_z || c_y || a_y || b_x || b_z || c_x ||  c_w) &&
-    ( !d_z || !a_w) &&
-    ( !d_z || !b_w) &&
-     ( !d_z || !a_z) &&
-     ( !d_z || !c_y) &&
-     ( !d_z || !a_y) &&
-     ( !d_z || !b_x) &&
-      ( !d_z || !b_z) &&
-     ( !d_z || !c_x) &&
-     ( !d_z ||  c_w) &&
-     !d_w&&
-     ( !a_w || !b_w) &&
-      ( !a_w || !d_y) &&
-       ( !a_w || !a_z || a_y) &&
-      ( !a_w || a_z || !a_y) &&
-      ( !a_w || !c_y) &&
-      ( !a_w || !b_x) &&
-      ( !a_w || !b_z) &&
-      ( !a_w || !c_x) &&
-       (a_w || !a_z || !a_y) &&
-        !b_y &&
-         ( !b_w || !d_y) &&
-          ( !b_w || !a_z) &&
-           ( !b_w || !c_y) &&
-            ( !b_w || !a_y) &&
-    ( !b_w || !b_x || b_z) &&
-    ( !b_w || b_x || !b_z) &&
-     ( !b_w || !c_x)   &&
-     ( !b_w ||  c_w) &&
-      (b_w || !b_x || !b_z) &&
-       ( !d_y || !a_z) &&
-      ( !d_y || !c_y) &&
-       ( !d_y || !a_y) &&
-    ( !d_y || !b_x) &&
-    ( !d_y || !b_z) &&
-    ( !d_y || !c_x) &&
-    ( !d_y ||  c_w) &&
-     ( !a_z || !c_y) &&
-     ( !a_z || !b_x) &&
-     ( !a_z || !b_z) &&
-     ( !a_z || !c_x) &&
-     ( !c_y || !a_y) &&
-     ( !c_y || !b_x) &&
-      ( !c_y || !b_z) &&
-       ( !c_y || !c_x ||  c_w) &&
-       ( !c_y || c_x ||  c_w) &&
-       (c_y || !c_x ||  c_w) &&
-       ( !a_y || !b_x) &&
-       ( !a_y || !b_z) &&
-        ( !a_y || !c_x) &&
-        ( !b_x || !c_x) &&
-        ( !b_x ||  c_w) &&
-        !a_x &&
-        ( !b_z || !c_x) &&
-         ( !b_z ||  c_w)
-*/
+    }
 
-    private void translate(){
+    public void translate(){
+        //Creating atom objects from the input string
+        StringBuilder temp = new StringBuilder();
+        String[] atomString= guess.split(",");
+        List<Atom> atomList = new ArrayList<>();
+
+        //Getting the complement, since the original atom is not used in bool. trans.
+
+        List<Atom> negGuess = new ArrayList<>();
+        for (String s: atomString) {
+            Atom a = new Atom(s);
+            atomList.add(a);
+            negGuess.add(a.getComplement());
+        }
+        //temp.append(generateAndClauses(negGuess));
+
+        List<List<Atom>> posAtoms = new ArrayList<>();
+        List<List<Atom>> negAtoms = new ArrayList<>();
+        for (Atom a:atomList) {
+            posAtoms .add(generateAtoms(a,false));
+            negAtoms.add(generateAtoms(a,true));
+        }
+
+        temp.append(generateNegDxCases(posAtoms,negAtoms));
+        temp.append(generateNegDzCases(posAtoms,negAtoms));
+        temp.append(generateNegAwCases(posAtoms,negAtoms));
+        temp.append(generateNegBwCases(posAtoms,negAtoms));
+        temp.append(generateNegDyCases(posAtoms,negAtoms));
+        temp.append(generateNegAzCases(posAtoms,negAtoms));
+        temp.append(generateNegCyCases(posAtoms,negAtoms));
+        temp.append(generateNegAyCases(posAtoms,negAtoms));
+        temp.append(generateRestCases(posAtoms,negAtoms));
+        super.boolTrans =temp.substring(0,temp.lastIndexOf("&&"));
+    }
+
+    private String generateNegAyCases(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
+        StringBuilder temp = new StringBuilder();
+        Atom negAy= negAtoms.get(0).get(1);
+        List<Atom> Alist = Arrays.asList(negAtoms.get(0).get(2),posAtoms.get(0).get(3));
+        List<Atom> Blist = Arrays.asList(negAtoms.get(1).get(0), negAtoms.get(1).get(2));
+        List<Atom> Clist = Arrays.asList(negAtoms.get(2).get(0));
+
+        List<Atom> case1 = new ArrayList<>();
+        case1.add(negAy);
+        case1.addAll(Alist);
+
+
+        List<Atom> cases = new ArrayList<>();
+        cases.addAll(Blist);
+        cases.addAll(Clist);
+
+        temp.append(generateOrClause(case1));
+
+        temp.append(generateMultiOrClauses(negAy, cases));
+        return temp.toString();
+
+    }
+    private String generateNegCyCases(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
+        StringBuilder temp = new StringBuilder();
+        Atom negCy= negAtoms.get(2).get(1);
+        List<Atom> Alist = Arrays.asList(negAtoms.get(0).get(1));
+        List<Atom> Blist = Arrays.asList(negAtoms.get(1).get(0), negAtoms.get(1).get(2));
+        List<Atom> Clist = Arrays.asList(negAtoms.get(2).get(0), posAtoms.get(2).get(0),
+                posAtoms.get(2).get(3));
+
+        List<Atom> case1 = new ArrayList<>();
+        case1.add(negCy);
+        case1.addAll(Clist.subList(1,3));
+
+        List<Atom> case2 = new ArrayList<>();
+        case2.add(negCy);
+        case2.add(Clist.get(0));
+        case2.add(Clist.get(2));;
+
+        List<Atom> cases = new ArrayList<>();
+        cases.addAll(Alist);
+        cases.addAll(Blist);
+
+        temp.append(generateOrClause(case1));
+        temp.append(generateOrClause(case2));
+
+        temp.append(generateMultiOrClauses(negCy, cases));
+        return temp.toString();
+
+    }
+    private String generateNegAzCases(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
+        StringBuilder temp = new StringBuilder();
+        Atom negAz= negAtoms.get(0).get(2);
+
+        List<Atom> Blist = Arrays.asList(negAtoms.get(1).get(0), negAtoms.get(1).get(2));
+        List<Atom> Clist = Arrays.asList(negAtoms.get(2).get(0), negAtoms.get(2).get(1));
+
+
+        List<Atom> cases = new ArrayList<>();
+        cases.addAll(Blist);
+        cases.addAll(Clist);
+
+
+        temp.append(generateMultiOrClauses(negAz, cases));
+        return temp.toString();
+
+    }
+    private String generateRestCases(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
+        StringBuilder temp = new StringBuilder();
+        Atom negBx= negAtoms.get(1).get(0);
+        Atom negBz= negAtoms.get(1).get(2);
+        Atom posDx= posAtoms.get(3).get(0);
+
+
+        List<Atom> Alist = Arrays.asList(posAtoms.get(0).get(1), posAtoms.get(0).get(2),
+                posAtoms.get(0).get(3));
+        List<Atom> Blist = Arrays.asList(negAtoms.get(1).get(2), posAtoms.get(1).get(0),
+                posAtoms.get(1).get(2),posAtoms.get(1).get(3));
+        List<Atom> Clist = Arrays.asList(negAtoms.get(2).get(0), posAtoms.get(2).get(0),
+                posAtoms.get(2).get(1), posAtoms.get(2).get(3));
+        List<Atom> Dlist = Arrays.asList(negAtoms.get(3).get(1), negAtoms.get(3).get(2),
+                posAtoms.get(3).get(1),posAtoms.get(3).get(2));
+
+        List<Atom> case1 = new ArrayList<>();
+        case1.add(negBx);
+        case1.add(Blist.get(0));
+        case1.add(Blist.get(3));
+
+        List<Atom> BxCases = new ArrayList<>();
+        BxCases.add(Clist.get(0));
+        BxCases.add(Clist.get(3));
+
+        List<Atom> BzCases = new ArrayList<>();
+        BzCases.add(Clist.get(0));
+        BzCases.add(Clist.get(3));
+
+        List<Atom> case2 = new ArrayList<>();
+        case2.add(Clist.get(0));
+        case2.addAll(Clist.subList(2,4));
+
+        List<Atom> case3 = new ArrayList<>();
+        case3.add(posDx);
+        case3.addAll(Dlist.subList(0,2));
+
+        List<Atom> case4 = new ArrayList<>();
+        case4.add(posDx);
+        case4.addAll(Alist);
+        case4.addAll(Blist.subList(1,4));
+        case4.addAll(Clist.subList(1,4));
+        case4.addAll(Dlist.subList(2,4));
+
+        temp.append(generateOrClause(case1));
+        temp.append(generateMultiOrClauses(negBx, BxCases));
+        temp.append(generateMultiOrClauses(negBz, BzCases));
+        temp.append(generateOrClause(case2));
+        temp.append(generateOrClause(case3));
+        temp.append(generateOrClause(case4));
+
+        return temp.toString();
+
+    }
+    private String generateNegDyCases(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
+
+        StringBuilder temp = new StringBuilder();
+        Atom negDy= negAtoms.get(3).get(1);
+
+        List<Atom> Alist = Arrays.asList(negAtoms.get(0).get(1), negAtoms.get(0).get(2));
+        List<Atom> Blist = Arrays.asList(negAtoms.get(1).get(0), negAtoms.get(1).get(2));
+        List<Atom> Clist = Arrays.asList(negAtoms.get(2).get(0), negAtoms.get(2).get(1),
+                posAtoms.get(2).get(3));
+
+
+        List<Atom> cases = new ArrayList<>();
+        cases.addAll(Alist);
+        cases.addAll(Blist);
+        cases.addAll(Clist);
+
+        temp.append(generateMultiOrClauses(negDy, cases));
+        return temp.toString();
+
+    }
+    private String generateNegBwCases(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
+
+        StringBuilder temp = new StringBuilder();
+        Atom negBw= negAtoms.get(1).get(3);
+
+        List<Atom> Alist = Arrays.asList(negAtoms.get(0).get(1), negAtoms.get(0).get(2));
+        List<Atom> Blist = Arrays.asList(negAtoms.get(1).get(0), negAtoms.get(1).get(2),
+                posAtoms.get(1).get(0), posAtoms.get(1).get(2));
+        List<Atom> Clist = Arrays.asList(negAtoms.get(2).get(0), negAtoms.get(2).get(1),
+                posAtoms.get(2).get(3));
+        List<Atom> Dlist = Arrays.asList(negAtoms.get(3).get(1));
+
+        List<Atom> case1 = new ArrayList<>();
+        case1.add(negBw);
+        case1.addAll(Blist.subList(1,3));
+
+        List<Atom> case2 = new ArrayList<>();
+        case2.add(negBw);
+        case2.add(Blist.get(0));
+        case2.add(Blist.get(3));
+
+        List<Atom> cases = new ArrayList<>();
+        cases.addAll(Alist);
+        cases.addAll(Clist);
+        cases.addAll(Dlist);
+
+        temp.append(generateOrClause(case1));
+        temp.append(generateOrClause(case2));
+        temp.append(generateMultiOrClauses(negBw, cases));
+        return temp.toString();
+
+    }
+    private String generateNegAwCases(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
+
+        StringBuilder temp = new StringBuilder();
+        Atom negAw= negAtoms.get(0).get(3);
+
+        List<Atom> Alist = Arrays.asList(negAtoms.get(0).get(1), negAtoms.get(0).get(2),
+                posAtoms.get(0).get(1), posAtoms.get(0).get(2));
+        List<Atom> Blist = Arrays.asList(negAtoms.get(1).get(0), negAtoms.get(1).get(2),
+                negAtoms.get(1).get(3));
+        List<Atom> Clist = Arrays.asList(negAtoms.get(2).get(0), negAtoms.get(2).get(1));
+        List<Atom> Dlist = Arrays.asList(negAtoms.get(3).get(1));
+
+        List<Atom> case1 = new ArrayList<>();
+        case1.add(negAw);
+        case1.addAll(Alist.subList(1,3));
+
+        List<Atom> case2 = new ArrayList<>();
+        case2.add(negAw);
+        case2.add(Alist.get(0));
+        case2.add(Alist.get(3));
+
+        List<Atom> cases = new ArrayList<>();
+        cases.addAll(Blist);
+        cases.addAll(Clist);
+        cases.addAll(Dlist);
+
+        temp.append(generateOrClause(case1));
+        temp.append(generateOrClause(case2));
+        temp.append(generateMultiOrClauses(negAw, cases));
+        return temp.toString();
+
+    }
+    private String generateNegDzCases(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
+
+        StringBuilder temp = new StringBuilder();
+        Atom negDz = negAtoms.get(3).get(2);
+
+        List<Atom> Alist = Arrays.asList(negAtoms.get(0).get(1), negAtoms.get(0).get(2),
+                negAtoms.get(0).get(3));
+        List<Atom> Blist = Arrays.asList(negAtoms.get(1).get(0), negAtoms.get(1).get(2),
+                negAtoms.get(1).get(3));
+        List<Atom> Clist = Arrays.asList(negAtoms.get(2).get(0), negAtoms.get(2).get(1),
+                posAtoms.get(2).get(3));
+
+
+        List<Atom> cases = new ArrayList<>();
+        cases.addAll(Alist);
+        cases.addAll(Blist);
+        cases.addAll(Clist);
+
+
+        temp.append(generateMultiOrClauses(negDz, cases));
+        return temp.toString();
+
+    }
+    private String generateNegDxCases(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
+        StringBuilder temp = new StringBuilder();
+        Atom negDx = negAtoms.get(3).get(0);
+
+        List<Atom> Alist = Arrays.asList(negAtoms.get(0).get(1), negAtoms.get(0).get(2),
+                negAtoms.get(0).get(3));
+        List<Atom> Blist = Arrays.asList(negAtoms.get(1).get(0), negAtoms.get(1).get(2),
+                negAtoms.get(1).get(3));
+        List<Atom> Clist = Arrays.asList(negAtoms.get(2).get(0), negAtoms.get(2).get(1),
+                posAtoms.get(2).get(3));
+        List<Atom> Dlist = Arrays.asList(negAtoms.get(3).get(1), negAtoms.get(3).get(2),
+                posAtoms.get(3).get(1),posAtoms.get(3).get(2));
+
+
+        List<Atom> case1 = new ArrayList<>();
+        case1.add(negDx);
+        case1.addAll(Dlist.subList(1,3));
+
+        List<Atom> case2 = new ArrayList<>();
+        case2.add(negDx);
+        case2.add(Dlist.get(0));
+        case2.add(Dlist.get(3));
+
+        List<Atom> cases = new ArrayList<>();
+        cases.addAll(Alist);
+        cases.addAll(Blist);
+        cases.addAll(Clist);
+
+
+
+        temp.append(generateOrClause(case1));
+        temp.append(generateOrClause(case2));
+        temp.append(generateMultiOrClauses(negDx, cases));
+        return temp.toString();
+    }
+
+
+
+    private String generateMultiOrClauses(Atom a, List<Atom> list1){
+        StringBuilder temp = new StringBuilder();
+
+        for (Atom aList1 : list1) {
+            temp.append( "("+ a.stringRep + " || "+aList1.stringRep +") &&\n");
+            addClause(a,aList1);
+        }
+        return temp.toString();
+
+    }
+    private void addClause(Atom a, Atom b){
+        Set<Atom> atomSet = new HashSet<>();
+        atomSet.add(a);
+        atomSet.add(b);
+        clauses.add(new Clause(atomSet));
+    }
+
+
+    private void translateNotCNF(){
         //Creating atom objects from the input string
         String[] atomString= guess.split(",");
         List<Atom> atomList = new ArrayList<>();
@@ -102,10 +349,10 @@ public class ORRR extends Feedback {
         Set<Atom> formula = new HashSet<>();
         formula.addAll(atomList);
 
-        Set<Atom> atomSetA = generateAtoms(atomList.get(0),true);
-        Set<Atom> atomSetB = generateAtoms(atomList.get(1), true);
-        Set<Atom> atomSetC = generateAtoms(atomList.get(2),true);
-        Set<Atom> atomSetD = generateAtoms(atomList.get(3), true);
+        Set<Atom> atomSetA = generateAtoms1(atomList.get(0),true);
+        Set<Atom> atomSetB = generateAtoms1(atomList.get(1), true);
+        Set<Atom> atomSetC = generateAtoms1(atomList.get(2),true);
+        Set<Atom> atomSetD = generateAtoms1(atomList.get(3), true);
 
         Set<Atom> case1 = new HashSet<>();
         case1.addAll(atomSetA);
@@ -128,10 +375,10 @@ public class ORRR extends Feedback {
         case4.addAll(atomSetD);
 
 
-        Set<Atom> posA =  generateAtoms(atomList.get(0),false);
-        Set<Atom> posB =  generateAtoms(atomList.get(1),false);
-        Set<Atom> posC =  generateAtoms(atomList.get(2),false);
-        Set<Atom> posD =  generateAtoms(atomList.get(3),false);
+        Set<Atom> posA =  generateAtoms1(atomList.get(0),false);
+        Set<Atom> posB =  generateAtoms1(atomList.get(1),false);
+        Set<Atom> posC =  generateAtoms1(atomList.get(2),false);
+        Set<Atom> posD =  generateAtoms1(atomList.get(3),false);
 
 
         StringBuilder trans = new StringBuilder();
@@ -169,7 +416,7 @@ public class ORRR extends Feedback {
     }
 
 
-    private Set<Atom> generateAtoms(Atom a, boolean isNegated){
+    private Set<Atom> generateAtoms1(Atom a, boolean isNegated){
         Set<Atom> res = new HashSet<>();
 
         String neg = "";
@@ -183,5 +430,60 @@ public class ORRR extends Feedback {
             }
         }
         return res;
+    }
+
+
+    private  String generateOrClause(List<Atom> atoms){
+        StringBuilder temp = new StringBuilder();
+        temp.append("(");
+        for (Atom a: atoms ) {
+            temp.append(a.stringRep + " || ");
+        }
+        addClauseFromList(atoms);
+
+        String res = temp.substring(0,temp.lastIndexOf("||")) + ") &&";
+        return res + "\n";
+    }
+
+    private void addClauseFromList(List<Atom> list){
+        Set<Atom> atomSet = new HashSet<>();
+        atomSet.addAll(list);
+        clauses.add(new Clause(atomSet));
+    }
+
+    private List<Atom> generateAtoms(Atom a, Boolean negated){
+        List<Atom> res =new ArrayList<>();
+        String[] pos  = {"x","y","z","w"};
+        String neg ="";
+        if(negated){
+            neg = "!";
+        }
+        for (int i = 0; i <pos.length ; i++) {
+            if (!a.position.equals(pos[i])){
+                res.add(new Atom(neg+a.color+"_"+pos[i]));
+            } else {
+                if(negated){
+                    res.add(a.getComplement());
+                }
+                else {
+                    res.add(a);
+                }
+            }
+        }
+        return res;
+    }
+
+    private  String generateAndClauses(List<Atom> atoms){
+        StringBuilder temp = new StringBuilder();
+
+        for (Atom a: atoms ) {
+            temp.append(a.stringRep + " && \n");
+            Set<Atom> s = new HashSet<>();
+            s.add(a);
+            Clause c = new Clause(s);
+            clauses.add(c);
+        }
+
+        return temp.toString();
     }
 }

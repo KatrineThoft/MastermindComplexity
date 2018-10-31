@@ -135,7 +135,7 @@ public class OOOR extends Feedback {
 
     private  String generateAndClauses(List<Atom> atoms){
         StringBuilder temp = new StringBuilder();
-       
+
         for (Atom a: atoms ) {
             temp.append(a.stringRep + " && \n");
             Set<Atom> s = new HashSet<>();
