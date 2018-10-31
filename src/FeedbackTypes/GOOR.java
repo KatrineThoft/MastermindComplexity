@@ -313,7 +313,7 @@ public class GOOR extends Feedback {
             i++;
         }
         return temp.toString();
-    } 
+    }
     private String generateNegCzCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
         StringBuilder temp = new StringBuilder();
         Atom negCz = negAtoms.get(2).get(2);
