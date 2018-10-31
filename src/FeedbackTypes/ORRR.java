@@ -14,7 +14,7 @@ public class ORRR extends Feedback {
     @Override
     public int noXOR() {
         return 11;
-    } 
+    }
 
     public void translate(){
         //Creating atom objects from the input string
