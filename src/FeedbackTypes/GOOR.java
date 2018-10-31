@@ -217,11 +217,11 @@ public class GOOR extends Feedback {
         allCases.add(case18);
         List<Atom> case19 = new ArrayList<>();
         case19.addAll(Alist.subList(0,2));
-        case19.add(Blist.get(1));
-        case19.add(Blist.get(2));
+        case19.addAll(Blist.subList(1,3));
         case19.add(Blist.get(4));
-        case19.addAll(Clist.subList(0,2));
-        case19.add(Clist.get(5));
+        case19.add(Clist.get(0));
+        case19.add(Clist.get(2));
+        case19.add(Clist.get(4));
         case19.add(Dlist.get(0));
         case19.add(Dlist.get(2));
         allCases.add(case19);
@@ -231,12 +231,77 @@ public class GOOR extends Feedback {
         case20.add(Blist.get(1));
         case20.add(Blist.get(4));
         case20.add(Blist.get(6));
-        case20.add(Clist.get(1));
-        case20.add(Clist.get(3));
-        case20.add(Clist.get(5));
+        case20.addAll(Clist.subList(2,5));
         case20.add(Dlist.get(0));
         case20.add(Dlist.get(2));
         allCases.add(case20);
+        List<Atom> case21 = new ArrayList<>();
+        case21.addAll(Alist.subList(0,2));
+        case21.add(Blist.get(2));
+        case21.addAll(Blist.subList(4,6));
+        case21.add(Clist.get(1));
+        case21.add(Clist.get(3));
+        case21.add(Clist.get(5));
+        case21.add(Dlist.get(0));
+        case21.add(Dlist.get(2));
+        allCases.add(case21);
+
+        List<Atom> case22 = new ArrayList<>();
+        case22.addAll(Alist.subList(0,2));
+        case22.addAll(Blist.subList(4,7));
+        case22.addAll(Clist.subList(0,2));
+        case22.add(Clist.get(5));
+        case22.add(Dlist.get(0));
+        case22.add(Dlist.get(2));
+        allCases.add(case22);
+        List<Atom> case23 = new ArrayList<>();
+        case23.addAll(Alist.subList(0,2));
+        case23.add(Blist.get(2));
+        case23.addAll(Blist.subList(4,6));
+        case23.addAll(Clist.subList(2,5));
+        case23.add(Dlist.get(0));
+        case23.add(Dlist.get(2));
+        allCases.add(case23);
+
+        List<Atom> case24 = new ArrayList<>();
+        case24.addAll(Alist.subList(0,2));
+        case24.addAll(Blist.subList(4,7));
+        case24.add(Clist.get(0));
+        case24.add(Clist.get(2));
+        case24.add(Clist.get(4));
+        case24.add(Dlist.get(0));
+        case24.add(Dlist.get(2));
+        allCases.add(case24);
+
+        List<Atom> case25 = new ArrayList<>();
+        case25.add(Alist.get(2));
+        case25.addAll(Blist.subList(1,3));
+        case25.add(Clist.get(3));
+        case25.add(Dlist.get(2));
+        allCases.add(case25);
+
+        List<Atom> case26 = new ArrayList<>();
+        case26.add(Alist.get(2));
+        case26.add(Blist.get(1));
+        case26.add(Blist.get(6));
+        case26.add(Clist.get(0));
+        case26.add(Dlist.get(2));
+        allCases.add(case26);
+
+        List<Atom> case27 = new ArrayList<>();
+        case27.add(Alist.get(2));
+        case27.add(Blist.get(2));
+        case27.add(Blist.get(5));
+        case27.add(Clist.get(0));
+        case27.add(Dlist.get(2));
+        allCases.add(case27);
+
+        List<Atom> case28 = new ArrayList<>();
+        case28.add(Alist.get(2));
+        case28.addAll(Blist.subList(5,7));
+        case28.add(Clist.get(3));
+        case28.add(Dlist.get(2));
+        allCases.add(case28);
 
         for (int i = 0; i < 14; i++) {
             temp.append(generateMultiOrClauses(posCz, negDx, allCases.get(i), allCases.get(i + 1)));
@@ -248,19 +313,7 @@ public class GOOR extends Feedback {
             i++;
         }
         return temp.toString();
-    } /*
-
-            (c_z || d_x || d_w|| b_y || !b_z || !d_y || c_y || !a_y || !a_x || !b_w || !c_x || !c_w) &&
-            (c_z || d_x || d_w|| b_y || !b_z || !d_y || c_y || !a_y || !a_x || b_w || c_x || !c_w) &&
-            (c_z || d_x || d_w|| b_y || b_z || !d_y || !c_y || !a_y || !a_x || !b_w || c_x || c_w) &&
-            (c_z || d_x || d_w|| b_y || b_z || !d_y || !c_y || !a_y || !a_x || b_w || !c_x || c_w) &&
-            (c_z || d_x || d_w|| b_y || b_z || !d_y || c_y || !a_y || !a_x || !b_w || c_x || !c_w) &&
-            (c_z || d_x || d_w|| b_y || b_z || !d_y || c_y || !a_y || !a_x || b_w || !c_x || !c_w) &&
-            (c_z || d_x || d_w|| !b_z || a_x || !b_w || c_x) &&
-            (c_z || d_x || d_w|| !b_z || a_x || b_w || !c_x) &&
-            (c_z || d_x || d_w|| b_z || a_x || !b_w || !c_x) &&
-            (c_z || d_x || d_w|| b_z || a_x || b_w || c_x) &&
-     */
+    } 
     private String generateNegCzCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
         StringBuilder temp = new StringBuilder();
         Atom negCz = negAtoms.get(2).get(2);
