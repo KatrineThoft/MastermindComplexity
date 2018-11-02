@@ -1,11 +1,11 @@
 package FeedbackTypes;
 
 public class Atom {
-    String stringRep;
+    public String stringRep;
     String position;
     String color;
     Boolean isNegated;
-    Boolean isResolved;
+    public Boolean isResolved = false;
 
 
     public Atom(String s){
@@ -27,7 +27,7 @@ public class Atom {
     }
 
     public Boolean equals(Atom other) {
-        return (color.equals(other.color) && position.equals(other.position));
+        return (color.equals(other.color) && position.equals(other.position)) &&(isNegated == other.isNegated);
     }
 
     public Atom getComplement(){

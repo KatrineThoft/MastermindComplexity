@@ -31,10 +31,10 @@ public class GOOR extends Feedback {
 
 
 
-        //res.append(generateNegCzCases(negAtoms,posAtoms));
-       //res.append(generatePosCzCases(negAtoms,posAtoms));
-        //res.append(generateNegDxCases(negAtoms,posAtoms));
-       // res.append(generatePosDxCases(negAtoms,posAtoms));
+        res.append(generateNegCzCases(negAtoms,posAtoms));
+        res.append(generatePosCzCases(negAtoms,posAtoms));
+        res.append(generateNegDxCases(negAtoms,posAtoms));
+        res.append(generatePosDxCases(negAtoms,posAtoms));
         res.append(generatePosAyCases(negAtoms,posAtoms));
 
 

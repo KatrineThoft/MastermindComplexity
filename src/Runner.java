@@ -1,13 +1,22 @@
-package FeedbackTypes;
+
+
+import FeedbackTypes.Feedback;
+import FeedbackTypes.*;
+import Resolution.Resolution;
+
 
 public class Runner {
 
     public static void main(String[] args){
       // String guess = "R_x,O_y,Y_z,G_w";
         String guess = "a_x,b_y,c_z,d_w";
-        Feedback test1 = new GOOR(guess);
+        Feedback test1 = new OOOR(guess);
 
         System.out.println("Boolean Translation of " +test1.getType() +":\n"+test1.getBoolTrans() +"\n");
+        Resolution resolution = new Resolution(test1);
+        System.out.println("Result after resolution: \n" +resolution.resultString+"\n");
+
+
         /*System.out.println("No. symbols in Bool. Trans.: "+test1.noSymbols());
         System.out.println("No. unique atoms in Bool. Trans. (complimented atoms included): "+test1.noAtoms());
         System.out.println("No. clauses in Bool. Trans.: "+test1.noClauses());
