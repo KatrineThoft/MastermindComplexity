@@ -7,7 +7,7 @@ import java.util.Set;
 public class Clause {
    Set<Atom> atoms = new HashSet<>();
    Set<Atom> resolvedAtoms = new HashSet<>();
-   Clause parent;
+   Set<Clause> parents= new HashSet<>();
    boolean isResolved;
 
     public Clause(Set<Atom> atoms){
@@ -31,12 +31,13 @@ public class Clause {
     public void resolveAtom(Atom a){
         a.isResolved = true;
         resolvedAtoms.add(a);
+        isResolved = true;
     }
 
     public Set<Atom> getAtoms(){ return atoms; }
 
-    public void setParent(Clause parent){
-        this.parent = parent;
+    public void setParent(Set<Clause> parent){
+        this.parents = parent;
     }
 
     public boolean contains(Atom a){
@@ -57,9 +58,13 @@ public class Clause {
        return res.substring(0,res.lastIndexOf(",")) +"}";
     }
 
+    public boolean isChildOf(Clause c) {
+        return !parents.isEmpty() && parents.contains(c);
+    }
+
 
     public boolean isResolved(){
-       return atoms.size() == resolvedAtoms.size();
+       return isResolved;
     }
 
     public Boolean equals(Clause other) {

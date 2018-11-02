@@ -2,6 +2,7 @@ package Resolution;
 
 import FeedbackTypes.*;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,7 +48,7 @@ public class Resolution {
             for (Clause c2: clauses) {
                 j++;
                 System.out.println("Loop 2 looking at clause: "+c2.toString()+"\n j=" +j);
-                if(!(c1.equals(c2)) && !c2.isResolved() && !c1.isResolved()){
+                if(!(c1.equals(c2)) && !c2.isResolved() && !c1.isResolved() && !c1.isChildOf(c2) && !c2.isChildOf(c1)){
                     for (Atom a : c1.getAtoms()) {
                         System.out.println("Searching for compliment for: "+a.stringRep);
                         if (c2.contains(a.getComplement()) && !a.isResolved &&!a.getComplement().isResolved){
@@ -59,6 +60,7 @@ public class Resolution {
                             child.addAllAtoms(c2.getAtoms());
                             child.resolveAtom(a);
                             child.resolveAtom(a.getComplement());
+                            child.setParent(new HashSet<>(Arrays.asList(c1, c2)));
                             temp.add(child);
                             System.out.println("Child clause: " + child.toString());
                         }
