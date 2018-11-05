@@ -8,13 +8,21 @@ import Resolution.Resolution;
 public class Runner {
 
     public static void main(String[] args){
-      // String guess = "R_x,O_y,Y_z,G_w";
-        String guess = "a_x,b_y,c_z,d_w";
-        Feedback test1 = new OOOR(guess);
+       String guess1 = "R_x,G_y,R_z,G_w";
 
-        System.out.println("Boolean Translation of " +test1.getType() +":\n"+test1.getBoolTrans() +"\n");
-        Resolution resolution = new Resolution(test1);
-        System.out.println("Result after resolution: \n" +resolution.resultString+"\n");
+        //Colors:("R","O","Y","G","B","P")
+
+        Feedback test1 = new GGOO(guess1);
+        Resolution resolution1 = new Resolution(test1);
+        System.out.println("Result after resolution: \n" +resolution1.resultString+"\n");
+        System.out.println("Done w. resolving guess 1!");
+        String guess2 = "G_x,R_y,R_z,G_w";
+        Feedback test2 = new GGOO(guess2);
+        //System.out.println("Boolean Translation of " +test1.getType() +":\n"+test1.getBoolTrans() +"\n");
+
+       Resolution resolution2 = new Resolution(test2,resolution1.getAllClauses());
+       System.out.println("Result after resolution: \n" +resolution2.resultString+"\n");
+        System.out.println("Done w. resolving guess 2!");
 
 
         /*System.out.println("No. symbols in Bool. Trans.: "+test1.noSymbols());

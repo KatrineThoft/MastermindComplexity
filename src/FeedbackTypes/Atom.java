@@ -26,10 +26,26 @@ public class Atom {
        // System.out.println("Atom: " +color+" pos: "+position+ " stringRep: " +neg +s);
     }
 
-    public Boolean equals(Atom other) {
+    public boolean equals(Atom other) {
         return (color.equals(other.color) && position.equals(other.position)) &&(isNegated == other.isNegated);
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public Boolean getNegated() {
+        return isNegated;
+    }
+
+    @Override
+    public int hashCode() {
+        return stringRep.hashCode();
+    }
     public Atom getComplement(){
         if(isNegated){
             return new Atom(color + "_"+position);

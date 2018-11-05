@@ -8,13 +8,15 @@ public class Clause {
    Set<Atom> atoms = new HashSet<>();
    Set<Atom> resolvedAtoms = new HashSet<>();
    Set<Clause> parents= new HashSet<>();
-   boolean isResolved;
+   private boolean isResolved;
 
     public Clause(Set<Atom> atoms){
         this.atoms = atoms;
         isResolved = false;
     }
-    public Clause(){}
+    public Clause(){
+        isResolved = false;
+    }
 
     public int noOfAtoms(){
         return atoms.size();
@@ -62,12 +64,12 @@ public class Clause {
         return !parents.isEmpty() && parents.contains(c);
     }
 
-
     public boolean isResolved(){
        return isResolved;
     }
 
-    public Boolean equals(Clause other) {
+
+    public boolean equals(Clause other) {
         for (Atom a: atoms) {
             if (!other.atoms.contains(a)){
                 return false;
@@ -79,8 +81,26 @@ public class Clause {
             }
 
         }
-        return true;
+        return this.hashCode() == other.hashCode();
     }
 
+    public Atom getAtom(Atom a){
+        for (Atom at: atoms) {
+          if (at.equals(a)) {
+              return a;
+          }
+        }
+        return null;
+    }
+
+    @Override
+    public int hashCode() {
+        int res=0;
+        for (Atom a:atoms
+             ) {
+            res+= a.hashCode();
+        }
+        return res;
+    }
 
 }
