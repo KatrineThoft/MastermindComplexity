@@ -13,7 +13,7 @@ public class GR extends Feedback {
             super.clauses =clauses;
 
         }
-    
+
 
     private void translate() {
         String[] atomString= guess.split(",");
