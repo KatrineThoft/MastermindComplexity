@@ -129,9 +129,12 @@ public class Resolution {
                             child.setParent(new HashSet<>(Arrays.asList(c1, c2)));
                             Set<Atom> atomSet = c1.getAtoms().stream().filter(s -> !s.equals(a)).collect(Collectors.toSet());
                             atomSet.addAll(c2.getAtoms().stream().filter(s -> !s.equals(complement)).collect(Collectors.toSet()));
-                            child.addAllAtoms(atomSet);
-                            child = removeAllCompliments(child);
-                            temp.add(child);
+                                    child.addAllAtoms(atomSet);
+                                    child = removeAllCompliments(child);
+                                    if(child.getAtoms().size() >0) {
+                                        temp.add(child);
+                                    }
+
 
                             } else if(containsCompliments(c1,c2)){
                                 Set<Atom> atomSet1 = c1.getAtoms().stream().filter(s -> !s.equals(a)).collect(Collectors.toSet());

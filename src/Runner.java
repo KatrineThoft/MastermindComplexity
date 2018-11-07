@@ -20,7 +20,7 @@ public class Runner {
         //Colors:("R","O","Y","G")
         Feedback test1 = new OR(guess1);
         System.out.println("Bool. Trans. of: "+ test1.getType()+ "\n" + test1.getBoolTrans());
-        System.out.println("No. clauses: "+ test1.noClauses()+ "\n" + test1.noSymbols());
+        System.out.println("No. clauses: "+ test1.noClauses());
 
         Resolution resolution1 = new Resolution(test1,false);
         System.out.println("Result after resolution: \n" +resolution1.resultString+"\n");
@@ -29,6 +29,8 @@ public class Runner {
         String guess2 = "G_x,R_y";
         Feedback test2 = new OO(guess2);
         Resolution resolution2 = new Resolution(test2,resolution1.getAllClauses(),false);
+        System.out.println("Result after resolution: \n" +resolution2.resultString+"\n");
+        System.out.println("Done w. resolving guess 2!");
     }
 
     private static void fourPinDMM() {
