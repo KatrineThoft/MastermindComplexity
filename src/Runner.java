@@ -9,7 +9,22 @@ import Resolution.Resolution;
 public class Runner {
 
     public static void main(String[] args){
-       String guess1 = "R_x,G_y,R_z,G_w";
+
+        twoPinDMM();
+       // fourPinDMM();
+
+    }
+
+    private static void twoPinDMM() {
+        String guess1 = "a_x,b_y";
+        //Colors:("R","O","Y","G")
+        Feedback test1 = new GR(guess1);
+        System.out.println("Bool. Trans. of: "+ test1.getType()+ "\n" + test1.getBoolTrans());
+        System.out.println("No. clauses: "+ test1.noClauses()+ "\n" + test1.noSymbols());
+    }
+
+    private static void fourPinDMM() {
+        String guess1 = "R_x,G_y,R_z,G_w";
 
         //Colors:("R","O","Y","G","B","P")
 
@@ -23,8 +38,8 @@ public class Runner {
         Feedback test2 = new GGOO(guess2);
         //System.out.println("Boolean Translation of " +test1.getType() +":\n"+test1.getBoolTrans() +"\n");
 
-       Resolution resolution2 = new Resolution(test2,resolution1.getAllClauses(),false);
-     //   System.out.println("Boolean Translation of " +test2.getType() +":\n"+test2.getBoolTrans() +"\n");
+        Resolution resolution2 = new Resolution(test2,resolution1.getAllClauses(),false);
+        //   System.out.println("Boolean Translation of " +test2.getType() +":\n"+test2.getBoolTrans() +"\n");
 
         System.out.println("Result after resolution: \n" +resolution2.resultString+"\n");
         System.out.println("Done w. resolving guess 2!");
