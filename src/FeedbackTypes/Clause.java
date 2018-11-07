@@ -105,7 +105,7 @@ public class Clause {
              ) {
             res+= a.hashCode();
         }
-        return res;
+        return res + (new Random().nextInt(4)^2);
     }
 
 }

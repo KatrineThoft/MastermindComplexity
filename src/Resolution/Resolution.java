@@ -3,6 +3,7 @@ package Resolution;
 import FeedbackTypes.*;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -12,22 +13,24 @@ public class Resolution {
     public  String resultString;
     private int noSteps;
     private int noResolvedAtoms;
+    private boolean isMinimal;
 
 
-    public Resolution(Feedback feedback){
+    public Resolution(Feedback feedback, boolean isMinimal){
         this.allClauses = feedback.getClauses();
+        this.isMinimal = isMinimal;
         printClauses();
         resultString = resolve();
     }
 
     private void printClauses() { for (Clause c: allClauses) {System.out.println(c.toString()); } }
-    
-    public Resolution(Feedback feedback, Set<Clause> premises){
-        //mergeRedundantClauses(feedback.getClauses(),premises);
-        printClauses();
 
+    public Resolution(Feedback feedback, Set<Clause> premises, boolean isMinimal){
+       // mergeRedundantClauses(feedback.getClauses(),premises);
+        this.isMinimal = isMinimal;
         allClauses.addAll(premises);
         allClauses.addAll(feedback.getClauses());
+        printClauses();
         resultString =  resolve();
     }
 
@@ -67,16 +70,16 @@ public class Resolution {
            return c;
         }
          c.addAllAtoms(temp);
-        System.out.println("Replaced atoms in: "+c.toString()+" Atom:"+str);
         return c;
     }
 
     private String resolve() {
         Set<Clause> childClauses = searchForCompliments(allClauses);
         while (!childClauses.isEmpty() && !allClauses.containsAll(childClauses)){
-            removeClauses();
             allClauses.addAll(childClauses);
+            removeClauses();
             childClauses=searchForCompliments(allClauses);
+            System.out.println("Size of child Clauses: "+ childClauses.size());
         }
 
         StringBuilder res = new StringBuilder();
@@ -91,6 +94,16 @@ public class Resolution {
 
     private void removeClauses() {
          allClauses = allClauses.stream().filter(s -> !s.isResolved()).collect(Collectors.toSet());
+         Set<Clause> newClauseSet =new  HashSet<>();
+         newClauseSet.addAll(allClauses);
+        for (Clause c1:allClauses) {
+            for (Clause c2: allClauses) {
+                if (c2.equalAtoms(c1) && c1.hashCode() != c2.hashCode() ){
+                    newClauseSet.remove(c2);
+                }
+            }
+        }
+        allClauses = newClauseSet;
 
     }
 
@@ -106,29 +119,47 @@ public class Resolution {
                         if (c2.contains(a.getComplement()) && !a.isResolved && !a.getComplement().isResolved) {
                             noSteps++;
                             noResolvedAtoms+=2;
-                            Clause child = new Clause();
                             c1.resolveAtom(a);
                             Atom complement = c2.getAtom(a.getComplement());
                             c2.resolveAtom(complement);
                             c2.resolveAtom(a.getComplement());
 
+                            if(isMinimal){
+                            Clause child = new Clause();
                             child.setParent(new HashSet<>(Arrays.asList(c1, c2)));
                             Set<Atom> atomSet = c1.getAtoms().stream().filter(s -> !s.equals(a)).collect(Collectors.toSet());
                             atomSet.addAll(c2.getAtoms().stream().filter(s -> !s.equals(complement)).collect(Collectors.toSet()));
                             child.addAllAtoms(atomSet);
-
-                           /* System.out.println("Resolved: " + a.stringRep + " and " + complement.stringRep);
-                            System.out.println("Parents: " + c1.toString() + " and " + c2.toString());*/
                             child = removeAllCompliments(child);
                             temp.add(child);
-                          //  System.out.println("No. children: " + temp.size());
+
+                            } else if(containsCompliments(c1,c2)){
+                                Set<Atom> atomSet1 = c1.getAtoms().stream().filter(s -> !s.equals(a)).collect(Collectors.toSet());
+                                Set<Atom> atomSet2=c2.getAtoms().stream().filter(s -> !s.equals(complement)).collect(Collectors.toSet());
+                                if(atomSet1.size()>0) {
+                                    Clause child1 = new Clause(atomSet1);
+                                    temp.add(child1);
+                                }
+                                if (atomSet2.size() >0) {
+                                    Clause child2 = new Clause(atomSet2);
+                                    temp.add(child2);
+                                }
+
+                            } else {
+                                    Set<Atom> atomSet = c1.getAtoms();
+                                    atomSet.addAll(c2.getAtoms());
+                                    Clause child = new Clause(atomSet);
+                                    child.setParent(new HashSet<>(Arrays.asList(c1, c2)));
+
+                                }
+                            }
                         }
 
                     }
                 }
             }
         }
-        }
+
 
         return temp;
     }
@@ -139,26 +170,29 @@ public class Resolution {
         Set<Atom> resolvedAtoms = new HashSet<>();
 
         for (Atom a: c.getAtoms()) {
-            if(!c.contains(a.getComplement()) && !resolvedAtoms.contains(a)){
-                noResolvedAtoms=+2;
+            if(!c.contains(a.getComplement()) && !resolvedAtoms.contains(a)) {
+                noResolvedAtoms = +2;
                 atoms.add(a);
                 resolvedAtoms.add(a);
                 resolvedAtoms.add(a.getComplement());
-            //} else {
-             //   System.out.println("Resolved: " +a.stringRep+ " and it's compliment!");
             }
         }
         res.addAllAtoms(atoms);
-       // System.out.println("Child clause after elimination compliments: " +res.toString());
 
         return res;
+    }
+
+    private boolean containsCompliments(Clause c1, Clause c2) {
+        for (Atom a : c1.getAtoms()) {
+            if (c2.contains(a.getComplement())) { return true; }
+        }
+        return false;
     }
 
 
     public Set<Clause> getAllClauses(){
         return allClauses;
     }
-
     public int getNoSteps(){ return noSteps; }
     public int getNoResolvedAtoms(){ return noResolvedAtoms; }
 }

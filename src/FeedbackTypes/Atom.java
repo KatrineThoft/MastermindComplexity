@@ -29,8 +29,8 @@ public class Atom {
     }
 
     public boolean equals(Atom other) {
-        //return (color.equals(other.color) && position.equals(other.position)) &&(isNegated == other.isNegated);
-        return this.hashCode() == other.hashCode();
+        return (color.equals(other.color) && position.equals(other.position)) &&(isNegated == other.isNegated);
+       // return this.hashCode() == other.hashCode();
     }
 
     public String getColor() {
