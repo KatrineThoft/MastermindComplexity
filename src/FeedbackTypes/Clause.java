@@ -1,6 +1,7 @@
 package FeedbackTypes;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 //or clause
@@ -70,20 +71,24 @@ public class Clause {
 
 
     public boolean equals(Clause other) {
-        for (Atom a: atoms) {
-            if (!other.atoms.contains(a)){
-                return false;
-            }
-        }
-        for (Atom a: other.atoms) {
-            if (!atoms.contains(a)){
-                return false;
-            }
-
-        }
         return this.hashCode() == other.hashCode();
     }
 
+
+    public boolean equalAtoms(Clause other) {
+        for (Atom a : atoms) {
+            if (!other.atoms.contains(a)) {
+                return false;
+            }
+        }
+        for (Atom a : other.atoms) {
+            if (!atoms.contains(a)) {
+                return false;
+            }
+
+        }
+        return true;
+    }
     public Atom getAtom(Atom a){
         for (Atom at: atoms) {
           if (at.equals(a)) {

@@ -4,6 +4,10 @@ import FeedbackTypes.Feedback;
 import FeedbackTypes.*;
 import Resolution.Resolution;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class Runner {
 
@@ -11,6 +15,8 @@ public class Runner {
        String guess1 = "R_x,G_y,R_z,G_w";
 
         //Colors:("R","O","Y","G","B","P")
+
+
 
         Feedback test1 = new GGOO(guess1);
         Resolution resolution1 = new Resolution(test1);
@@ -21,7 +27,9 @@ public class Runner {
         //System.out.println("Boolean Translation of " +test1.getType() +":\n"+test1.getBoolTrans() +"\n");
 
        Resolution resolution2 = new Resolution(test2,resolution1.getAllClauses());
-       System.out.println("Result after resolution: \n" +resolution2.resultString+"\n");
+     //   System.out.println("Boolean Translation of " +test2.getType() +":\n"+test2.getBoolTrans() +"\n");
+
+        System.out.println("Result after resolution: \n" +resolution2.resultString+"\n");
         System.out.println("Done w. resolving guess 2!");
 
 

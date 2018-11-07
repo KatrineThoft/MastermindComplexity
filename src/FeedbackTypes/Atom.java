@@ -1,5 +1,7 @@
 package FeedbackTypes;
 
+import java.util.Random;
+
 public class Atom {
     public String stringRep;
     String position;
@@ -27,7 +29,8 @@ public class Atom {
     }
 
     public boolean equals(Atom other) {
-        return (color.equals(other.color) && position.equals(other.position)) &&(isNegated == other.isNegated);
+        //return (color.equals(other.color) && position.equals(other.position)) &&(isNegated == other.isNegated);
+        return this.hashCode() == other.hashCode();
     }
 
     public String getColor() {
@@ -44,7 +47,7 @@ public class Atom {
 
     @Override
     public int hashCode() {
-        return stringRep.hashCode();
+       return stringRep.hashCode();
     }
     public Atom getComplement(){
         if(isNegated){
