@@ -11,6 +11,7 @@ public abstract class Feedback {
     Set<String> positions = new HashSet<>();
     Set<String> colors = new HashSet<>();
     Set<Clause> clauses=new HashSet<>();
+    Set<Atom> allUniqueAtoms =new HashSet<>();
 
     public Feedback(String type, String guess){
         this.type = type;
@@ -29,7 +30,6 @@ public abstract class Feedback {
     }
 
     public int noAtoms(){
-        Set<Atom> allUniqueAtoms = new HashSet<>();
         for (Clause c: clauses) {
             allUniqueAtoms.addAll(c.atoms);
         }
@@ -74,6 +74,15 @@ public abstract class Feedback {
         }
 
         return max;
+    }
+
+    public int noColors(){
+        Set<String> colors=new HashSet<>();
+        noAtoms();
+        for (Atom a: allUniqueAtoms) {
+            colors.add(a.color);
+        }
+        return colors.size();
     }
 
     //Not necessary all have depth one in CNF form

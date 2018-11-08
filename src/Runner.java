@@ -1,8 +1,7 @@
 
 
-import FeedbackTypes.Feedback;
 import FeedbackTypes.*;
-import Resolution.Resolution;
+import Resolution.*;
 
 
 
@@ -10,27 +9,27 @@ public class Runner {
 
     public static void main(String[] args){
 
-        twoPinDMM();
-       // fourPinDMM();
+        //twoPinDMM();
+       fourPinDMM();
 
     }
 
     private static void twoPinDMM() {
         String guess1 = "R_x,O_y";
         //Colors:("R","O","Y","G")
-        Feedback test1 = new OR(guess1);
+        Feedback test1 = new RR(guess1);
         System.out.println("Bool. Trans. of: "+ test1.getType()+ "\n" + test1.getBoolTrans());
-        System.out.println("No. clauses: "+ test1.noClauses());
+        System.out.println("No. colors: "+ test1.noColors());
 
-        Resolution resolution1 = new Resolution(test1,false);
+        /*Resolution resolution1 = new Resolution(test1,false);
         System.out.println("Result after resolution: \n" +resolution1.resultString+"\n");
         System.out.println("Done w. resolving guess 1!");
 
         String guess2 = "G_x,R_y";
         Feedback test2 = new OO(guess2);
-        Resolution resolution2 = new Resolution(test2,resolution1.getAllClauses(),false);
+        Resolution resolution2 = new Resolution(test2,resolution1.getCurrentClauses(),false);
         System.out.println("Result after resolution: \n" +resolution2.resultString+"\n");
-        System.out.println("Done w. resolving guess 2!");
+        System.out.println("Done w. resolving guess 2!");*/
     }
 
     private static void fourPinDMM() {
@@ -43,16 +42,20 @@ public class Runner {
         Feedback test1 = new GGOO(guess1);
         Resolution resolution1 = new Resolution(test1,false);
         System.out.println("Result after resolution: \n" +resolution1.resultString+"\n");
+        System.out.println("No. symbols total: \n" +resolution1.noTotalSymbols()+"\n" +
+                "No. symbols in result: "+resolution1.noResSymbols());
         System.out.println("Done w. resolving guess 1!");
+
+
         String guess2 = "G_x,R_y,R_z,G_w";
         Feedback test2 = new GGOO(guess2);
         //System.out.println("Boolean Translation of " +test1.getType() +":\n"+test1.getBoolTrans() +"\n");
 
-        Resolution resolution2 = new Resolution(test2,resolution1.getAllClauses(),false);
+        /*Resolution resolution2 = new Resolution(test2,resolution1.getCurrentClauses(),false);
         //   System.out.println("Boolean Translation of " +test2.getType() +":\n"+test2.getBoolTrans() +"\n");
 
         System.out.println("Result after resolution: \n" +resolution2.resultString+"\n");
-        System.out.println("Done w. resolving guess 2!");
+        System.out.println("Done w. resolving guess 2!");*/
 
 
         /*System.out.println("No. symbols in Bool. Trans.: "+test1.noSymbols());

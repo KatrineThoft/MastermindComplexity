@@ -3,33 +3,38 @@ package Resolution;
 import FeedbackTypes.*;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Resolution {
+    private Set<Clause> currentClauses = new HashSet<>();
     private Set<Clause> allClauses = new HashSet<>();
     public  String resultString;
     private int noSteps;
     private int noResolvedAtoms;
     private boolean isMinimal;
+    private int noTotalClauses;
 
 
     public Resolution(Feedback feedback, boolean isMinimal){
-        this.allClauses = feedback.getClauses();
+        this.currentClauses = feedback.getClauses();
+        noTotalClauses = currentClauses.size();
+        this.allClauses.addAll(currentClauses);
         this.isMinimal = isMinimal;
         printClauses();
         resultString = resolve();
     }
 
-    private void printClauses() { for (Clause c: allClauses) {System.out.println(c.toString()); } }
+    private void printClauses() { for (Clause c: currentClauses) {System.out.println(c.toString()); } }
 
     public Resolution(Feedback feedback, Set<Clause> premises, boolean isMinimal){
        // mergeRedundantClauses(feedback.getClauses(),premises);
         this.isMinimal = isMinimal;
-        allClauses.addAll(premises);
-        allClauses.addAll(feedback.getClauses());
+        currentClauses.addAll(premises);
+        currentClauses.addAll(feedback.getClauses());
+        noTotalClauses = currentClauses.size();
+        this.allClauses.addAll(currentClauses);
         printClauses();
         resultString =  resolve();
     }
@@ -45,10 +50,10 @@ public class Resolution {
         }
         for (Clause c: premises) {
             Set<Atom> temp2 = c.getAtoms();
-            allClauses.add(replaceAtoms(atoms,temp2));
+            currentClauses.add(replaceAtoms(atoms,temp2));
         }
 
-        allClauses.addAll(feedback);
+        currentClauses.addAll(feedback);
 
 
     }
@@ -74,36 +79,38 @@ public class Resolution {
     }
 
     private String resolve() {
-        Set<Clause> childClauses = searchForCompliments(allClauses);
-        while (!childClauses.isEmpty() && !allClauses.containsAll(childClauses)){
+        Set<Clause> childClauses = searchForCompliments(currentClauses);
+        while (!childClauses.isEmpty() && !currentClauses.containsAll(childClauses)){
+            currentClauses.addAll(childClauses);
+            noTotalClauses += childClauses.size();
             allClauses.addAll(childClauses);
             removeClauses();
-            childClauses=searchForCompliments(allClauses);
+            childClauses=searchForCompliments(currentClauses);
             System.out.println("Size of child Clauses: "+ childClauses.size());
         }
 
         StringBuilder res = new StringBuilder();
-        for (Clause c: allClauses) {
+        for (Clause c: currentClauses) {
             res.append(c.toString() +"\n");
         }
 
-        System.out.println("Size of allClauses: "+ allClauses.size());
+        System.out.println("Size of currentClauses: "+ currentClauses.size());
         return res.toString();
     }
 
 
     private void removeClauses() {
-         allClauses = allClauses.stream().filter(s -> !s.isResolved()).collect(Collectors.toSet());
+         currentClauses = currentClauses.stream().filter(s -> !s.isResolved()).collect(Collectors.toSet());
          Set<Clause> newClauseSet =new  HashSet<>();
-         newClauseSet.addAll(allClauses);
-        for (Clause c1:allClauses) {
-            for (Clause c2: allClauses) {
+         newClauseSet.addAll(currentClauses);
+        for (Clause c1: currentClauses) {
+            for (Clause c2: currentClauses) {
                 if (c2.equalAtoms(c1) && c1.hashCode() != c2.hashCode() ){
                     newClauseSet.remove(c2);
                 }
             }
         }
-        allClauses = newClauseSet;
+        currentClauses = newClauseSet;
 
     }
 
@@ -193,10 +200,29 @@ public class Resolution {
     }
 
 
-    public Set<Clause> getAllClauses(){
-        return allClauses;
+    public Set<Clause> getCurrentClauses(){
+        return currentClauses;
     }
     public int getNoSteps(){ return noSteps; }
     public int getNoResolvedAtoms(){ return noResolvedAtoms; }
+
+    public int getNoTotalClauses() {
+        return noTotalClauses;
+    }
+    public int noTotalSymbols(){
+        int res=0;
+        for (Clause c: allClauses) {
+           res+=c.getAtoms().size();
+        }
+        return res;
+    }
+
+    public int noResSymbols(){
+        int res=0;
+        for (Clause c: currentClauses) {
+            res+=c.getAtoms().size();
+        }
+        return res;
+    }
 }
 
