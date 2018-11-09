@@ -4,7 +4,7 @@ import FeedbackTypes.*;
 import Resolution.*;
 
 
-
+//Class used to run the proof methods from
 public class Runner {
 
     public static void main(String[] args){
@@ -14,6 +14,7 @@ public class Runner {
 
     }
 
+    //Executing resolution on 2-pin DMM examples
     private static void twoPinDMM() {
         String guess1 = "R_x,O_y";
         //Colors:("R","O","Y","G")
@@ -32,6 +33,7 @@ public class Runner {
         System.out.println("Done w. resolving guess 2!");*/
     }
 
+    //Executing resolution on 4-pin DMM examples
     private static void fourPinDMM() {
         //Colors:("R","O","Y","G","B","P")
 

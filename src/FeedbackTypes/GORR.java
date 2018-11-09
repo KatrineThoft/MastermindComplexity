@@ -1,7 +1,7 @@
 package FeedbackTypes;
 
 import java.util.*;
-
+//Class representing feedback of the type GORR
 public class GORR extends Feedback {
     Set<Clause> clauses = new HashSet<>();
     public GORR(String guess) {
@@ -15,7 +15,8 @@ public class GORR extends Feedback {
     }
 
 
-
+    //Method translating a guess from into a Boolean translation
+    //Saves all data in Clause objects.
     private void translate(){
         String[] atomString= guess.split(",");
         List<Atom> posAtoms = new ArrayList<>();
@@ -58,7 +59,7 @@ public class GORR extends Feedback {
 
     }
 
-
+    //Methods generating the clauses of the Boolean translation one clause at a time
     private String generateNegCClauses(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
         StringBuilder res = new StringBuilder();
         Atom negC = negAtoms.get(2).get(0);
@@ -189,8 +190,6 @@ public class GORR extends Feedback {
 
         return res.toString();
     }
-
-
     private String generatePosCClauses(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
         StringBuilder res = new StringBuilder();
         Atom negB = negAtoms.get(1).get(1);
@@ -314,8 +313,6 @@ public class GORR extends Feedback {
 
         return res.toString();
     }
-
-
     private String generatePosBClauses(List<List<Atom>>  posAtoms, List<List<Atom>> negAtoms) {
         StringBuilder res = new StringBuilder();
         Atom posB = posAtoms.get(1).get(0);
@@ -437,7 +434,6 @@ public class GORR extends Feedback {
         }
         return res.toString();
     }
-
     private String generateNegBClauses(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
         StringBuilder res = new StringBuilder();
         Atom negB = negAtoms.get(1).get(0);
@@ -564,7 +560,6 @@ public class GORR extends Feedback {
         }
         return res.toString();
     }
-
     private String generatePosAClauses(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
         StringBuilder res = new StringBuilder();
         Atom posA = posAtoms.get(0).get(0);
@@ -813,10 +808,9 @@ public class GORR extends Feedback {
         }
         return res.toString();
     }
-
-
     private String generateNegAClauses(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
         Atom negA = negAtoms.get(0).get(0);
+
         List<Atom> Dlist = Arrays.asList(negAtoms.get(3).get(1),negAtoms.get(3).get(2),posAtoms.get(3).get(1),posAtoms.get(3).get(2));
         List<Atom> Clist = Arrays.asList(negAtoms.get(2).get(1),negAtoms.get(2).get(3),posAtoms.get(2).get(1),posAtoms.get(2).get(3));
         List<Atom> Blist = Arrays.asList(negAtoms.get(1).get(2),negAtoms.get(1).get(3),posAtoms.get(1).get(2),posAtoms.get(1).get(3));
@@ -1061,35 +1055,13 @@ public class GORR extends Feedback {
     }
 
 
-
-    private List<Atom> generateAtoms(Atom a, Boolean negated){
-        List<Atom> res =new ArrayList<>();
-        String[] pos  = {"x","y","z","w"};
-        String neg ="";
-        if(negated){
-            neg = "!";
-        }
-        for (int i = 0; i <pos.length ; i++) {
-            if (!a.position.equals(pos[i])){
-                res.add(new Atom(neg+a.color+"_"+pos[i]));
-            } else {
-                if(negated){
-                    res.add(a.getComplement());
-                }
-                else {
-                    res.add(a);
-                }
-            }
-        }
-        return res;
-    }
-
+    //Generates a singe OR clause
     private String generateSingleOrClauses(Atom a, Atom b){
         addClause(a,b,b);
         return "("+ a.stringRep + " || " + b.stringRep + ") && \n";
     }
 
-
+    //Generates a OR clauses which all contains the same two Atoms
     private String generateMultiOrClauses(Atom a, Atom b, List<Atom> list1, List<Atom> list2){
         StringBuilder temp = new StringBuilder();
         StringBuilder temp2 = new StringBuilder();
@@ -1116,6 +1088,7 @@ public class GORR extends Feedback {
 
     }
 
+    //Generates a singe OR clause from a list of Atoms
     private  String generateOrClause(List<Atom> atoms){
         StringBuilder temp = new StringBuilder();
         temp.append("(");
@@ -1127,6 +1100,7 @@ public class GORR extends Feedback {
         return res + "\n";
     }
 
+    //Methods adding clauses to data set
     private void addClause(Atom a, Atom b, Atom c){
         Set<Atom> atomSet = new HashSet<>();
         atomSet.add(a);
@@ -1141,28 +1115,31 @@ public class GORR extends Feedback {
         atomSet.addAll(list);
         clauses.add(new Clause(atomSet));
     }
+
+
+    //Generates Atom objects
+    // creates Atoms for each position for one color
+    private List<Atom> generateAtoms(Atom a, Boolean negated){
+        List<Atom> res =new ArrayList<>();
+        String[] pos  = {"x","y","z","w"};
+        String neg ="";
+        if(negated){
+            neg = "!";
+        }
+        for (int i = 0; i <pos.length ; i++) {
+            if (!a.position.equals(pos[i])){
+                res.add(new Atom(neg+a.color+"_"+pos[i]));
+            } else {
+                if(negated){
+                    res.add(a.getComplement());
+                }
+                else {
+                    res.add(a);
+                }
+            }
+        }
+        return res;
+    }
+
 }
 
-/*
------- done to here -----
-
-
-(c_x || !d_x || !d_z || !c_w || !a_w || a_z || !b_y) &&
-(c_x || !d_x || !d_z || !c_w || a_w || !a_z || !b_y) &&
-(c_x || !d_x || !d_z || c_w || !a_w || !a_z || !b_y) &&
-(c_x || !d_x || !d_z || c_w || a_w || a_z || !b_y) &&
-(c_x || !d_x || d_z || !c_w || !a_w || !a_z || !b_y) &&
-(c_x || !d_x || d_z || !c_w || a_w || a_z || !b_y) &&
-(c_x || !d_x || d_z || c_w || !a_w || a_z || !b_y) &&
-(c_x || !d_x || d_z || c_w || a_w || !a_z || !b_y) &&
-(c_x || d_x || !d_z || !c_w || !a_w || !a_z || !b_y) &&
-(c_x || d_x || !d_z || !c_w || a_w || a_z || !b_y) &&
-(c_x || d_x || !d_z || c_w || !a_w || a_z || !b_y) &&
-(c_x || d_x || !d_z || c_w || a_w || !a_z || !b_y) &&
-(c_x || d_x || d_z || !c_w || !a_w || a_z || !b_y) &&
-(c_x || d_x || d_z || !c_w || a_w || !a_z || !b_y) &&
-(c_x || d_x || d_z || c_w || !a_w || !a_z || !b_y) &&
-(c_x || d_x || d_z || c_w || a_w || a_z || !b_y) &&
------- done from here -----
-
- */

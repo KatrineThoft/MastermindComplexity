@@ -130,32 +130,11 @@ public class GOOO extends Feedback {
     }
 
 
+    //Generates Atom objects
+    // creates Atoms for each position for one color
 
 
-    private List<Atom> generateAtoms(Atom a, Boolean negated){
-        List<Atom> res =new ArrayList<>();
-        String[] pos  = {"x","y","z","w"};
-        String neg ="";
-        if(negated){
-            neg = "!";
-        }
-
-        for (int i = 0; i <pos.length ; i++) {
-            if (!a.position.equals(pos[i])){
-                res.add(new Atom(neg+a.color+"_"+pos[i]));
-            } else {
-                if(negated){
-                    res.add(a.getComplement());
-                }
-               else {
-                    res.add(a);
-                }
-            }
-        }
-
-        return res;
-    }
-
+    //Generates a OR clauses which all contains the same two Atoms
     private String generateMultiOrClauses(Atom a, Atom b, List<Atom> list1, List<Atom> list2){
         StringBuilder temp = new StringBuilder();
         String ab = a.stringRep + " || " + b.stringRep;
@@ -174,11 +153,13 @@ public class GOOO extends Feedback {
 
     }
 
+    //Generates a singe OR clause
     private String generateSingleOrClauses(Atom a, Atom b){
         addClause(a,b,b);
         return "("+ a.stringRep + " || " + b.stringRep + ") && \n";
     }
 
+    //Generates a OR clauses from a list of Atoms
     private  String generateOrClause(List<Atom> atoms){
         StringBuilder temp = new StringBuilder();
         temp.append("(");
@@ -191,12 +172,14 @@ public class GOOO extends Feedback {
         return res + "\n";
     }
 
+    //Adds clauses to data set from a List
     private void addClauseFromList(List<Atom> list){
         Set<Atom> atomSet = new HashSet<>();
         atomSet.addAll(list);
         clauses.add(new Clause(atomSet));
     }
 
+    //Adds clauses to data set
     private void addClause(Atom a, Atom b, Atom c){
         Set<Atom> atomSet = new HashSet<>();
         atomSet.add(a);
@@ -204,55 +187,29 @@ public class GOOO extends Feedback {
         atomSet.add(c);
         clauses.add(new Clause(atomSet));
     }
+    //Generates Atom objects
+    // creates Atoms for each position for one color
+    private List<Atom> generateAtoms(Atom a, Boolean negated){
+        List<Atom> res =new ArrayList<>();
+        String[] pos  = {"x","y","z","w"};
+        String neg ="";
+        if(negated){
+            neg = "!";
+        }
+        for (int i = 0; i <pos.length ; i++) {
+            if (!a.position.equals(pos[i])){
+                res.add(new Atom(neg+a.color+"_"+pos[i]));
+            } else {
+                if(negated){
+                    res.add(a.getComplement());
+                }
+                else {
+                    res.add(a);
+                }
+            }
+        }
+        return res;
+    }
 
-    /*
-    ( !a_x || !d_y || !d_z || !c_w || !b_w || !b_z || !c_y) &&
-    ( !a_x || d_y || d_z) &&
-    ( !a_x || d_y || c_y) &&
-    ( !a_x || d_z || b_z) &&
-    ( !a_x || !dw) &&
-    ( !a_x || c_w || b_w) &&
-    ( !a_x || c_w || c_y) &&
-    ( !a_x || !c_z) &&
-    ( !a_x || b_w || b_z) &&
-    ( !a_x || !b_y) &&
 
-    (a_x || b_x || a_y || b_y) &&
-    (a_x || !c_x || !d_x || !d_z || dw || !c_w || c_z || !a_w || !a_z) &&
-    (a_x || c_x || d_x || dw || c_z) &&
-    (a_x || c_x || dw || c_w || c_z) &&
-    (a_x || c_x || c_z || a_z) &&
-    (a_x || d_x || d_z || dw || c_z) &&
-    (a_x || d_x || dw || a_w) &&
-    (a_x || d_z || dw || c_z || a_z) &&
-    (a_x || dw || c_w || c_z || a_w) &&
-    (a_x || dw || c_z || a_w || a_z) &&
-    (a_x || dw || c_z || b_y) &&
-
-    ( !b_x || !c_x || !dw || !b_z || !a_z || !a_y || !c_y) &&
-    ( !b_x || !d_x || !d_y || !c_z || !b_w || !a_w || !a_y) &&
-
-    (b_x || c_x || !dw) &&
-    (b_x || d_x || !c_z) &&
-    (b_x || !dw || b_z) &&
-    (b_x || !c_z || b_w) &&
-
-    (d_x || d_y || !c_z) &&
-    (d_y || dw || b_w || b_y) &&
-    (d_y || !c_z || a_y) &&
-
-     (c_x || !dw || c_y) &&
-    ( !dw || !c_z) &&
-    ( !dw || b_z || a_z) &&
-    ( !dw || a_z || a_y) &&
-    ( !dw || a_y || c_y) &&
-    (!dw || !b_y) &&
-
-    ( !c_z || b_w || a_w) &&
-    ( !c_z || a_w || a_y) &&
-    ( !c_z || !b_y) &&
-
-     (d_z || dw || c_w || c_z) &&
-    (c_z || b_z || c_y || b_y)
-     */
 }

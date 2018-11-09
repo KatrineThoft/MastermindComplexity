@@ -1,7 +1,7 @@
 package FeedbackTypes;
 
 import java.util.*;
-
+//Class representing feedback of the type GGRR
 public class GGRR extends Feedback {
     Set<Clause> clauses = new HashSet<>();
     public GGRR(String guess) {
@@ -16,7 +16,8 @@ public class GGRR extends Feedback {
     }
 
 
-
+    //Method translating a guess from into a Boolean translation
+    //Saves all data in Clause objects.
     public void translate(){
         String[] atomString= guess.split(",");
         List<Atom> posAtoms = new ArrayList<>();
@@ -61,24 +62,7 @@ public class GGRR extends Feedback {
         super.boolTrans =posCClauses + negCClauses + bClauses;
     }
 
-
-    private List<Atom> generateAtoms(Atom a, Boolean negated){
-        List<Atom> res =new ArrayList<>();
-        String[] pos  = {"x","y","z","w"};
-        String neg ="";
-        if(negated){
-            neg = "!";
-        }
-        for (int i = 0; i <pos.length ; i++) {
-            if (!a.position.equals(pos[i])){
-                res.add(new Atom(neg+a.color+"_"+pos[i]));
-            }
-        }
-
-        return res;
-    }
-
-
+    //Generates a OR clauses which all contains the same two Atoms
     private String generateOrClauses(Atom a, Atom b, List<Atom> list1, List<Atom> list2){
         StringBuilder temp = new StringBuilder();
         String ab = a.stringRep + " || " + b.stringRep;
@@ -97,7 +81,7 @@ public class GGRR extends Feedback {
 
     }
 
-
+    //Generates a singe OR clause
     private String generateSingleOrClauses(Atom a, Atom b){
         Set<Atom> atomSet = new HashSet<>();
         atomSet.add(a);
@@ -106,7 +90,7 @@ public class GGRR extends Feedback {
         return "("+ a.stringRep + " || " + b.stringRep + ") && \n";
     }
 
-
+    //Adds clauses to data set
     private void addClause(Atom a, Atom b, Atom c){
         Set<Atom> atomSet = new HashSet<>();
         atomSet.add(a);
@@ -115,22 +99,32 @@ public class GGRR extends Feedback {
 
         clauses.add(new Clause(atomSet));
     }
-    /*
-    ( ! a_x || ! d_z ||  c_z) &&
-    ( ! a_x || ! d_w ||  c_z) &&
-    ( ! a_x || ! c_w ||  c_z) &&
-    ( a_x || ! c_x ||  c_z) &&
-    ( a_x ||  d_w ||  c_z) &&
-    ( a_x ||  c_z || ! a_z) &&
+
+    //Generates Atom objects
+    // creates Atoms for each position for one color
+    private List<Atom> generateAtoms(Atom a, Boolean negated){
+        List<Atom> res =new ArrayList<>();
+        String[] pos  = {"x","y","z","w"};
+        String neg ="";
+        if(negated){
+            neg = "!";
+        }
+        for (int i = 0; i <pos.length ; i++) {
+            if (!a.position.equals(pos[i])){
+                res.add(new Atom(neg+a.color+"_"+pos[i]));
+            } else {
+                if(negated){
+                    res.add(a.getComplement());
+                }
+                else {
+                    res.add(a);
+                }
+            }
+        }
+        return res;
+    }
 
 
-    ( ! d_x ||  d_w || ! c_z) &&
-    ( d_w || ! c_z || ! a_w) &&
-    ( ! b_x ||  b_y) &&
-    ( d_w ||  b_y) &&
-    ( c_z ||  b_y) &&
-    ( ! a_y ||  b_y)
-     */
 }
 
 

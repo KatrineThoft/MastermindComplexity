@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+//Class representing feedback of the type OR
 public class OR extends Feedback {
     Set<Clause> clauses = new HashSet<>();
     public OR(String guess) {
@@ -14,6 +14,8 @@ public class OR extends Feedback {
 
     }
 
+    //Method translating a guess from into a Boolean translation
+    //Saves all data in Clause objects.
     private void translate() {
         String[] atomString= guess.split(",");
         List<Atom> atomList = new ArrayList<>();
@@ -59,6 +61,7 @@ public class OR extends Feedback {
         super.boolTrans = trans.substring(0,trans.lastIndexOf("&&"));
     }
 
+    //Adds clauses to data set
     private void addClause(List<Atom> list){
         for (Atom a: list) {
             Set<Atom> atomSet = new HashSet<>();
@@ -66,14 +69,33 @@ public class OR extends Feedback {
             clauses.add(new Clause(atomSet));
         }
     }
+
+    //Generates a singe OR clause from a list of Atoms
+    private String generateSingleOrClauses(List<Atom> list){
+        addClause(list);
+        return "("+ list.get(0).stringRep + " || " + list.get(1).stringRep + ") && \n";
+    }
+
+    //Generates a singe AND clause from a list of Atoms
+    private String generateAndClauses(List<Atom> list){
+        addClause(list);
+        return list.get(0).stringRep + " && \n " ;
+    }
+
+    @Override
+    public int noXOR() {
+        return 1;
+    }
+
+    //Generates Atom objects
+    // creates Atoms for each position for one color
     private List<Atom> generateAtoms(Atom a, Boolean negated){
         List<Atom> res =new ArrayList<>();
-        String[] pos  = {"x","y"};
+        String[] pos  = {"x","y","z","w"};
         String neg ="";
         if(negated){
             neg = "!";
         }
-
         for (int i = 0; i <pos.length ; i++) {
             if (!a.position.equals(pos[i])){
                 res.add(new Atom(neg+a.color+"_"+pos[i]));
@@ -86,24 +108,9 @@ public class OR extends Feedback {
                 }
             }
         }
-
         return res;
     }
 
-
-    private String generateSingleOrClauses(List<Atom> list){
-        addClause(list);
-        return "("+ list.get(0).stringRep + " || " + list.get(1).stringRep + ") && \n";
-    }
-
-    private String generateAndClauses(List<Atom> list){
-        addClause(list);
-        return list.get(0).stringRep + " && \n " ;
-    }
-    @Override
-    public int noXOR() {
-        return 1;
-    }
 }
 
 

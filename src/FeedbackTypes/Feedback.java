@@ -1,9 +1,8 @@
 package FeedbackTypes;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
+//Super class for all feedback types
 public abstract class Feedback {
     private String type;
     String boolTrans;
@@ -13,6 +12,7 @@ public abstract class Feedback {
     Set<Clause> clauses=new HashSet<>();
     Set<Atom> allUniqueAtoms =new HashSet<>();
 
+    //Constructor of Feedback class
     public Feedback(String type, String guess){
         this.type = type;
         this.guess = guess;
@@ -22,6 +22,7 @@ public abstract class Feedback {
         //colors.addAll(Arrays.asList("a","b","c","d","e","f"));
     }
 
+    //Getter methods for different features of a feedback type
     public String getType(){
         return type;
     }
@@ -111,6 +112,7 @@ public abstract class Feedback {
 
     public abstract int noXOR();
 
+    //Exctracting all info needed to count number of symbols or the depth of a Boolean translation
     private String removeAllUnesserayInfo(Boolean countSymbols){
         String temp1,temp2;
         temp1 = boolTrans.replace(" ","");
@@ -129,6 +131,7 @@ public abstract class Feedback {
        return temp1.replace("_","");
     }
 
+    //Method ensuring that only legal colors and positions are present in a guess
     private void checkColorsAndPositions(){
         String temp =guess.replace("_"," ");
         temp =temp.replace(","," ");
@@ -143,7 +146,6 @@ public abstract class Feedback {
             }
         }
     }
-
 
 
 }

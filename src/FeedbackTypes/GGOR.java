@@ -1,7 +1,7 @@
 package FeedbackTypes;
 
 import java.util.*;
-
+//Class representing feedback of the type GGOR
 public class GGOR extends Feedback {
     Set<Clause> clauses = new HashSet<>();
     public GGOR(String guess) {
@@ -10,6 +10,8 @@ public class GGOR extends Feedback {
         super.clauses = clauses;
     }
 
+    //Method translating a guess from into a Boolean translation
+    //Saves all data in Clause objects.
     private void translate() {
         StringBuilder temp = new StringBuilder();
         String[] atomString= guess.split(",");
@@ -32,6 +34,8 @@ public class GGOR extends Feedback {
         super.boolTrans =temp.substring(0,temp.lastIndexOf("&&"));
     }
 
+    //Used by translate() to genereate the Boolean translation
+    //one OR clause at at time
     private String generateCases(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
 
         StringBuilder temp = new StringBuilder();
@@ -85,6 +89,7 @@ public class GGOR extends Feedback {
     }
 
 
+    //Generates a singe OR clause
     private  String generateOrClause(List<Atom> atoms){
         StringBuilder temp = new StringBuilder();
         temp.append("(");
@@ -97,12 +102,15 @@ public class GGOR extends Feedback {
         return res + "\n";
     }
 
+    //Adds clauses to data set
     private void addClauseFromList(List<Atom> list){
         Set<Atom> atomSet = new HashSet<>();
         atomSet.addAll(list);
         clauses.add(new Clause(atomSet));
     }
 
+    //Generates Atom objects
+    // creates Atoms for each position for one color
     private List<Atom> generateAtoms(Atom a, Boolean negated){
         List<Atom> res =new ArrayList<>();
         String[] pos  = {"x","y","z","w"};
@@ -124,5 +132,7 @@ public class GGOR extends Feedback {
         }
         return res;
     }
+
+
 
 }

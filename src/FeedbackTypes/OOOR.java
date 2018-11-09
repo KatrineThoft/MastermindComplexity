@@ -1,7 +1,7 @@
 package FeedbackTypes;
 
 import java.util.*;
-
+//Class representing feedback of the type OOOR
 public class OOOR extends Feedback {
     Set<Clause> clauses = new HashSet<>();
     public OOOR(String guess) {
@@ -10,14 +10,14 @@ public class OOOR extends Feedback {
         super.clauses = clauses;
     }
 
+    //Method translating a guess from into a Boolean translation
+    //Saves all data in Clause objects.
     private void translate() {
         StringBuilder temp = new StringBuilder();
         String[] atomString= guess.split(",");
         List<Atom> atomList = new ArrayList<>();
 
         //Getting the complement, since the original atom is not used in bool. trans.
-
-
         List<Atom> negGuess = new ArrayList<>();
         for (String s: atomString) {
             Atom a = new Atom(s);
@@ -36,6 +36,7 @@ public class OOOR extends Feedback {
         super.boolTrans =temp.substring(0,temp.lastIndexOf("&&"));
     }
 
+    //Method generating the clauses of the Boolean translation one clause at a time
     private String generateCases(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
         StringBuilder temp = new StringBuilder();
         List<Atom> Alist = Arrays.asList(negAtoms.get(0).get(2),negAtoms.get(0).get(3),
@@ -91,12 +92,47 @@ public class OOOR extends Feedback {
         return temp.toString();
     }
 
-    /*
-!b_x &&
-!b_z
- */
+    //Generates an OR clauses from a list of Atom
+    private  String generateOrClause(List<Atom> atoms){
+        StringBuilder temp = new StringBuilder();
+        temp.append("(");
+        for (Atom a: atoms ) {
+            temp.append(a.stringRep + " || ");
+        }
+        addClauseFromList(atoms);
 
+        String res = temp.substring(0,temp.lastIndexOf("||")) + ") &&";
+        return res + "\n";
+    }
 
+    //Generates an AND clauses from a list of Atom
+    private  String generateAndClauses(List<Atom> atoms){
+        StringBuilder temp = new StringBuilder();
+        for (Atom a: atoms ) {
+            temp.append(a.stringRep + " && \n");
+            Set<Atom> s = new HashSet<>();
+            s.add(a);
+            Clause c = new Clause(s);
+            clauses.add(c);
+        }
+
+        return temp.toString();
+    }
+
+    //Adds clauses to data set
+    private void addClauseFromList(List<Atom> list){
+        Set<Atom> atomSet = new HashSet<>();
+        atomSet.addAll(list);
+        clauses.add(new Clause(atomSet));
+    }
+
+    @Override
+    public int noXOR() {
+        return 43;
+    }
+
+    //Generates Atom objects
+    // creates Atoms for each position for one color
     private List<Atom> generateAtoms(Atom a, Boolean negated){
         List<Atom> res =new ArrayList<>();
         String[] pos  = {"x","y","z","w"};
@@ -119,58 +155,5 @@ public class OOOR extends Feedback {
         return res;
     }
 
-
-    private  String generateOrClause(List<Atom> atoms){
-        StringBuilder temp = new StringBuilder();
-        temp.append("(");
-        for (Atom a: atoms ) {
-            temp.append(a.stringRep + " || ");
-        }
-        addClauseFromList(atoms);
-
-        String res = temp.substring(0,temp.lastIndexOf("||")) + ") &&";
-        return res + "\n";
-    }
-
-
-    private  String generateAndClauses(List<Atom> atoms){
-        StringBuilder temp = new StringBuilder();
-
-        for (Atom a: atoms ) {
-            temp.append(a.stringRep + " && \n");
-            Set<Atom> s = new HashSet<>();
-            s.add(a);
-            Clause c = new Clause(s);
-            clauses.add(c);
-        }
-
-        return temp.toString();
-    }
-
-    private void addClauseFromList(List<Atom> list){
-        Set<Atom> atomSet = new HashSet<>();
-        atomSet.addAll(list);
-        clauses.add(new Clause(atomSet));
-    }
-
-/*!a_x &&
-!b_y &&
-!c_z &&
-!d_w&&
-
-
-( !a_w || !d_y || !a_z || c_w) &&
- ( !a_w || a_z || !c_x) &&
-  (a_w || d_y || !a_z || !c_x) &&
-  (a_w || !a_z || !c_x ||c_w) &&
-( !d_y || !a_z || c_x || c_w) &&
-!b_x &&
-!b_z
- */
-
-    @Override
-    public int noXOR() {
-        return 43;
-    }
 
 }

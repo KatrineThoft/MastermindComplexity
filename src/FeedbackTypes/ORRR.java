@@ -1,7 +1,7 @@
 package FeedbackTypes;
 
 import java.util.*;
-
+//Class representing feedback of the type ORRR
 public class ORRR extends Feedback {
     Set<Clause> clauses= new HashSet<>();
 
@@ -16,6 +16,8 @@ public class ORRR extends Feedback {
         return 11;
     }
 
+    //Method translating a guess from into a Boolean translation
+    //Saves all data in Clause objects.
     public void translate(){
         //Creating atom objects from the input string
         StringBuilder temp = new StringBuilder();
@@ -51,6 +53,7 @@ public class ORRR extends Feedback {
         super.boolTrans =temp.substring(0,temp.lastIndexOf("&&"));
     }
 
+    //Methods generating the clauses of the Boolean translation one clause at a time
     private String generateNegAyCases(List<List<Atom>> posAtoms, List<List<Atom>> negAtoms) {
         StringBuilder temp = new StringBuilder();
         Atom negAy= negAtoms.get(0).get(1);
@@ -316,7 +319,7 @@ public class ORRR extends Feedback {
     }
 
 
-
+    //Generates a OR clauses which all contains the same two Atoms
     private String generateMultiOrClauses(Atom a, List<Atom> list1){
         StringBuilder temp = new StringBuilder();
 
@@ -327,6 +330,27 @@ public class ORRR extends Feedback {
         return temp.toString();
 
     }
+
+
+    //Generates a singe OR clause from a list of Atoms
+    private  String generateOrClause(List<Atom> atoms){
+        StringBuilder temp = new StringBuilder();
+        temp.append("(");
+        for (Atom a: atoms ) {
+            temp.append(a.stringRep + " || ");
+        }
+        addClauseFromList(atoms);
+
+        String res = temp.substring(0,temp.lastIndexOf("||")) + ") &&";
+        return res + "\n";
+    }
+
+    //Adds clauses to data set
+    private void addClauseFromList(List<Atom> list){
+        Set<Atom> atomSet = new HashSet<>();
+        atomSet.addAll(list);
+        clauses.add(new Clause(atomSet));
+    }
     private void addClause(Atom a, Atom b){
         Set<Atom> atomSet = new HashSet<>();
         atomSet.add(a);
@@ -334,7 +358,23 @@ public class ORRR extends Feedback {
         clauses.add(new Clause(atomSet));
     }
 
+    //Generates a singe AND clause from a list of Atoms
+    private  String generateAndClauses(List<Atom> atoms){
+        StringBuilder temp = new StringBuilder();
 
+        for (Atom a: atoms ) {
+            temp.append(a.stringRep + " && \n");
+            Set<Atom> s = new HashSet<>();
+            s.add(a);
+            Clause c = new Clause(s);
+            clauses.add(c);
+        }
+
+        return temp.toString();
+    }
+
+
+    //translate in not cnf format
     private void translateNotCNF(){
         //Creating atom objects from the input string
         String[] atomString= guess.split(",");
@@ -394,7 +434,21 @@ public class ORRR extends Feedback {
 
         super.boolTrans = trans.toString();
     }
+    private Set<Atom> generateAtoms1(Atom a, boolean isNegated){
+        Set<Atom> res = new HashSet<>();
 
+        String neg = "";
+        if(isNegated){
+            neg = "!";
+        }
+
+        for (String p:positions) {
+            if (!a.position.equals(p)){
+                res.add(new Atom(neg+a.color+"_"+p));
+            }
+        }
+        return res;
+    }
     private String addCases(Set<Atom> negAtoms, Set<Atom> posAtoms) {
 
         String res="";
@@ -415,43 +469,9 @@ public class ORRR extends Feedback {
         return res;
     }
 
-
-    private Set<Atom> generateAtoms1(Atom a, boolean isNegated){
-        Set<Atom> res = new HashSet<>();
-
-        String neg = "";
-        if(isNegated){
-            neg = "!";
-        }
-
-        for (String p:positions) {
-            if (!a.position.equals(p)){
-                res.add(new Atom(neg+a.color+"_"+p));
-            }
-        }
-        return res;
-    }
-
-
-    private  String generateOrClause(List<Atom> atoms){
-        StringBuilder temp = new StringBuilder();
-        temp.append("(");
-        for (Atom a: atoms ) {
-            temp.append(a.stringRep + " || ");
-        }
-        addClauseFromList(atoms);
-
-        String res = temp.substring(0,temp.lastIndexOf("||")) + ") &&";
-        return res + "\n";
-    }
-
-    private void addClauseFromList(List<Atom> list){
-        Set<Atom> atomSet = new HashSet<>();
-        atomSet.addAll(list);
-        clauses.add(new Clause(atomSet));
-    }
-
-    private List<Atom> generateAtoms(Atom a, Boolean negated){
+    //Generates Atom objects
+    // creates Atoms for each position for one color
+    List<Atom> generateAtoms(Atom a, Boolean negated){
         List<Atom> res =new ArrayList<>();
         String[] pos  = {"x","y","z","w"};
         String neg ="";
@@ -461,29 +481,11 @@ public class ORRR extends Feedback {
         for (int i = 0; i <pos.length ; i++) {
             if (!a.position.equals(pos[i])){
                 res.add(new Atom(neg+a.color+"_"+pos[i]));
-            } else {
-                if(negated){
-                    res.add(a.getComplement());
-                }
-                else {
-                    res.add(a);
-                }
             }
         }
+
         return res;
     }
 
-    private  String generateAndClauses(List<Atom> atoms){
-        StringBuilder temp = new StringBuilder();
 
-        for (Atom a: atoms ) {
-            temp.append(a.stringRep + " && \n");
-            Set<Atom> s = new HashSet<>();
-            s.add(a);
-            Clause c = new Clause(s);
-            clauses.add(c);
-        }
-
-        return temp.toString();
-    }
 }

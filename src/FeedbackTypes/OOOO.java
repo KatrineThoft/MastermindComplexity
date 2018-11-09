@@ -1,7 +1,7 @@
 package FeedbackTypes;
 
 import java.util.*;
-
+//Class representing feedback of the type OOOO
 public class OOOO extends Feedback{
     Set<Clause> clauses = new HashSet<>();
     public OOOO(String guess) {
@@ -10,6 +10,8 @@ public class OOOO extends Feedback{
         super.clauses = clauses;
     }
 
+    //Method translating a guess from into a Boolean translation
+    //Saves all data in Clause objects.
     private void translate() {
 
         String[] atomString= guess.split(",");
@@ -52,6 +54,7 @@ public class OOOO extends Feedback{
         super.boolTrans = res.substring(0,res.lastIndexOf("&&"));
     }
 
+    //Methods generating the clauses of the Boolean translation one clause at a time
     private String generateRestCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
         StringBuilder temp = new StringBuilder();
         Atom posDz = posAtoms.get(3).get(2);
@@ -1122,6 +1125,7 @@ public class OOOO extends Feedback{
         return 8;
     }
 
+    //Generates a OR clauses which all contains the same two Atoms
     private String generateMultiOrClauses(Atom a, Atom b, List<Atom> list1, List<Atom> list2){
         StringBuilder temp = new StringBuilder();
         StringBuilder temp2 = new StringBuilder();
@@ -1149,6 +1153,7 @@ public class OOOO extends Feedback{
     }
 
 
+    //Generates a singe OR clause from a list of Atoms
     private  String generateOrClause(List<Atom> atoms){
         StringBuilder temp = new StringBuilder();
         temp.append("(");
@@ -1160,6 +1165,7 @@ public class OOOO extends Feedback{
         return res + "\n";
     }
 
+    //Generates a singe AND clause from a list of Atoms
     private  String generateAndClause(List<Atom> atoms){
         StringBuilder temp = new StringBuilder();
 
@@ -1170,6 +1176,17 @@ public class OOOO extends Feedback{
         return temp.toString() + "&&\n";
     }
 
+    //Adds clauses to data set
+    private void addClause(Atom a, Atom b, List<Atom> list){
+        Set<Atom> atomSet = new HashSet<>();
+        atomSet.add(a);
+        atomSet.add(b);
+        atomSet.addAll(list);
+        clauses.add(new Clause(atomSet));
+    }
+
+    //Generates Atom objects
+    // creates Atoms for each position for one color
     private List<Atom> generateAtoms(Atom a, Boolean negated){
         List<Atom> res =new ArrayList<>();
         String[] pos  = {"x","y","z","w"};
@@ -1192,21 +1209,4 @@ public class OOOO extends Feedback{
         return res;
     }
 
-    private void addClause(Atom a, Atom b, List<Atom> list){
-        Set<Atom> atomSet = new HashSet<>();
-        atomSet.add(a);
-        atomSet.add(b);
-        atomSet.addAll(list);
-        clauses.add(new Clause(atomSet));
-    }
-
-    private void addClause4Atoms(Atom a, Atom b,Atom c, Atom d, List<Atom> list){
-        Set<Atom> atomSet = new HashSet<>();
-        atomSet.add(a);
-        atomSet.add(b);
-        atomSet.add(c);
-        atomSet.add(d);
-        atomSet.addAll(list);
-        clauses.add(new Clause(atomSet));
-    }
 }

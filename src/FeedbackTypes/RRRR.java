@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+//Class representing feedback of the type GOOR
 public class RRRR extends Feedback {
     Set<Clause> clauses = new HashSet<>();
     public RRRR(String guess) {

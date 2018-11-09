@@ -1,7 +1,7 @@
 package FeedbackTypes;
 
 import java.util.*;
-
+//Class representing feedback of the type GOOR
 public class GOOR extends Feedback {
     Set<Clause> clauses = new HashSet<>();
     public GOOR(String guess) {
@@ -10,6 +10,9 @@ public class GOOR extends Feedback {
         super.clauses = clauses;
     }
 
+
+    //Method translating a guess from into a Boolean translation
+    //Saves all data in Clause objects.
     private void translate() {
         String[] atomString= guess.split(",");
         List<Atom> atomList = new ArrayList<>();
@@ -41,6 +44,7 @@ public class GOOR extends Feedback {
         super.boolTrans = res.substring(0,res.lastIndexOf("&&"));
     }
 
+    //Methods generating the clauses of the Boolean translation one clause at a time
     private String generatePosAyCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
         StringBuilder temp = new StringBuilder();
         Atom posAy = posAtoms.get(0).get(1);
@@ -242,7 +246,6 @@ public class GOOR extends Feedback {
         }
         return temp.toString();
     }
-
     private String generateNegDxCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
 
         StringBuilder temp = new StringBuilder();
@@ -395,8 +398,6 @@ public class GOOR extends Feedback {
         }
         return temp.toString();
     }
-
-
     private String generatePosCzCases(List<List<Atom>> negAtoms, List<List<Atom>> posAtoms) {
         StringBuilder temp = new StringBuilder();
         Atom posCz = posAtoms.get(2).get(2);
@@ -838,6 +839,7 @@ public class GOOR extends Feedback {
         return temp.toString();
     }
 
+    //Generates a OR clauses which all contains the same two Atoms
     private String generateMultiOrClauses(Atom a, Atom b, List<Atom> list1, List<Atom> list2){
         StringBuilder temp = new StringBuilder();
         StringBuilder temp2 = new StringBuilder();
@@ -865,6 +867,8 @@ public class GOOR extends Feedback {
     }
 
 
+
+    //Generates a singe OR clause from a list of Atoms
     private  String generateOrClause(List<Atom> atoms){
         StringBuilder temp = new StringBuilder();
         temp.append("(");
@@ -876,16 +880,24 @@ public class GOOR extends Feedback {
         return res + "\n";
     }
 
-    private  String generateAndClause(List<Atom> atoms){
-        StringBuilder temp = new StringBuilder();
 
-        for (Atom a: atoms ) {
-            temp.append(a.stringRep + " && ");
-        }
-        addClause(atoms.get(0),atoms.get(0),atoms);
-        return temp.toString() + "&&\n";
+    //Adds clauses to data set
+    private void addClause(Atom a, Atom b, List<Atom> list){
+        Set<Atom> atomSet = new HashSet<>();
+        atomSet.add(a);
+        atomSet.add(b);
+        atomSet.addAll(list);
+        clauses.add(new Clause(atomSet));
     }
 
+
+    @Override
+    public int noXOR() {
+        return 74;
+    }
+
+    //Generates Atom objects
+    // creates Atoms for each position for one color
     private List<Atom> generateAtoms(Atom a, Boolean negated){
         List<Atom> res =new ArrayList<>();
         String[] pos  = {"x","y","z","w"};
@@ -908,36 +920,6 @@ public class GOOR extends Feedback {
         return res;
     }
 
-    private void addClause(Atom a, Atom b, List<Atom> list){
-        Set<Atom> atomSet = new HashSet<>();
-        atomSet.add(a);
-        atomSet.add(b);
-        atomSet.addAll(list);
-        clauses.add(new Clause(atomSet));
-    }
-
-    private void addClause4Atoms(Atom a, Atom b,Atom c, Atom d, List<Atom> list){
-        Set<Atom> atomSet = new HashSet<>();
-        atomSet.add(a);
-        atomSet.add(b);
-        atomSet.add(c);
-        atomSet.add(d);
-        atomSet.addAll(list);
-        clauses.add(new Clause(atomSet));
-    }
-
-    private void addClause(Atom a, Atom b, Atom c){
-        Set<Atom> atomSet = new HashSet<>();
-        atomSet.add(a);
-        atomSet.add(b);
-        atomSet.add(c);
-        clauses.add(new Clause(atomSet));
-    }
-
-    @Override
-    public int noXOR() {
-        return 74;
-    }
 
 
 }

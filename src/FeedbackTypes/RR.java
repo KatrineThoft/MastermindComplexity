@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+//Class representing feedback of the type RR
 public class RR extends Feedback {
     Set<Clause> clauses = new HashSet<>();
     public RR(String guess) {
@@ -13,7 +13,9 @@ public class RR extends Feedback {
         super.clauses =clauses;
 
     }
-//¬ax∧¬by∧¬ay∧¬bx
+
+    //Method translating a guess from into a Boolean translation
+    //Saves all data in Clause objects.
     private void translate() {
         String[] atomString= guess.split(",");
         List<Atom> atomList = new ArrayList<>();
@@ -39,21 +41,35 @@ public class RR extends Feedback {
         super.boolTrans = trans.substring(0,trans.lastIndexOf("&&"));
     }
 
+    //Adds clauses to data set
     private void addClause(Atom a){
-
             Set<Atom> atomSet = new HashSet<>();
             atomSet.add(a);
             clauses.add(new Clause(atomSet));
 
     }
+
+
+    //Generates a single AND clause
+    private String generateAndClauses(Atom a){
+        addClause(a);
+        return a.stringRep + " && \n " ;
+    }
+
+    @Override
+    public int noXOR() {
+        return 0;
+    }
+
+    //Generates Atom objects
+    // creates Atoms for each position for one color
     private List<Atom> generateAtoms(Atom a, Boolean negated){
         List<Atom> res =new ArrayList<>();
-        String[] pos  = {"x","y"};
+        String[] pos  = {"x","y","z","w"};
         String neg ="";
         if(negated){
             neg = "!";
         }
-
         for (int i = 0; i <pos.length ; i++) {
             if (!a.position.equals(pos[i])){
                 res.add(new Atom(neg+a.color+"_"+pos[i]));
@@ -66,18 +82,7 @@ public class RR extends Feedback {
                 }
             }
         }
-
         return res;
     }
 
-
-    private String generateAndClauses(Atom a){
-        addClause(a);
-        return a.stringRep + " && \n " ;
-    }
-
-    @Override
-    public int noXOR() {
-        return 0;
-    }
 }

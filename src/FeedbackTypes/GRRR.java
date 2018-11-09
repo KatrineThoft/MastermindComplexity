@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+//Class representing feedback of the type GRRR
 public class GRRR extends Feedback {
     Set<Clause> clauses = new HashSet<>();
     public GRRR(String guess) {
@@ -13,6 +13,8 @@ public class GRRR extends Feedback {
         super.clauses =clauses;
     }
 
+    //Method translating a guess from into a Boolean translation
+    //Saves all data in Clause objects.
     private void translate() {
         StringBuilder res = new StringBuilder();
 
@@ -41,11 +43,13 @@ public class GRRR extends Feedback {
         super.boolTrans = res.substring(0,res.lastIndexOf("&&"));
     }
 
+    //Generates a singe OR clause
     private String generateSingleOrClauses(Atom a, Atom b) {
         addClause(a,b);
         return "(" + a.stringRep + " || " + b.stringRep + ") && \n";
     }
 
+    //Generates a singe OR clause from a list of Atoms
     private String generateOrClause(List<Atom> atoms) {
         StringBuilder temp = new StringBuilder();
         temp.append("(");
@@ -61,7 +65,7 @@ public class GRRR extends Feedback {
         return 3;
     }
 
-
+    //Adds clauses to data set
     private void addClause(Atom a, Atom b){
         Set<Atom> atomSet = new HashSet<>();
         atomSet.add(a);
@@ -73,16 +77,5 @@ public class GRRR extends Feedback {
         atomSet.addAll(list);
         clauses.add(new Clause(atomSet));
     }
-    /*( !a_x || !b_y) &&
-    ( !a_x || !c_z) &&
-    ( !a_x || !d_w) &&
 
-    (a_x || b_y || c_z || d_w) &&
-
-    ( !b_y || !c_z) &&
-   ( !b_y || !d_w) &&
-
-   ( !c_z || !d_w)
-
-     */
 }

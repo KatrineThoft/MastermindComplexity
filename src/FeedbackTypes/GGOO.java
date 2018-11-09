@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+//Class representing feedback of the type GGOO
 public class GGOO extends Feedback{
     Set<Clause> clauses = new HashSet<>();
 
@@ -19,7 +19,8 @@ public class GGOO extends Feedback{
         return 5;
     }
 
-
+    //Method translating a guess from into a Boolean translation
+    //Saves all data in Clause objects.
     private void translate() {
         String[] atomString= guess.split(",");
         List<Atom> posAtoms = new ArrayList<>();
@@ -87,18 +88,25 @@ public class GGOO extends Feedback{
 
     }
 
+    //Generates Atom objects
+    // creates Atoms for each position for one color
     private List<Atom> generateAtoms(Atom a){
         List<Atom> res =new ArrayList<>();
         String[] pos  = {"x","y","z","w"};
+        String neg ="";
+
         for (int i = 0; i <pos.length ; i++) {
             if (!a.position.equals(pos[i])){
-                res.add(new Atom(a.color+"_"+pos[i]));
+                res.add(new Atom(neg+a.color+"_"+pos[i]));
+            } else {
+                    res.add(a);
+                }
             }
-        }
-
         return res;
     }
 
+
+    //Method used by translate() to generate clauses
     private String generateOrClauses(Atom a, Atom b, List<Atom> list1, List<Atom> list2){
         StringBuilder temp = new StringBuilder();
         String ab = a.stringRep + " || " + b.stringRep;
@@ -116,6 +124,7 @@ public class GGOO extends Feedback{
         return   temp.toString();
     }
 
+    //Adds clauses to data set
     private void addClause(Atom a, Atom b, Atom c){
         Set<Atom> atomSet = new HashSet<>();
         atomSet.add(a);
@@ -123,29 +132,5 @@ public class GGOO extends Feedback{
         atomSet.add(c);
         clauses.add(new Clause(atomSet));
     }
-    /*
-    ( !a_x || d_y || !c_z) &&
-    ( !a_x || d_z || !b_y) &&
-    ( !a_x || !d_w || !c_z) &&
-    ( !a_x || !d_w || !b_y) &&
-    ( !a_x || c_w || !b_y) &&
-    ( !a_x || !c_z || b_w) &&
-    ( !a_x || !c_z || !b_y) &&
 
-    (a_x || b_x || b_y) &&
-    (a_x || c_x || c_z) &&
-    (a_x || d_w || c_z) &&
-    (a_x || d_w || b_y) &&
-    (a_x || c_z || a_z) &&
-    (a_x || c_z || b_y) &&
-    (a_x || a_y || b_y) &&
-
-    (d_x || !c_z || !b_y) &&
-    ( !d_w || !c_z || !b_y) &&
-    (d_w || c_z || b_y) &&
-
-    ( !c_z || a_w || !b_y) &&
-    (c_z || b_z || b_y) &&
-    (c_z || c_y || b_y)
-     */
 }

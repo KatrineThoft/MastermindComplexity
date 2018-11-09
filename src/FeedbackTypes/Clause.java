@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-//or clause
+//Class representing and OR clause in a Boolean translation
 public class Clause {
    Set<Atom> atoms = new HashSet<>();
    Set<Atom> resolvedAtoms = new HashSet<>();
@@ -31,6 +31,7 @@ public class Clause {
         this.atoms.addAll(atoms);
     }
 
+    //Methods used in proofs to mark an atom as resolved
     public void resolveAtom(Atom a){
         a.isResolved = true;
         resolvedAtoms.add(a);
@@ -41,6 +42,10 @@ public class Clause {
 
     public void setParent(Set<Clause> parent){
         this.parents = parent;
+    }
+
+    public boolean isChildOf(Clause c) {
+        return !parents.isEmpty() && parents.contains(c);
     }
 
     public boolean contains(Atom a){
@@ -61,10 +66,6 @@ public class Clause {
        return res.substring(0,res.lastIndexOf(",")) +"}";
     }
 
-    public boolean isChildOf(Clause c) {
-        return !parents.isEmpty() && parents.contains(c);
-    }
-
     public boolean isResolved(){
        return isResolved;
     }
@@ -74,7 +75,8 @@ public class Clause {
         return this.hashCode() == other.hashCode();
     }
 
-
+    //Method used to check whether to Clause objects holds the same Atoms
+    //Used to remove duplicate clauses.
     public boolean equalAtoms(Clause other) {
         for (Atom a : atoms) {
             if (!other.atoms.contains(a)) {
@@ -89,6 +91,7 @@ public class Clause {
         }
         return true;
     }
+
     public Atom getAtom(Atom a){
         for (Atom at: atoms) {
           if (at.equals(a)) {

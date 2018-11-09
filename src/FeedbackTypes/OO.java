@@ -15,7 +15,8 @@ public class OO extends Feedback {
     }
 
 
-
+    //Method translating a guess from into a Boolean translation
+    //Saves all data in Clause objects.
     private void translate() {
         String[] atomString= guess.split(",");
         List<Atom> atomList = new ArrayList<>();
@@ -44,6 +45,7 @@ public class OO extends Feedback {
         super.boolTrans = trans.substring(0,trans.lastIndexOf("&&"));
     }
 
+    //Adds clauses to data set
     private void addClause(Set<Atom> list){
         for (Atom a: list) {
             Set<Atom> atomSet = new HashSet<>();
@@ -57,14 +59,16 @@ public class OO extends Feedback {
         return 0;
     }
 
+
+    //Generates Atom objects
+    // creates Atoms for each position for one color
     private List<Atom> generateAtoms(Atom a, Boolean negated){
         List<Atom> res =new ArrayList<>();
-        String[] pos  = {"x","y"};
+        String[] pos  = {"x","y","z","w"};
         String neg ="";
         if(negated){
             neg = "!";
         }
-
         for (int i = 0; i <pos.length ; i++) {
             if (!a.position.equals(pos[i])){
                 res.add(new Atom(neg+a.color+"_"+pos[i]));
@@ -77,7 +81,7 @@ public class OO extends Feedback {
                 }
             }
         }
-
         return res;
     }
+
 }

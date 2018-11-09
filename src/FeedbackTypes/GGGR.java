@@ -2,7 +2,7 @@
 package FeedbackTypes;
 
 import java.util.*;
-
+//Class representing feedback of the type GGGR
 public class GGGR extends Feedback {
     Set<Atom> formula = new HashSet<>();
     Set<Clause> clauses = new HashSet<>();
@@ -20,6 +20,8 @@ public class GGGR extends Feedback {
     }
 
 
+    //Method translating a guess from into a Boolean translation
+    //Saves all data in Clause objects.
     private void translate(){
         String[] atomString= guess.split(",");
         List<Atom> atomList = new ArrayList<>();
@@ -58,21 +60,14 @@ public class GGGR extends Feedback {
 
         super.boolTrans = res.substring(0,res.lastIndexOf("\n "));
     }
-      /*
-    ( !a_x || !b_y || !c_z || !d_w) &&
-    (a_x || b_y) &&
-    (a_x || c_z) &&
-    (a_x || d_w) &&
-    (b_y || c_z) &&
-    (b_y || d_w) &&
-    (c_z || d_w)
-     */
 
-      public Set<Atom> getAtoms(){
+
+    public Set<Atom> getAtoms(){
           return formula;
       }
 
-      private String createOrClauses(List<Atom> atomList, Atom x){
+    //Method used by translate() to generate clauses
+    private String createOrClauses(List<Atom> atomList, Atom x){
           StringBuilder temp2 = new StringBuilder();
           for (int i = 1; i < atomList.size(); i++) {
               Atom a = atomList.get(i);
