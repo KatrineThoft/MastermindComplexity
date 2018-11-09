@@ -18,6 +18,7 @@ public abstract class Feedback {
         this.guess = guess;
         positions.addAll(Arrays.asList("x","y","z","w"));
         colors.addAll(Arrays.asList("R","O","Y","G","B","P"));
+        checkColorsAndPositions();
         //colors.addAll(Arrays.asList("a","b","c","d","e","f"));
     }
 
@@ -128,7 +129,20 @@ public abstract class Feedback {
        return temp1.replace("_","");
     }
 
+    private void checkColorsAndPositions(){
+        String temp =guess.replace("_"," ");
+        temp =temp.replace(","," ");
+       String[] guessArray= temp.split(" ");
 
+        for (int i = 0; i<guessArray.length; i++) {
+            if(i%2==0 && !colors.contains(guessArray[i])){
+                throw new IllegalArgumentException("Color not defined");
+            } else if(i%2!=0 && !positions.contains(guessArray[i])){
+                throw new IllegalArgumentException("Position not defined");
+
+            }
+        }
+    }
 
 
 
