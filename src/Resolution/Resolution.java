@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+//Class containing the resolution method
 public class Resolution {
     private Set<Clause> currentClauses = new HashSet<>();
     private Set<Clause> resolvedClauses = new HashSet<>();
@@ -18,7 +19,7 @@ public class Resolution {
     private int noTotalClauses;
 
 
-
+    //Constructor for the first guess, without premises
     public Resolution(Feedback feedback, boolean isMinimal){
         this.currentClauses = feedback.getClauses();
         noTotalClauses = currentClauses.size();
@@ -28,8 +29,7 @@ public class Resolution {
         resultString = resolve();
     }
 
-    private void printClauses() { for (Clause c: currentClauses) {System.out.println(c.toString()); } }
-
+    //Constructor for the following guesses, with premises
     public Resolution(Feedback feedback, Set<Clause> premises, boolean isMinimal){
         this.isMinimal = isMinimal;
         currentClauses.addAll(premises);
@@ -40,9 +40,15 @@ public class Resolution {
         resultString =  resolve();
     }
 
+    //Used to print the current clauses in the proof
+    private void printClauses() { for (Clause c: currentClauses) {System.out.println(c.toString()); } }
+
+
+    //Methods executing resolution
     private String resolve() {
         Set<Clause> childClauses = searchForCompliments(currentClauses);
 
+        //Resolves until no complementing pairs of Atoms are found
         while (containsComplimentingPairs()){
             currentClauses.addAll(childClauses);
             noTotalClauses += childClauses.size();
@@ -51,6 +57,7 @@ public class Resolution {
             childClauses=searchForCompliments(currentClauses);
         }
 
+        //Building a String such that the results can be printed
         StringBuilder res = new StringBuilder();
         for (Clause c: currentClauses) {
             res.append(c.toString() +"\n");
@@ -59,6 +66,7 @@ public class Resolution {
     }
 
 
+    //Removing all resolved clauses from the current set of clauses
     private void removeClauses() {
         resolvedClauses.addAll( currentClauses.stream().filter(s -> s.isResolved()).collect(Collectors.toSet()));
         currentClauses = currentClauses.stream().filter(s -> !s.isResolved()).collect(Collectors.toSet());
@@ -76,15 +84,18 @@ public class Resolution {
     }
 
 
+    //Searches for a pair of complimenting Atoms in the set of current clauses
     private Set<Clause> searchForCompliments(Set<Clause> clauses){
         Set<Clause> temp = new HashSet<>();
-
         for (Clause c1: clauses) {
             if (!c1.isResolved()) {
             for (Clause c2 : clauses) {
                 if (!(c1.equals(c2)) && !c1.isResolved() && !c2.isResolved() && !c1.isChildOf(c2) && !c2.isChildOf(c1)) {
                     for (Atom a : c1.getAtoms()) {
                         if (c2.contains(a.getComplement()) && !a.isResolved && !a.getComplement().isResolved) {
+                            //If one is found, the clauses containing the pair is resolved
+                            //A new clause the child clause is created
+                            //All Atoms except the complimenting pair is added to the child clause
                             noSteps++;
                             noResolvedAtoms+=2;
                             c1.resolveAtom(a);
@@ -92,22 +103,24 @@ public class Resolution {
                             c2.resolveAtom(complement);
                             c2.resolveAtom(a.getComplement());
 
-                            if(isMinimal){
+                            if(isMinimal){ //If a Minimal proof is wanted
                             Clause child = new Clause();
                             child.setParent(new HashSet<>(Arrays.asList(c1, c2)));
                             Set<Atom> atomSet = c1.getAtoms().stream().filter(s -> !s.equals(a)).collect(Collectors.toSet());
                             atomSet.addAll(c2.getAtoms().stream().filter(s -> !s.equals(complement)).collect(Collectors.toSet()));
                                     child.addAllAtoms(atomSet);
+                                    //All other complimenting pairs are removed from the child clause
                                     child = removeAllCompliments(child);
                                     if(child.getAtoms().size() >0) {
                                         temp.add(child);
                                     }
 
 
-                            } else if(containsCompliments(c1,c2)){
+                            } else if(containsCompliments(c1,c2)){ //If default proof is wanted and
+                                                                    // there exists another pair of complimenting literals
                                 Set<Atom> atomSet1 = c1.getAtoms().stream().filter(s -> !s.equals(a)).collect(Collectors.toSet());
                                 Set<Atom> atomSet2=c2.getAtoms().stream().filter(s -> !s.equals(complement)).collect(Collectors.toSet());
-                                if(atomSet1.size()>0) {
+                                if(atomSet1.size()>0) { //Onl
                                     Clause child1 = new Clause(atomSet1);
                                     temp.add(child1);
                                 }
@@ -116,7 +129,7 @@ public class Resolution {
                                     temp.add(child2);
                                 }
 
-                            } else {
+                            } else {//If default proof is wanted and no other pairs of complimenting literals
                                     Set<Atom> atomSet = c1.getAtoms();
                                     atomSet.addAll(c2.getAtoms());
                                     Clause child = new Clause(atomSet);
@@ -135,6 +148,7 @@ public class Resolution {
         return temp;
     }
 
+    //Used in minimal proof, removes all complimenting literals from a clause
     private Clause removeAllCompliments(Clause c) {
         Clause res = new Clause();
         Set<Atom> atoms = new HashSet<>();
@@ -153,6 +167,7 @@ public class Resolution {
         return res;
     }
 
+    //Used to check two clauses for complimenting literals
     private boolean containsCompliments(Clause c1, Clause c2) {
         for (Atom a : c1.getAtoms()) {
             if (c2.contains(a.getComplement())) { return true; }
@@ -160,7 +175,7 @@ public class Resolution {
         return false;
     }
 
-
+    //Used to check if current clauses contains complimenting literals
     private boolean containsComplimentingPairs(){
         for (Clause c1:currentClauses) {
             for (Clause c2: currentClauses){
@@ -172,12 +187,12 @@ public class Resolution {
         return false;
     }
 
+    //Getter methods for different features of the proof
     public Set<Clause> getCurrentClauses(){
         return currentClauses;
     }
     public int getNoSteps(){ return noSteps; }
     public int getNoResolvedAtoms(){ return noResolvedAtoms; }
-
     public int getNoTotalClauses() {
         return noTotalClauses;
     }
@@ -188,7 +203,6 @@ public class Resolution {
         }
         return res;
     }
-
     public int noSymbols(){
         int res=0;
         for (Clause c: currentClauses) {
@@ -196,7 +210,6 @@ public class Resolution {
         }
         return res;
     }
-
     public Set<Clause> getResolvedClauses() {
         return resolvedClauses;
     }
