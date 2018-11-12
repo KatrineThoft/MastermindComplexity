@@ -44,7 +44,6 @@ public class GGOO extends Feedback{
         List<Atom> allDs = generateAtoms(posAtoms.get(3));
         allDs.add(negAtoms.get(3));
 
-
         //Generating clauses with !ax
         String negACases = generateOrClauses(negAtoms.get(0),negAtoms.get(1),
                 allCs.subList(2,allCs.size()),allDs.subList(2,allDs.size()));
@@ -55,12 +54,12 @@ public class GGOO extends Feedback{
 
         //getting all atoms in the clauses with ax and by
         List<Atom> case1 = new ArrayList<>();
-        case1.add(allAs.get(0));
+        case1.add(allAs.get(1));
         case1.add(allBs.get(0));
 
         //getting all atoms in the clauses with ax and cz
         List<Atom> case2 = new ArrayList<>();
-        case2.add(allAs.get(1));
+        case2.add(allAs.get(2));
         case2.add(allCs.get(0));
         case2.add(posAtoms.get(3));
 
@@ -84,7 +83,8 @@ public class GGOO extends Feedback{
         String bCases = generateOrClauses(negAtoms.get(1),negAtoms.get(2),case3.subList(0,2),case3.subList(2,3));
         bCases += generateOrClauses(posAtoms.get(1),posAtoms.get(2),case4.subList(0,2),case4.subList(2,3));
 
-        super.boolTrans = negACases+posACases +bCases;
+
+        super.boolTrans = negACases+posACases +bCases.substring(0,bCases.lastIndexOf("&&"));
 
     }
 

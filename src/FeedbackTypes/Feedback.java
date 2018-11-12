@@ -18,8 +18,8 @@ public abstract class Feedback {
         this.guess = guess;
         positions.addAll(Arrays.asList("x","y","z","w"));
         colors.addAll(Arrays.asList("R","O","Y","G","B","P"));
-        checkColorsAndPositions();
         //colors.addAll(Arrays.asList("a","b","c","d","e","f"));
+        checkColorsAndPositions();
     }
 
     //Getter methods for different features of a feedback type

@@ -24,6 +24,8 @@ public class Resolution {
         noTotalClauses = currentClauses.size();
         this.allClauses.addAll(currentClauses);
         this.isMinimal = isMinimal;
+        noSteps =0;
+        noResolvedAtoms =0;
         //printClauses();
         resultString = resolve();
     }
@@ -35,6 +37,8 @@ public class Resolution {
         currentClauses.addAll(feedback.getClauses());
         noTotalClauses = currentClauses.size();
         this.allClauses.addAll(currentClauses);
+        noSteps =0;
+        noResolvedAtoms =0;
        // printClauses();
         resultString =  resolve();
     }

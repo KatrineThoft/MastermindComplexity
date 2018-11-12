@@ -9,50 +9,66 @@ public class Runner {
 
     public static void main(String[] args){
 
-       // twoPinDMM();
-       fourPinDMM();
+       // resolutionTwoPinDMM();
+       //resolutionFourPinDMM();
+        naturalDedTwoPinDMM();
+       // naturalDedFourPinDMM();
+
+
 
     }
 
+    private static void naturalDedTwoPinDMM() {
+        String guess1 = "R_x,O_y";
+        Feedback test1 = new OO(guess1);
+        String conclusion1 = "O_x,R_y";
+        NaturalDeduction natDed = new NaturalDeduction(test1,conclusion1);
+        System.out.println(natDed.getResultString());
+
+    }
+
+    private static void naturalDedFourPinDMM() {
+    }
+
     //Executing resolution on 2-pin DMM examples
-    private static void twoPinDMM() {
+    private static void resolutionTwoPinDMM() {
         String guess1 = "R_x,O_y";
         //Colors:("R","O","Y","G")
         Feedback test1 = new RR(guess1);
         System.out.println("Bool. Trans. of: "+ test1.getType()+ "\n" + test1.getBoolTrans());
         System.out.println("No. colors: "+ test1.noColors());
 
-        /*ProofMethods resolution1 = new ProofMethods(test1,false);
+        Resolution resolution1 = new Resolution(test1,false);
         System.out.println("Result after resolution: \n" +resolution1.resultString+"\n");
         System.out.println("Done w. resolving guess 1!");
 
-        String guess2 = "G_x,R_y";
+      /*  String guess2 = "G_x,R_y";
         Feedback test2 = new OO(guess2);
-        ProofMethods resolution2 = new ProofMethods(test2,resolution1.getCurrentClauses(),false);
+        Resolution resolution2 = new Resolution(test2,resolution1.getCurrentClauses(),false);
         System.out.println("Result after resolution: \n" +resolution2.resultString+"\n");
         System.out.println("Done w. resolving guess 2!");*/
     }
 
     //Executing resolution on 4-pin DMM examples
-    private static void fourPinDMM() {
+    private static void resolutionFourPinDMM() {
         //Colors:("R","O","Y","G","B","P")
 
-        String guess1 = "R_x,G_y,R_z,G_w";
+        String guess1 = "O_x,O_y,O_z,R_w";
         Feedback test1 = new GGOO(guess1);
         Resolution resolution1 = new Resolution(test1,true);
-        System.out.println("Resolving guess " + guess1 +" on feedback type: " +test1.getType() + "\n"+test1.getBoolTrans());
+        System.out.println("Resolving guess " + guess1 +" on feedback bool Trans: " +test1.getType() + "\n"+test1.getClauses());
         System.out.println("Result after resolving 1st guess: \n" +resolution1.resultString+"\n");
 
 
-        String guess2 = "G_x,R_y,R_z,G_w";
-        Feedback test2 = new GGOO(guess2);
-        System.out.println("Resolving guess " + guess2 +" on feedback type: " +test2.getType());
+        String guess2 = "R_x,O_y,O_z,R_w";
+        Feedback test2 = new GGGR(guess2);
+        System.out.println("Resolving guess " + guess2 +" on feedback type: " +test2.getType()+"\n"+test2.getBoolTrans());
 
         Resolution resolution2 = new Resolution(test2,resolution1.getCurrentClauses(),true);
 
         System.out.println("Result after resolving 2nd guess: \n" +resolution2.resultString+"\n");
 
-        String guess3 = "R_x,R_y,B_z,R_w";
+      /*  String guess3 = "R_x,R_y,B_z,R_w";
         Feedback test3 = new GORR(guess3);
         System.out.println("Resolving guess " + guess3 +" on feedback type: " +test3.getType());
         Resolution resolution3 = new Resolution(test3,resolution2.getCurrentClauses(),true);
