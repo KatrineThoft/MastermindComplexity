@@ -1,7 +1,7 @@
 
 
 import FeedbackTypes.*;
-import Resolution.*;
+import ProofMethods.*;
 
 
 //Class used to run the proof methods from
@@ -9,7 +9,7 @@ public class Runner {
 
     public static void main(String[] args){
 
-        //twoPinDMM();
+       // twoPinDMM();
        fourPinDMM();
 
     }
@@ -22,13 +22,13 @@ public class Runner {
         System.out.println("Bool. Trans. of: "+ test1.getType()+ "\n" + test1.getBoolTrans());
         System.out.println("No. colors: "+ test1.noColors());
 
-        /*Resolution resolution1 = new Resolution(test1,false);
+        /*ProofMethods resolution1 = new ProofMethods(test1,false);
         System.out.println("Result after resolution: \n" +resolution1.resultString+"\n");
         System.out.println("Done w. resolving guess 1!");
 
         String guess2 = "G_x,R_y";
         Feedback test2 = new OO(guess2);
-        Resolution resolution2 = new Resolution(test2,resolution1.getCurrentClauses(),false);
+        ProofMethods resolution2 = new ProofMethods(test2,resolution1.getCurrentClauses(),false);
         System.out.println("Result after resolution: \n" +resolution2.resultString+"\n");
         System.out.println("Done w. resolving guess 2!");*/
     }
@@ -40,7 +40,7 @@ public class Runner {
         String guess1 = "R_x,G_y,R_z,G_w";
         Feedback test1 = new GGOO(guess1);
         Resolution resolution1 = new Resolution(test1,true);
-        System.out.println("Resolving guess " + guess1 +" on feedback type: " +test1.getType());
+        System.out.println("Resolving guess " + guess1 +" on feedback type: " +test1.getType() + "\n"+test1.getBoolTrans());
         System.out.println("Result after resolving 1st guess: \n" +resolution1.resultString+"\n");
 
 

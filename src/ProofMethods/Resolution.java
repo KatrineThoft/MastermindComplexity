@@ -1,7 +1,6 @@
-package Resolution;
+package ProofMethods;
 
 import FeedbackTypes.*;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -187,7 +186,7 @@ public class Resolution {
         return false;
     }
 
-    //Getter methods for different features of the proof
+    //Getter methods for different properties of the proof
     public Set<Clause> getCurrentClauses(){
         return currentClauses;
     }
