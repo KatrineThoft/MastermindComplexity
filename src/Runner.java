@@ -10,24 +10,42 @@ public class Runner {
     public static void main(String[] args){
 
        // resolutionTwoPinDMM();
-       //resolutionFourPinDMM();
-        naturalDedTwoPinDMM();
-       // naturalDedFourPinDMM();
+      //  resolutionFourPinDMM();
+      //  naturalDedTwoPinDMM();
+        naturalDedFourPinDMM();
 
 
 
     }
 
     private static void naturalDedTwoPinDMM() {
-        String guess1 = "R_x,O_y";
+        String guess1 = "O_x,R_y";
         Feedback test1 = new OO(guess1);
-        String conclusion1 = "O_x,R_y";
+        System.out.println(test1.getClauses());
+
+        String conclusion1 = "R_x,O_y";
         NaturalDeduction natDed = new NaturalDeduction(test1,conclusion1);
         System.out.println(natDed.getResultString());
 
     }
 
     private static void naturalDedFourPinDMM() {
+        String guess1 = "R_x,O_y,O_z,R_w";
+        Feedback test1 = new GGGR(guess1);
+        String guess2 = "R_x,O_y,O_z,R_w";
+        NaturalDeduction natDed1 = new NaturalDeduction(test1,guess2);
+       // System.out.println("Resolving guess " + guess1 +" on feedback bool Trans: " +test1.getType() + "\n"+test1.getBoolTrans());
+        System.out.println("Result after deduction 1st guess: \n" +natDed1.getResultString()+"\n");
+
+
+        String guess3 = "R_x,R_y,B_z,R_w";
+        Feedback test2 = new GGGR(guess2);
+      //  System.out.println("Resolving guess " + guess2 +" on feedback type: " +test2.getType()+"\n"+test2.getBoolTrans());
+
+        NaturalDeduction natDed2 = new NaturalDeduction(test2,guess3);
+
+        System.out.println("Result after deduction 2nd guess: \n" +natDed2.getResultString()+"\n");
+
     }
 
     //Executing resolution on 2-pin DMM examples
@@ -53,10 +71,10 @@ public class Runner {
     private static void resolutionFourPinDMM() {
         //Colors:("R","O","Y","G","B","P")
 
-        String guess1 = "O_x,O_y,O_z,R_w";
-        Feedback test1 = new GGOO(guess1);
+        String guess1 = "R_x,O_y,O_z,R_w";
+        Feedback test1 = new GGGR(guess1);
         Resolution resolution1 = new Resolution(test1,true);
-        System.out.println("Resolving guess " + guess1 +" on feedback bool Trans: " +test1.getType() + "\n"+test1.getClauses());
+        System.out.println("Resolving guess " + guess1 +" on feedback bool Trans: " +test1.getType() + "\n"+test1.getBoolTrans());
         System.out.println("Result after resolving 1st guess: \n" +resolution1.resultString+"\n");
 
 

@@ -22,10 +22,9 @@ public class OO extends Feedback {
         List<Atom> atomList = new ArrayList<>();
         //Getting the complement, since the original atom is not used in bool. trans.
         for (String s: atomString) {
-            Atom a = new Atom("!"+s);
+            Atom a = new Atom("!" + s);
             atomList.add(a);
-            atomList.addAll(generateAtoms(a,false));
-
+            atomList.addAll(generateAtoms(a, false));
         }
 
 
@@ -64,7 +63,7 @@ public class OO extends Feedback {
     // creates Atoms for each position for one color
     private List<Atom> generateAtoms(Atom a, Boolean negated){
         List<Atom> res =new ArrayList<>();
-        String[] pos  = {"x","y","z","w"};
+        String[] pos  = {"x","y"};
         String neg ="";
         if(negated){
             neg = "!";

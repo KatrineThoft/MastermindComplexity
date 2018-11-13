@@ -12,10 +12,8 @@ public class Atom {
 
     public Atom(String s){
         stringRep = s;
-        String neg="";
         if(s.contains("!")) {
             isNegated = true;
-            neg = "!";
             s = s.replace("!","");
         } else{
             isNegated = false;

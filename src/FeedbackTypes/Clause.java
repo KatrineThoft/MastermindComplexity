@@ -58,6 +58,9 @@ public class Clause {
     }
 
     public String toString(){
+        if (atoms.isEmpty()){
+            return"{}";
+        }
        StringBuilder res = new StringBuilder();
        res.append("{");
         for (Atom a: atoms) {
@@ -110,5 +113,4 @@ public class Clause {
         }
         return res+new Random().nextInt(9);
     }
-
 }

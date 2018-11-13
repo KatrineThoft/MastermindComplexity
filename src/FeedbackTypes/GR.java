@@ -85,7 +85,7 @@ public class GR extends Feedback {
     // creates Atoms for each position for one color
     private List<Atom> generateAtoms(Atom a, Boolean negated){
         List<Atom> res =new ArrayList<>();
-        String[] pos  = {"x","y","z","w"};
+        String[] pos  = {"x","y"};
         String neg ="";
         if(negated){
             neg = "!";
