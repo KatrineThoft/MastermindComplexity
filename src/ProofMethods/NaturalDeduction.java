@@ -8,19 +8,20 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-
+//Class containing the Natural Deduction method
 public class NaturalDeduction {
-    Set<Clause> currentClauses;
-    Set<Clause> allClauses;
-    Set<Clause> usedClauses;
-    Set<Clause> missingAtomsClauses;
-    Set<Atom> missingAtoms;
-    Clause conclusion;
-    int noSteps;
+    private Set<Clause> currentClauses;
+    private Set<Clause> allClauses; //TODO: Implement update
+    private Set<Clause> usedClauses;
+    private Set<Clause> missingAtomsClauses;
+    private Set<Atom> missingAtoms;
+    private Clause conclusion;
+    private int noSteps;
     private int noTotalClauses;
-    String resultString;
+    private String resultString;
 
 
+    //Constructor
     public NaturalDeduction(Feedback feedback, String conclusionString){
         this.currentClauses = feedback.getClauses();
         this.conclusion = createConclusionClause(conclusionString);
@@ -32,6 +33,7 @@ public class NaturalDeduction {
 
     }
 
+    //Creates a Clause object representing the conclusion
     private Clause createConclusionClause(String str) {
         String[] atomString= str.split(",");
         Set<Atom> atoms = new HashSet<>();
@@ -44,6 +46,7 @@ public class NaturalDeduction {
     }
 
 
+    //Method applying the rules to the given feedback clauses
     private void derive() {
         Clause res = new Clause();
            currentClauses.addAll(applyORRule());
@@ -60,6 +63,7 @@ public class NaturalDeduction {
             resultString = res.toString();
         }
 
+    //Searches for positions in conclusion w. no atoms found in curren tclauses
     private void findMissingAtoms(Clause res) {
         Set<String> missingPos = new HashSet<>();
         for (Atom a:res.getAtoms()) {
@@ -80,7 +84,14 @@ public class NaturalDeduction {
         missingAtomsClauses = findClauses;
     }
 
+    //Removes clauses from currentclauses that have been used already
+    private void removeUsedClauses() {
+        this.usedClauses.addAll(currentClauses.stream().filter(Clause::isResolved).collect(Collectors.toSet()));
+        this.currentClauses = currentClauses.stream().filter(c->!c.isResolved()).collect(Collectors.toSet());
+    }
 
+
+    //Methods implementing the rules of Natural Deduction
     private Clause applyANDRule(boolean isMissing) {
        Clause resultClause = new Clause();
        Set<Atom> atoms = new HashSet<>();
@@ -95,13 +106,6 @@ public class NaturalDeduction {
         }
         return resultClause;
     }
-
-    private void removeUsedClauses() {
-        this.usedClauses.addAll(currentClauses.stream().filter(Clause::isResolved).collect(Collectors.toSet()));
-        this.currentClauses = currentClauses.stream().filter(c->!c.isResolved()).collect(Collectors.toSet());
-    }
-
-
     private Set<Clause> applyORRule() {
         Set<Clause> newClauses = new HashSet<>();
         for (Clause c: currentClauses) {
@@ -112,6 +116,7 @@ public class NaturalDeduction {
         return newClauses;
     }
 
+    //Method searching for negated atoms for positions which are unfilled in conclusion
     private Set<Clause> searchForMissing() {
         Set<Clause> newClauses = new HashSet<>();
         for (Clause c1 : missingAtomsClauses) {
@@ -130,6 +135,7 @@ public class NaturalDeduction {
         return newClauses;
     }
 
+    //Method searching for atoms contained in conclusion
     private Set<Clause> containsConclusionAtoms(Clause c) {
         Set<Clause> newClauses = new HashSet<>();
         for (Atom a:c.getAtoms()) {
@@ -147,22 +153,25 @@ public class NaturalDeduction {
        return newClauses;
     }
 
+    //Getter methods for different properties of the proof
     public int getNoTotalClauses() {
         return noTotalClauses;
     }
-
     public Clause getConclusion() {
         return conclusion;
     }
-
     public int getNoSteps() {
         return noSteps;
     }
     public Set<Clause> getCurrentClauses() {
         return currentClauses;
     }
-
     public String getResultString() {
         return resultString;
     }
+
+    //Used to print the current clauses in the proof
+    private void printClauses() { for (Clause c: currentClauses) {System.out.println(c.toString()); } }
+
+
 }

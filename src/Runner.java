@@ -11,8 +11,8 @@ public class Runner {
 
        // resolutionTwoPinDMM();
       //  resolutionFourPinDMM();
-      //  naturalDedTwoPinDMM();
-        naturalDedFourPinDMM();
+        naturalDedTwoPinDMM();
+       // naturalDedFourPinDMM();
 
 
 
