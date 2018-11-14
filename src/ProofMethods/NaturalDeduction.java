@@ -46,63 +46,50 @@ public class NaturalDeduction {
 
     private void derive() {
         Clause res = new Clause();
-           currentClauses.addAll(applyORRule(false));
-           allClauses.addAll(applyORRule(false));
+           currentClauses.addAll(applyORRule());
            removeUsedClauses();
-           if (!allAtomsNotFound()){
-               System.out.println("All atom not in conclusion");
-               //Look for the positions where there is an atom missing in the conclusion,
-               // look for negated atoms on that position
-               findMissingAtoms();
-               currentClauses.addAll(searchForMissing());
-               allClauses.addAll(applyORRule(true));
-               removeUsedClauses();
-           } else{
-               //Applying AND rule
-               System.out.println("All atom in conclusion");
-                res = applyANDRule();
-           }
-
+                res = applyANDRule(false);
+                currentClauses.add(res);
+                if(res.getAtoms().size() <conclusion.getAtoms().size()){
+                    findMissingAtoms(res);
+                    currentClauses.addAll(searchForMissing());
+                    Clause newRes = applyANDRule(true);
+                    res.addAllAtoms(newRes.getAtoms());
+                    currentClauses.add(res);
+                }
             resultString = res.toString();
         }
 
-    private void findMissingAtoms() {
-        Set<Atom> missing = new HashSet<>();
-        for (Atom a:conclusion.getAtoms()) {
-            if (!currentClauses.contains(a)){
-                missing.add(a);
-            }
-        }
-        Set<String> missingPos =new HashSet<>();
-        if (!missing.isEmpty()){
-            for (Atom a:missing) {
-                missingPos.add(a.getPosition());
-            }
+    private void findMissingAtoms(Clause res) {
+        Set<String> missingPos = new HashSet<>();
+        for (Atom a:res.getAtoms()) {
+            missingPos.add(a.getPosition());
         }
 
         Set<Clause> findClauses = new HashSet<>();
          missingAtoms = new HashSet<>();
 
-        for (String pos:missingPos) {
             for (Clause c : currentClauses) {
                 for (Atom a : c.getAtoms()) {
-                    if (a.getPosition().equals(pos) && a.getNegated().equals(true)){
+                    if (!missingPos.contains(a.getPosition()) && a.getNegated().equals(true)){
                         findClauses.add(c);
                         missingAtoms.add(a);
                     }
-                }
             }
         }
         missingAtomsClauses = findClauses;
     }
 
 
-    private Clause applyANDRule() {
+    private Clause applyANDRule(boolean isMissing) {
        Clause resultClause = new Clause();
+       Set<Atom> atoms = new HashSet<>();
+       atoms = isMissing ? missingAtoms : conclusion.getAtoms();
+
         for (Clause c: currentClauses) {
-            for (Atom a: conclusion.getAtoms()) {
+            for (Atom a: atoms) {
                 if (c.contains(a)){
-                    resultClause.addAtom(a);
+                    resultClause.addAtom(a); //AND rule
                 }
             }
         }
@@ -110,23 +97,12 @@ public class NaturalDeduction {
     }
 
     private void removeUsedClauses() {
-        int size = currentClauses.size();
-        this.usedClauses.addAll(currentClauses.stream().filter(c->c.isResolved()).collect(Collectors.toSet()));
+        this.usedClauses.addAll(currentClauses.stream().filter(Clause::isResolved).collect(Collectors.toSet()));
         this.currentClauses = currentClauses.stream().filter(c->!c.isResolved()).collect(Collectors.toSet());
-        for (Clause c:usedClauses
-             ) {
-            System.out.println(c.toString() +" removed" );
-        }
-
-    }
-
-    private boolean allAtomsNotFound() {
-        return currentClauses.containsAll(conclusion.getAtoms());
     }
 
 
-
-    private Set<Clause> applyORRule(boolean findMissing) {
+    private Set<Clause> applyORRule() {
         Set<Clause> newClauses = new HashSet<>();
         for (Clause c: currentClauses) {
             if (!c.isResolved()) {
@@ -145,7 +121,8 @@ public class NaturalDeduction {
                     Set<Atom> atomSet = new HashSet<>();
                     atomSet.add(a);
                     c1.resolveAtom(a);
-                    newClauses.add(new Clause(atomSet)); //Elim or rule
+                    Clause c2 = new Clause(atomSet);
+                    newClauses.add(c2); //Elim or rule
                 }
             }
 
