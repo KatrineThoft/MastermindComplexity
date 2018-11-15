@@ -147,5 +147,17 @@ public abstract class Feedback {
         }
     }
 
+    public String getComplexity(){
+        StringBuilder compl = new StringBuilder();
+        compl.append("No. atoms total: "+noAtoms() +"\n" );
+        compl.append("No. clauses total: "+noClauses() +"\n" );
+        compl.append("No. longest OR clause: "+longestOrClause() +"\n" );
+        compl.append("No. symbols: "+noSymbols() +"\n" );
+        compl.append("No. total operators: "+noOperators() +"\n" );
+
+
+
+        return compl.toString();
+    }
 
 }

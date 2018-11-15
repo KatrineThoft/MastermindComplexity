@@ -3,112 +3,194 @@
 import FeedbackTypes.*;
 import ProofMethods.*;
 
+import java.util.*;
+
 
 //Class used to run the proof methods from
 public class Runner {
 
     public static void main(String[] args){
 
-       // resolutionTwoPinDMM();
-      //  resolutionFourPinDMM();
-        naturalDedTwoPinDMM();
-       // naturalDedFourPinDMM();
-
+        testCases4pin(false);
+       // testCases2pin(true);
 
 
     }
 
-    private static void naturalDedTwoPinDMM() {
-        String guess1 = "O_x,R_y";
-        Feedback test1 = new OO(guess1);
-        System.out.println(test1.getClauses());
+    private static void testCases2pin(boolean isResolution) {
+    }
 
-        String conclusion1 = "R_x,O_y";
-        NaturalDeduction natDed = new NaturalDeduction(test1,conclusion1);
-        System.out.println(natDed.getResultString());
+    private static void testCases4pin(boolean isResolution) {
+        // Map w. a list of guesses from an item, the corresponding feedback and the conclusion of each guess
+        Map<List<String>, Map.Entry<List<Feedback>,List<String>>> allItems = new HashMap<>();
+/*
+        String item1Guess1 = "O_x,R_y,O_z,R_w";
+        Feedback item1Feedback1 = new GGOO(item1Guess1);
+        String item1Guess2 = "R_x,O_y,O_z,R_w";
+        Feedback item1Feedback2 = new OOOO(item1Guess2);
+        List<String> item1Guesses = new ArrayList<>();
+        item1Guesses.add(item1Guess1);
+        item1Guesses.add(item1Guess2);
+
+        List<Feedback> item1FeedBack = new ArrayList<>();
+        item1FeedBack.add(item1Feedback1);
+        item1FeedBack.add(item1Feedback2);
+
+        List<String> item1Conclusion = new ArrayList<>();
+        item1Conclusion.add("R_x,O_y,O_z,R_w");
+        item1Conclusion.add("R_x,O_y,R_z,O_w");
+
+        allItems.put(item1Guesses,new AbstractMap.SimpleEntry(item1FeedBack, item1Conclusion));
+
+        String item2Guess1 = "O_x,R_y,R_z,O_w";
+        Feedback item2Feedback1 = new GGOO(item2Guess1);
+        String item2Guess2 = "O_x,R_y,O_z,R_w";
+        Feedback item2Feedback2 = new GGOO(item2Guess2);
+        String item2Guess3 = "R_x,O_y,R_z,R_w";
+        Feedback item2Feedback3 = new GOOR(item2Guess3);
+        List<String> item2Guesses = new ArrayList<>();
+        item2Guesses.add(item2Guess1);
+        item2Guesses.add(item2Guess2);
+        item2Guesses.add(item2Guess3);
+
+
+        List<Feedback> item2FeedBack = new ArrayList<>();
+        item2FeedBack.add(item2Feedback1);
+        item2FeedBack.add(item2Feedback2);
+        item2FeedBack.add(item2Feedback3);
+
+        List<String> item2Conclusion = new ArrayList<>();
+        item2Conclusion.add("O_x,R_y,O_z,R_w");
+        item2Conclusion.add("R_x,O_y,R_z,R_w");
+        item2Conclusion.add("R_x,R_y,O_z,O_w");
+        allItems.put(item2Guesses,new AbstractMap.SimpleEntry(item2FeedBack, item2Conclusion));
+
+
+        String item3Guess1 = "O_x,R_y,R_z,R_w";
+        Feedback item3Feedback1 = new OORR(item3Guess1);
+
+        List<String> item3Guesses = new ArrayList<>();
+        item3Guesses.add(item3Guess1);
+
+        List<Feedback> item3FeedBack = new ArrayList<>();
+        item3FeedBack.add(item3Feedback1);
+        List<String> item3Conclusion = new ArrayList<>();
+        item3Conclusion.add("R_x,O_y,O_z,O_w");
+
+
+        allItems.put(item3Guesses,new AbstractMap.SimpleEntry(item3FeedBack, item3Conclusion));
+
+        String item4Guess1 = "R_x,R_y,R_z,O_w";
+        Feedback item4Feedback1 = new GGOO(item4Guess1);
+        String item4Guess2 = "R_x,O_y,O_z,O_w";
+        Feedback item4Feedback2 = new GGRR(item4Guess2);
+        String item4Guess3 = "R_x,O_y,R_z,O_w";
+        Feedback item4Feedback3 = new GGGR(item4Guess3);
+        List<String> item4Guesses = new ArrayList<>();
+        item4Guesses.add(item4Guess1);
+        item4Guesses.add(item4Guess2);
+        item4Guesses.add(item4Guess3);
+
+
+        List<Feedback> item4FeedBack = new ArrayList<>();
+        item4FeedBack.add(item4Feedback1);
+        item4FeedBack.add(item4Feedback2);
+        item4FeedBack.add(item4Feedback3);
+
+        List<String> item4Conclusion = new ArrayList<>();
+        item4Conclusion.add("R_x,O_y,O_z,O_w");
+        item4Conclusion.add("R_x,O_y,R_z,O_w");
+        item4Conclusion.add("R_x,O_y,R_z,R_w");
+        allItems.put(item4Guesses,new AbstractMap.SimpleEntry(item4FeedBack, item4Conclusion));
+*/
+        String item5Guess1 = "Y_x,O_y,Y_z,Y_w";
+        Feedback item5Feedback1 = new GGOO(item5Guess1);
+        String item5Guess2 = "O_x,Y_y,Y_z,Y_w";
+        Feedback item5Feedback2 = new GGOO(item5Guess2);
+        String item5Guess3 = "O_x,O_y,Y_z,O_w";
+        Feedback item5Feedback3 = new GGRR(item5Guess3);
+        String item5Guess4 = "R_x,R_y,R_z,R_w";
+        Feedback item5Feedback4 = new RRRR(item5Guess3);
+
+        List<String> item5Guesses = new ArrayList<>();
+        item5Guesses.add(item5Guess1);
+        item5Guesses.add(item5Guess2);
+        item5Guesses.add(item5Guess3);
+        item5Guesses.add(item5Guess4);
+
+        List<Feedback> item5FeedBack = new ArrayList<>();
+        item5FeedBack.add(item5Feedback1);
+        item5FeedBack.add(item5Feedback2);
+        item5FeedBack.add(item5Feedback3);
+        item5FeedBack.add(item5Feedback4);
+
+        List<String> item5Conclusion = new ArrayList<>();
+        item5Conclusion.add("O_x,Y_y,Y_z,Y_w");
+        item5Conclusion.add("O_x,O_y,Y_z,O_w");
+        item5Conclusion.add("R_x,R_y,R_z,R_w");
+        item5Conclusion.add("Y_x,Y_y,Y_z,O_w");
+        allItems.put(item5Guesses,new AbstractMap.SimpleEntry(item5FeedBack, item5Conclusion));
+
+       // if (isResolution){
+        for (List<String> item: allItems.keySet()) {
+            for (int i = 0; i < item.size(); i++) {
+              //  System.out.println(allItems.get(item).getKey().get(i).getGuess() + "is getting resolved");
+                System.out.println(allItems.get(item).getKey().get(i).getComplexity());
+
+            }
+           // System.out.println("------------->Item done!<------------------");
+        }
+        System.out.println("------------->Bool. trans. done!<------------------");
+
+            for (List<String> item: allItems.keySet()) {
+                for (int i = 0; i < item.size(); i++) {
+                   // System.out.println(allItems.get(item).getKey().get(i).getGuess() + "is getting resolved");
+                    resolutionFourPinDMM(allItems.get(item).getKey().get(i),false);
+
+                }
+             //   System.out.println("------------->Item done!<------------------");
+            }
+            System.out.println("------------->Resolution done!<------------------");
+
+       // } else {
+            for (List<String> item : allItems.keySet()) {
+                for (int i = 0; i < item.size(); i++) {
+                    naturalDedFourPinDMM(allItems.get(item).getKey().get(i), allItems.get(item).getValue().get(i));
+                }
+              //  System.out.println("------------->Item done!<------------------");
+            }
+        System.out.println("------------->Nat. ded. done!<------------------");
+
+        // }
+    }
+
+    private static void naturalDedTwoPinDMM(Feedback feedback, String conclusion) {
+        NaturalDeduction natDed1 = new NaturalDeduction(feedback,conclusion);
+        System.out.println("Complexity: \n"+natDed1.getComplexity());
+
 
     }
 
-    private static void naturalDedFourPinDMM() {
-        String guess1 = "R_x,O_y,O_z,R_w";
-        Feedback test1 = new GGGR(guess1);
-        String guess2 = "R_x,O_y,O_z,R_w";
-        NaturalDeduction natDed1 = new NaturalDeduction(test1,guess2);
-       // System.out.println("Resolving guess " + guess1 +" on feedback bool Trans: " +test1.getType() + "\n"+test1.getBoolTrans());
-        System.out.println("Result after deduction 1st guess: \n" +natDed1.getResultString()+"\n");
-
-
-        String guess3 = "R_x,R_y,B_z,R_w";
-        Feedback test2 = new GGGR(guess2);
-      //  System.out.println("Resolving guess " + guess2 +" on feedback type: " +test2.getType()+"\n"+test2.getBoolTrans());
-
-        NaturalDeduction natDed2 = new NaturalDeduction(test2,guess3);
-
-        System.out.println("Result after deduction 2nd guess: \n" +natDed2.getResultString()+"\n");
+    private static void naturalDedFourPinDMM(Feedback feedback, String conclusion) {
+        NaturalDeduction natDed1 = new NaturalDeduction(feedback,conclusion);
+        //System.out.println("Result after deduction: \n" +natDed1.getResultString()+"\n");
+        System.out.println("Complexity: \n"+natDed1.getComplexity());
 
     }
 
     //Executing resolution on 2-pin DMM examples
-    private static void resolutionTwoPinDMM() {
-        String guess1 = "R_x,O_y";
-        //Colors:("R","O","Y","G")
-        Feedback test1 = new RR(guess1);
-        System.out.println("Bool. Trans. of: "+ test1.getType()+ "\n" + test1.getBoolTrans());
-        System.out.println("No. colors: "+ test1.noColors());
-
-        Resolution resolution1 = new Resolution(test1,false);
-        System.out.println("Result after resolution: \n" +resolution1.resultString+"\n");
-        System.out.println("Done w. resolving guess 1!");
-
-      /*  String guess2 = "G_x,R_y";
-        Feedback test2 = new OO(guess2);
-        Resolution resolution2 = new Resolution(test2,resolution1.getCurrentClauses(),false);
-        System.out.println("Result after resolution: \n" +resolution2.resultString+"\n");
-        System.out.println("Done w. resolving guess 2!");*/
+    private static void resolutionTwoPinDMM(Feedback feedback, boolean isMinimal) {
+        Resolution resolution = new Resolution(feedback,isMinimal);
+        System.out.println("Complexity: \n"+resolution.getComplexity());
     }
 
     //Executing resolution on 4-pin DMM examples
-    private static void resolutionFourPinDMM() {
-        //Colors:("R","O","Y","G","B","P")
+    private static void resolutionFourPinDMM(Feedback feedback, boolean isMinimal) {
 
-        String guess1 = "R_x,O_y,O_z,R_w";
-        Feedback test1 = new GGGR(guess1);
-        Resolution resolution1 = new Resolution(test1,true);
-        System.out.println("Resolving guess " + guess1 +" on feedback bool Trans: " +test1.getType() + "\n"+test1.getBoolTrans());
-        System.out.println("Result after resolving 1st guess: \n" +resolution1.resultString+"\n");
-
-
-        String guess2 = "R_x,O_y,O_z,R_w";
-        Feedback test2 = new GGGR(guess2);
-        System.out.println("Resolving guess " + guess2 +" on feedback type: " +test2.getType()+"\n"+test2.getBoolTrans());
-
-        Resolution resolution2 = new Resolution(test2,resolution1.getCurrentClauses(),true);
-
-        System.out.println("Result after resolving 2nd guess: \n" +resolution2.resultString+"\n");
-
-      /*  String guess3 = "R_x,R_y,B_z,R_w";
-        Feedback test3 = new GORR(guess3);
-        System.out.println("Resolving guess " + guess3 +" on feedback type: " +test3.getType());
-        Resolution resolution3 = new Resolution(test3,resolution2.getCurrentClauses(),true);
-        System.out.println("Result after resolving 3rd guess: \n" +resolution3.resultString+"\n");
-
-
-
-        String guess4 = "Y_x,O_y,O_z,O_w";
-        Feedback test4 = new RRRR(guess4);
-        System.out.println("Resolving guess " + guess4 +" on feedback type: " +test4.getType());
-        Resolution resolution4 = new Resolution(test4,resolution3.getCurrentClauses(),true);
-        System.out.println("Result after resolving 4th guess: \n" +resolution4.resultString+"\n");
-
-
-        /*System.out.println("No. symbols in Bool. Trans.: "+test1.noSymbols());
-        System.out.println("No. unique atoms in Bool. Trans. (complimented atoms included): "+test1.noAtoms());
-        System.out.println("No. clauses in Bool. Trans.: "+test1.noClauses());
-        System.out.println("No. operators in total in Bool. Trans.: "+test1.noOperators());
-        System.out.println("No. AND operators in Bool. Trans.: "+test1.noAndOperators());
-        System.out.println("No. OR operators in Bool. Trans.: "+test1.noOrOperators());
-        System.out.println("Longest OR clause  in Bool. Trans.: "+test1.longestOrClause());*/
-
+        Resolution resolution = new Resolution(feedback,isMinimal);
+        System.out.println("Resolving guess " + feedback.getGuess() +" on feedback bool Trans: " +feedback.getType());
+        System.out.println("Result after resolving guess: \n" +resolution.resultString+"\n");
+        System.out.println("Complexity: \n"+resolution.getComplexity());
 
 
       /*

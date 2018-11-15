@@ -11,22 +11,25 @@ import java.util.stream.Collectors;
 //Class containing the Natural Deduction method
 public class NaturalDeduction {
     private Set<Clause> currentClauses;
-    private Set<Clause> allClauses; //TODO: Implement update
+    private Set<Clause> allClauses;
     private Set<Clause> usedClauses;
     private Set<Clause> missingAtomsClauses;
     private Set<Atom> missingAtoms;
     private Clause conclusion;
+    private int noBranches;
     private int noSteps;
     private int noTotalClauses;
     private String resultString;
+    Clause res = new Clause();
 
 
     //Constructor
     public NaturalDeduction(Feedback feedback, String conclusionString){
         this.currentClauses = feedback.getClauses();
         this.conclusion = createConclusionClause(conclusionString);
-        System.out.println("Conclusion: "+conclusion.toString());
+        System.out.println("Guess: "+feedback.getGuess());
         noTotalClauses = currentClauses.size();
+        noBranches=0;
         this.usedClauses = new HashSet<>();
         this.allClauses = currentClauses;
         derive();
@@ -48,17 +51,22 @@ public class NaturalDeduction {
 
     //Method applying the rules to the given feedback clauses
     private void derive() {
-        Clause res = new Clause();
            currentClauses.addAll(applyORRule());
            removeUsedClauses();
                 res = applyANDRule(false);
+                allClauses.add(res);
+                allClauses.addAll(currentClauses);
                 currentClauses.add(res);
                 if(res.getAtoms().size() <conclusion.getAtoms().size()){
                     findMissingAtoms(res);
-                    currentClauses.addAll(searchForMissing());
+                    Set<Clause> missing = new HashSet<>();
+                    missing = searchForMissing();
+                    currentClauses.addAll(missing);
                     Clause newRes = applyANDRule(true);
                     res.addAllAtoms(newRes.getAtoms());
                     currentClauses.add(res);
+                    allClauses.add(res);
+                    allClauses.addAll(missing);
                 }
             resultString = res.toString();
         }
@@ -100,6 +108,7 @@ public class NaturalDeduction {
         for (Clause c: currentClauses) {
             for (Atom a: atoms) {
                 if (c.contains(a)){
+                    noSteps++;
                     resultClause.addAtom(a); //AND rule
                 }
             }
@@ -110,6 +119,8 @@ public class NaturalDeduction {
         Set<Clause> newClauses = new HashSet<>();
         for (Clause c: currentClauses) {
             if (!c.isResolved()) {
+                noBranches++;
+                noSteps++;
                 newClauses.addAll(containsConclusionAtoms(c));
             }
         }
@@ -169,9 +180,31 @@ public class NaturalDeduction {
     public String getResultString() {
         return resultString;
     }
+    public int getNoBranches(){return noBranches;}
 
+    public int noTotalSymbols(){
+        int res=0;
+        for (Clause c: allClauses) {
+            res+=c.getAtoms().size();
+        }
+        return res;
+    }
+    public int noSymbols(){
+       return res.getAtoms().size();
+    }
     //Used to print the current clauses in the proof
     private void printClauses() { for (Clause c: currentClauses) {System.out.println(c.toString()); } }
 
+    public String getComplexity(){
+        StringBuilder compl = new StringBuilder();
+        compl.append("No. clauses total: "+getNoTotalClauses() +"\n" );
+        compl.append("No. steps: "+getNoSteps() +"\n" );
+        compl.append("No. branches: "+getNoBranches() +"\n" );
+        compl.append("No. symbols: "+noSymbols() +"\n" );
+        compl.append("No. total symbols: "+noTotalSymbols() +"\n" );
 
+
+
+        return compl.toString();
+    }
 }

@@ -219,5 +219,16 @@ public class Resolution {
     public int noResolvedClauses() {
         return resolvedClauses.size();
     }
+
+    public String getComplexity(){
+        StringBuilder compl = new StringBuilder();
+        compl.append("No. clauses total: "+getNoTotalClauses() +"\n" );
+        compl.append("No. symbols total: "+noTotalSymbols() +"\n" );
+        compl.append("No. symbols in result: "+noSymbols() +"\n" );
+        compl.append("No. steps: "+getNoSteps() +"\n" );
+        compl.append("No. resolved atoms total: "+getNoResolvedAtoms() +"\n" );
+        compl.append("No. resolved clauses total: "+noResolvedClauses() +"\n" );
+        return compl.toString();
+    }
 }
 
