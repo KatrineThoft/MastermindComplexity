@@ -471,7 +471,7 @@ public class ORRR extends Feedback {
 
     //Generates Atom objects
     // creates Atoms for each position for one color
-    List<Atom> generateAtoms(Atom a, Boolean negated){
+    private List<Atom> generateAtoms(Atom a, Boolean negated){
         List<Atom> res =new ArrayList<>();
         String[] pos  = {"x","y","z","w"};
         String neg ="";
@@ -481,11 +481,16 @@ public class ORRR extends Feedback {
         for (int i = 0; i <pos.length ; i++) {
             if (!a.position.equals(pos[i])){
                 res.add(new Atom(neg+a.color+"_"+pos[i]));
+            } else {
+                if(negated){
+                    res.add(a.getComplement());
+                }
+                else {
+                    res.add(a);
+                }
             }
         }
-
         return res;
     }
-
 
 }
