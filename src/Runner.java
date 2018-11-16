@@ -11,12 +11,12 @@ public class Runner {
 
     public static void main(String[] args){
 
-       // testCases4pin(false);
+        testCases4pin(false);
         //testCases2pin(true);
 
        // testAll4PpinBoolTrans();
 
-        testAll2PpinBoolTrans();
+      //  testAll2PpinBoolTrans();
 
     }
 
@@ -40,9 +40,12 @@ public class Runner {
             //  System.out.println(allItems.get(item).getKey().get(i).getGuess() + "is getting resolved");
             System.out.println(feedbacks.get(i).getComplexity());
             System.out.println("------------->Bool. trans. done!<------------------");
-            resolutionFourPinDMM(feedbacks.get(i), false);
+            resolutionTwoPinDMM(feedbacks.get(i), false);
             System.out.println("------------->Resolution done!<------------------");
-            naturalDedFourPinDMM(feedbacks.get(i), conclusions.get(i));
+            naturalDedTwoPinDMM(feedbacks.get(i), conclusions.get(i));
+            System.out.println("------------->Nat. Ded. done!<------------------");
+
+
 
         }
 
@@ -245,7 +248,7 @@ public class Runner {
         // Map w. a list of guesses from an item, the corresponding feedback and the conclusion of each guess
         Map<List<String>, Map.Entry<List<Feedback>,List<String>>> allItems = new HashMap<>();
 
-        String item1Guess1 = "O_x,R_y,O_z,R_w";
+     /*   String item1Guess1 = "O_x,R_y,O_z,R_w";
         Feedback item1Feedback1 = new GGOO(item1Guess1);
         String item1Guess2 = "R_x,O_y,O_z,R_w";
         Feedback item1Feedback2 = new OOOO(item1Guess2);
@@ -352,6 +355,25 @@ public class Runner {
         item5Conclusion.add("Y_x,Y_y,Y_z,O_w");
         allItems.put(item5Guesses,new AbstractMap.SimpleEntry(item5FeedBack, item5Conclusion));
 
+      */  //ITEM: 657
+        //{'colours':['ROYGBP', '440000'], 'pins':4, 'tried':[['ROOR', 'GGGR'],['OOOR', 'GGOO']], 'triesLeft':1}
+        //correct: ROOO
+        String item6Guess1 = "O_x,O_y,O_z,R_w";
+        Feedback item6Feedback1 = new GGOO(item6Guess1);
+        String item6Guess2 = "R_x,O_y,O_z,R_w";
+        Feedback item6Feedback2 = new GGGR(item6Guess2);
+
+        List<String> item6Guesses = new ArrayList<>();
+        item6Guesses.add(item6Guess1);
+        item6Guesses.add(item6Guess2);
+
+        List<Feedback> item6FeedBack = new ArrayList<>();
+        item6FeedBack.add(item6Feedback1);
+        item6FeedBack.add(item6Feedback2);
+        List<String> item5Conclusion = new ArrayList<>();
+        item5Conclusion.add("R_x,O_y,O_z,R_w");
+        item5Conclusion.add("R_x,O_y,O_z,O_w");
+        allItems.put(item6Guesses,new AbstractMap.SimpleEntry(item6FeedBack, item5Conclusion));
        // if (isResolution){
         for (List<String> item: allItems.keySet()) {
             for (int i = 0; i < item.size(); i++) {

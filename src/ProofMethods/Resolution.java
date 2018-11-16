@@ -160,6 +160,7 @@ public class Resolution {
         for (Atom a: c.getAtoms()) {
             if(!c.contains(a.getComplement()) && !resolvedAtoms.contains(a)) {
                 noResolvedAtoms = +2;
+                noSteps++;
                 atoms.add(a);
                 resolvedAtoms.add(a);
                 resolvedAtoms.add(a.getComplement());
