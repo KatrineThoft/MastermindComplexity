@@ -8,7 +8,7 @@ public class GGGR extends Feedback {
     Set<Clause> clauses = new HashSet<>();
 
     public GGGR(String guess) {
-        super("FeedbackTypes.GGGR",guess);
+        super("GGGR",guess);
         translate();
         super.clauses = clauses;
     }

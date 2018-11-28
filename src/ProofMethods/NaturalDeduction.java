@@ -20,7 +20,7 @@ public class NaturalDeduction {
     private int noSteps;
     private int noTotalClauses;
     private String resultString;
-    Clause res = new Clause();
+    Set<Clause> res = new HashSet<>();
 
 
     //Constructor
@@ -54,28 +54,31 @@ public class NaturalDeduction {
            currentClauses.addAll(applyORRule());
            removeUsedClauses();
                 res = applyANDRule(false);
-                allClauses.add(res);
+                allClauses.addAll(res);
                 allClauses.addAll(currentClauses);
-                currentClauses.add(res);
-                if(res.getAtoms().size() <conclusion.getAtoms().size()){
+                currentClauses.addAll(res);
+                if(res.size() <conclusion.getAtoms().size()){
                     findMissingAtoms(res);
                     Set<Clause> missing = new HashSet<>();
                     missing = searchForMissing();
-                    currentClauses.addAll(missing);
-                    Clause newRes = applyANDRule(true);
-                    res.addAllAtoms(newRes.getAtoms());
-                    currentClauses.add(res);
-                    allClauses.add(res);
+                    /*currentClauses.addAll(missing);
+                    Set<Clause> newRes=new HashSet<>();
+                    newRes.addAll(applyANDRule(true));*/
+                    res.addAll(applyANDRule(true));
+                    currentClauses.addAll(res);
+                    allClauses.addAll(res);
                     allClauses.addAll(missing);
                 }
             resultString = res.toString();
         }
 
     //Searches for positions in conclusion w. no atoms found in curren tclauses
-    private void findMissingAtoms(Clause res) {
+    private void findMissingAtoms(Set<Clause> res) {
         Set<String> missingPos = new HashSet<>();
-        for (Atom a:res.getAtoms()) {
-            missingPos.add(a.getPosition());
+        for (Clause c: res) {
+            for (Atom a : c.getAtoms()) {
+                missingPos.add(a.getPosition());
+            }
         }
 
         Set<Clause> findClauses = new HashSet<>();
@@ -100,16 +103,17 @@ public class NaturalDeduction {
 
 
     //Methods implementing the rules of Natural Deduction
-    private Clause applyANDRule(boolean isMissing) {
-       Clause resultClause = new Clause();
+    private Set<Clause> applyANDRule(boolean isMissing) {
+       Set<Clause> resultClause = new HashSet<>();
        Set<Atom> atoms = new HashSet<>();
        atoms = isMissing ? missingAtoms : conclusion.getAtoms();
-
         for (Clause c: currentClauses) {
             for (Atom a: atoms) {
                 if (c.contains(a)){
                     noSteps++;
-                    resultClause.addAtom(a); //AND rule
+                   Set<Atom> atom = new HashSet();
+                   atom.add(a);
+                    resultClause.add(new Clause(atom)); //AND rule
                 }
             }
         }
@@ -182,15 +186,22 @@ public class NaturalDeduction {
     }
     public int getNoBranches(){return noBranches;}
 
-    public int noTotalSymbols(){
+    public int noAtoms(){
         int res=0;
         for (Clause c: allClauses) {
             res+=c.getAtoms().size();
         }
         return res;
     }
+    public int noTotalSymbols(){
+        int res=0;
+        for (Clause c: allClauses) {
+            res+=c.getAtoms().size();
+        }
+        return 2*res-1;
+    }
     public int noSymbols(){
-       return res.getAtoms().size();
+       return res.size()*2-1;
     }
     //Used to print the current clauses in the proof
     private void printClauses() { for (Clause c: currentClauses) {System.out.println(c.toString()); } }
@@ -198,6 +209,7 @@ public class NaturalDeduction {
     public String getComplexity(){
         StringBuilder compl = new StringBuilder();
         compl.append("No. clauses total: "+getNoTotalClauses() +"\n" );
+        compl.append("No. atoms: "+noAtoms() +"\n" );
         compl.append("No. steps: "+getNoSteps() +"\n" );
         compl.append("No. branches: "+getNoBranches() +"\n" );
         compl.append("No. symbols: "+noSymbols() +"\n" );

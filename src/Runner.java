@@ -10,13 +10,30 @@ import java.util.*;
 public class Runner {
 
     public static void main(String[] args){
+       /* String item6Guess1 = "O_x,O_y,O_z,R_w";
+        Feedback item6Feedback1 = new GGOO(item6Guess1);
+        String item6Guess2 = "R_x,O_y,O_z,R_w";
+        Feedback item6Feedback2 = new GGGR(item6Guess2);
 
-        testCases4pin(false);
-        //testCases2pin(true);
+        List<String> item6Guesses = new ArrayList<>();
+        item6Guesses.add(item6Guess1);
+        item6Guesses.add(item6Guess2);
 
-       // testAll4PpinBoolTrans();
+        List<Feedback> item6FeedBack = new ArrayList<>();
+        item6FeedBack.add(item6Feedback1);
+        item6FeedBack.add(item6Feedback2);
+        List<String> item6Conclusion = new ArrayList<>();
+        item6Conclusion.add("R_x,O_y,O_z,R_w");
+        item6Conclusion.add("R_x,O_y,O_z,O_w");
+        naturalDedFourPinDMM(item6Feedback1,item6Conclusion.get(0));
+        naturalDedFourPinDMM(item6Feedback2,item6Conclusion.get(1));*/
 
-      //  testAll2PpinBoolTrans();
+        //testCases4pin();
+        //testCases2pin();
+
+        testAll4PpinBoolTrans();
+
+        //testAll2PpinBoolTrans();
 
     }
 
@@ -37,17 +54,16 @@ public class Runner {
         feedbacks.addAll(Arrays.asList(rr,or,oo,gr));
 
         for (int i = 0; i < feedbacks.size(); i++) {
-            //  System.out.println(allItems.get(item).getKey().get(i).getGuess() + "is getting resolved");
-            System.out.println(feedbacks.get(i).getComplexity());
+            System.out.println(feedbacks.get(i).getType());
+            System.out.println(feedbacks.get(i).getBoolTrans());
             System.out.println("------------->Bool. trans. done!<------------------");
-            resolutionTwoPinDMM(feedbacks.get(i), false);
+           /* resolutionTwoPinDMM(feedbacks.get(i), false);
             System.out.println("------------->Resolution done!<------------------");
             naturalDedTwoPinDMM(feedbacks.get(i), conclusions.get(i));
-            System.out.println("------------->Nat. Ded. done!<------------------");
-
-
-
+            System.out.println("------------->Nat. Ded. done!<------------------");*/
         }
+        System.out.println("------------->2 pin done! done!<------------------");
+
 
     }
 
@@ -91,19 +107,21 @@ public class Runner {
 
             for (int i = 0; i < feedbacks.size(); i++) {
                 //  System.out.println(allItems.get(item).getKey().get(i).getGuess() + "is getting resolved");
+                System.out.println(feedbacks.get(i).getType());
                 System.out.println(feedbacks.get(i).getComplexity());
-                System.out.println("------------->Bool. trans. done!<------------------");
-                resolutionFourPinDMM(feedbacks.get(i), false);
+                System.out.println("------------->Bool trans done!<------------------");
+               resolutionFourPinDMM(feedbacks.get(i), false);
                 System.out.println("------------->Resolution done!<------------------");
                 naturalDedFourPinDMM(feedbacks.get(i), conclusions.get(i));
+                System.out.println("------------->feedback done!<------------------");
 
             }
-
+System.out.println("------------->4 pin done! done!<------------------");
 
 
     }
 
-    private static void testCases2pin(boolean isResolution) {
+    private static void testCases2pin() {
         // Map w. a list of guesses from an item, the corresponding feedback and the conclusion of each guess
         Map<List<String>, Map.Entry<List<Feedback>,List<String>>> allItems = new HashMap<>();
 
@@ -125,7 +143,7 @@ public class Runner {
         allItems.put(item1Guesses,new AbstractMap.SimpleEntry(item1FeedBack, item1Conclusion));
 
         //Item 2:
-//62,125605,"['YY', 'GR'],['BY', 'OO']","YB",5,2,-20.577827889119,-4.6785575316,-15.899270357519,80034
+        //62,125605,"['YY', 'GR'],['BY', 'OO']","YB",5,2,-20.577827889119,-4.6785575316,-15.899270357519,80034
        String item2Guess1 = "B_x,Y_y";
         Feedback item2Feedback1 = new OO(item2Guess1);
         String item2Guess2 = "Y_x,Y_y";
@@ -173,7 +191,7 @@ public class Runner {
         allItems.put(item3Guesses,new AbstractMap.SimpleEntry(item3FeedBack, item3Conclusion));
 
         //Item 4:
-//18,25846,"['RG', 'OO']","GR",5,1,-30.113825547635,3.3,-33.413825547635,297633
+        //18,25846,"['RG', 'OO']","GR",5,1,-30.113825547635,3.3,-33.413825547635,297633
        String item4Guess1 = "R_x,G_y";
        Feedback item4Feedback1 = new OO(item4Guess1);
         List<String> item4Guesses = new ArrayList<>();
@@ -244,11 +262,11 @@ public class Runner {
 
     }
 
-    private static void testCases4pin(boolean isResolution) {
+    private static void testCases4pin() {
         // Map w. a list of guesses from an item, the corresponding feedback and the conclusion of each guess
         Map<List<String>, Map.Entry<List<Feedback>,List<String>>> allItems = new HashMap<>();
 
-     /*   String item1Guess1 = "O_x,R_y,O_z,R_w";
+        String item1Guess1 = "O_x,R_y,O_z,R_w";
         Feedback item1Feedback1 = new GGOO(item1Guess1);
         String item1Guess2 = "R_x,O_y,O_z,R_w";
         Feedback item1Feedback2 = new OOOO(item1Guess2);
@@ -355,7 +373,7 @@ public class Runner {
         item5Conclusion.add("Y_x,Y_y,Y_z,O_w");
         allItems.put(item5Guesses,new AbstractMap.SimpleEntry(item5FeedBack, item5Conclusion));
 
-      */  //ITEM: 657
+        //ITEM: 657
         //{'colours':['ROYGBP', '440000'], 'pins':4, 'tried':[['ROOR', 'GGGR'],['OOOR', 'GGOO']], 'triesLeft':1}
         //correct: ROOO
         String item6Guess1 = "O_x,O_y,O_z,R_w";
@@ -370,7 +388,7 @@ public class Runner {
         List<Feedback> item6FeedBack = new ArrayList<>();
         item6FeedBack.add(item6Feedback1);
         item6FeedBack.add(item6Feedback2);
-        List<String> item5Conclusion = new ArrayList<>();
+        List<String> item6Conclusion = new ArrayList<>();
         item5Conclusion.add("R_x,O_y,O_z,R_w");
         item5Conclusion.add("R_x,O_y,O_z,O_w");
         allItems.put(item6Guesses,new AbstractMap.SimpleEntry(item6FeedBack, item5Conclusion));
