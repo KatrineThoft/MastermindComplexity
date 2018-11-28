@@ -10,7 +10,7 @@ import java.util.*;
 public class Runner {
 
     public static void main(String[] args){
-       /* */
+       /*
        String item6Guess1 = "O_x,O_y,O_z,R_w";
         Feedback item6Feedback1 = new GGOO(item6Guess1);
         String item6Guess2 = "R_x,O_y,O_z,R_w";
@@ -28,8 +28,8 @@ public class Runner {
         item6Conclusion.add("R_x,O_y,O_z,O_w");
         naturalDedFourPinDMM(item6Feedback1,item6Conclusion.get(0));
         naturalDedFourPinDMM(item6Feedback2,item6Conclusion.get(1));
-
-       // testCases4pin();
+*/
+        //testCases4pin();
         //testCases2pin();
 
        // testAll4PpinBoolTrans();
@@ -56,10 +56,10 @@ public class Runner {
 
         for (int i = 0; i < feedbacks.size(); i++) {
             System.out.println(feedbacks.get(i).getType());
-            System.out.println(feedbacks.get(i).getBoolTrans());
-           // System.out.println("------------->Bool. trans. done!<------------------");
-           /* resolutionTwoPinDMM(feedbacks.get(i), false);
-            System.out.println("------------->Resolution done!<------------------");*/
+           System.out.println(feedbacks.get(i).getBoolTrans());
+            System.out.println("------------->Bool. trans. done!<------------------");
+            resolutionTwoPinDMM(feedbacks.get(i), false);
+            System.out.println("------------->Resolution done!<------------------");
             naturalDedTwoPinDMM(feedbacks.get(i), conclusions.get(i));
             System.out.println("------------->Nat. Ded. done!<------------------");
         }
@@ -89,35 +89,35 @@ public class Runner {
               conclusion7,conclusion8,conclusion9,conclusion10,conclusion11,conclusion12,conclusion13));
 
 
-      Feedback rrrr = new RRRR(guess);
-      Feedback orrr = new ORRR(guess);
-      Feedback oorr = new OORR(guess);
-      Feedback ooor = new OOOR(guess);
-      Feedback oooo = new OOOO(guess);
-      Feedback gooo = new GOOO(guess);
-      Feedback ggoo = new GGOO(guess);
-      Feedback ggor = new GGOR(guess);
-      Feedback gggr = new GGGR(guess);
-      Feedback ggrr = new GGRR(guess);
-      Feedback grrr = new GRRR(guess);
-      Feedback gorr = new GORR(guess);
-      Feedback goor = new GOOR(guess);
+        Feedback rrrr = new RRRR(guess);
+        Feedback orrr = new ORRR(guess);
+        Feedback oorr = new OORR(guess);
+        Feedback ooor = new OOOR(guess);
+        Feedback oooo = new OOOO(guess);
+        Feedback gooo = new GOOO(guess);
+        Feedback ggoo = new GGOO(guess);
+        Feedback ggor = new GGOR(guess);
+        Feedback gggr = new GGGR(guess);
+        Feedback ggrr = new GGRR(guess);
+        Feedback grrr = new GRRR(guess);
+        Feedback gorr = new GORR(guess);
+        Feedback goor = new GOOR(guess);
         List<Feedback> feedbacks = new ArrayList<>();
         feedbacks.addAll(Arrays.asList(rrrr,orrr,oorr,ooor,oooo,gooo,
                 ggoo,ggor,gggr,ggrr,grrr,gorr,goor));
 
-            for (int i = 0; i < feedbacks.size(); i++) {
-                //  System.out.println(allItems.get(item).getKey().get(i).getGuess() + "is getting resolved");
-                System.out.println(feedbacks.get(i).getType());
-                System.out.println(feedbacks.get(i).getComplexity());
-                System.out.println("------------->Bool trans done!<------------------");
-               resolutionFourPinDMM(feedbacks.get(i), false);
-                System.out.println("------------->Resolution done!<------------------");
-                naturalDedFourPinDMM(feedbacks.get(i), conclusions.get(i));
-                System.out.println("------------->feedback done!<------------------");
+        for (int i = 0; i < feedbacks.size(); i++) {
 
-            }
-System.out.println("------------->4 pin done! done!<------------------");
+            System.out.println(feedbacks.get(i).getType());
+            System.out.println(feedbacks.get(i).getComplexity());
+            System.out.println("------------->Bool trans done!<------------------");
+            resolutionFourPinDMM(feedbacks.get(i), false);
+            System.out.println("------------->Resolution done!<------------------");
+            naturalDedFourPinDMM(feedbacks.get(i), conclusions.get(i));
+            System.out.println("------------->feedback done!<------------------");
+
+        }
+        System.out.println("------------->4 pin done! done!<------------------");
 
 
     }
@@ -170,9 +170,9 @@ System.out.println("------------->4 pin done! done!<------------------");
         String item3Guess1 = "R_x,O_y";
         Feedback item3Feedback1 = new OO(item3Guess1);
         String item3Guess2 = "R_x,R_y";
-        Feedback item3Feedback2 = new RR(item3Guess1);
+        Feedback item3Feedback2 = new RR(item3Guess2);
         String item3Guess3 = "Y_x,Y_y";
-        Feedback item3Feedback3 = new RR(item3Guess1);
+        Feedback item3Feedback3 = new RR(item3Guess3);
 
         List<String> item3Guesses = new ArrayList<>();
         item3Guesses.add(item3Guess1);
@@ -238,7 +238,7 @@ System.out.println("------------->4 pin done! done!<------------------");
                 System.out.println(allItems.get(item).getKey().get(i).getComplexity());
 
             }
-            // System.out.println("------------->Item done!<------------------");
+            System.out.println("------------->Item done!<------------------");
         }
         System.out.println("------------->Bool. trans. done!<------------------");
 
@@ -248,16 +248,15 @@ System.out.println("------------->4 pin done! done!<------------------");
                 resolutionFourPinDMM(allItems.get(item).getKey().get(i),false);
 
             }
-            //   System.out.println("------------->Item done!<------------------");
+               System.out.println("------------->Item done!<------------------");
         }
         System.out.println("------------->Resolution done!<------------------");
 
-        // } else {
         for (List<String> item : allItems.keySet()) {
             for (int i = 0; i < item.size(); i++) {
                 naturalDedFourPinDMM(allItems.get(item).getKey().get(i), allItems.get(item).getValue().get(i));
             }
-            //  System.out.println("------------->Item done!<------------------");
+             System.out.println("------------->Item done!<------------------");
         }
         System.out.println("------------->Nat. ded. done!<------------------");
 
@@ -390,32 +389,29 @@ System.out.println("------------->4 pin done! done!<------------------");
         item6FeedBack.add(item6Feedback1);
         item6FeedBack.add(item6Feedback2);
         List<String> item6Conclusion = new ArrayList<>();
-        item5Conclusion.add("R_x,O_y,O_z,R_w");
-        item5Conclusion.add("R_x,O_y,O_z,O_w");
-        allItems.put(item6Guesses,new AbstractMap.SimpleEntry(item6FeedBack, item5Conclusion));
-       // if (isResolution){
-      /*  for (List<String> item: allItems.keySet()) {
+        item6Conclusion.add("R_x,O_y,O_z,R_w");
+        item6Conclusion.add("R_x,O_y,O_z,O_w");
+        allItems.put(item6Guesses,new AbstractMap.SimpleEntry(item6FeedBack, item6Conclusion));
+
+      for (List<String> item: allItems.keySet()) {
             for (int i = 0; i < item.size(); i++) {
-              //  System.out.println(allItems.get(item).getKey().get(i).getGuess() + "is getting resolved");
                 System.out.println(allItems.get(item).getKey().get(i).getType());
                 System.out.println(allItems.get(item).getKey().get(i).getComplexity());
 
             }
-           // System.out.println("------------->Item done!<------------------");
+           System.out.println("------------->Item done!<------------------");
         }
         System.out.println("------------->Bool. trans. done!<------------------");
 
             for (List<String> item: allItems.keySet()) {
                 for (int i = 0; i < item.size(); i++) {
-                   // System.out.println(allItems.get(item).getKey().get(i).getGuess() + "is getting resolved");
                     resolutionFourPinDMM(allItems.get(item).getKey().get(i),false);
 
                 }
-             //   System.out.println("------------->Item done!<------------------");
+              System.out.println("------------->Item done!<------------------");
             }
             System.out.println("------------->Resolution done!<------------------");
-*/
-       // } else {
+
             for (List<String> item : allItems.keySet()) {
                 for (int i = 0; i < item.size(); i++) {
 
@@ -425,8 +421,6 @@ System.out.println("------------->4 pin done! done!<------------------");
                 System.out.println("------------->Item done!<------------------");
             }
         System.out.println("------------->Nat. ded. done!<------------------");
-
-        // }
     }
 
     private static void naturalDedTwoPinDMM(Feedback feedback, String conclusion) {
