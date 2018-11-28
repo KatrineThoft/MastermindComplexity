@@ -42,7 +42,7 @@ public class Atom {
 
     @Override
     public int hashCode() {
-       return stringRep.hashCode();
+       return stringRep.hashCode()+ (int) Math.random();
     }
 
     public Atom getComplement(){

@@ -109,16 +109,36 @@ public class NaturalDeduction {
        atoms = isMissing ? missingAtoms : conclusion.getAtoms();
         for (Clause c: currentClauses) {
             for (Atom a: atoms) {
-                if (c.contains(a)){
+                if (c.contains(a) && atomNotFound(a,resultClause)){
                     noSteps++;
                    Set<Atom> atom = new HashSet();
-                   atom.add(a);
+                    atom.add(a);
                     resultClause.add(new Clause(atom)); //AND rule
                 }
             }
         }
         return resultClause;
     }
+
+    private boolean atomNotFound(Atom a, Set<Clause> clauseSet) {
+
+            for (Clause c : res) {
+                for (Atom a1 : c.getAtoms()) {
+                    if (a1.equals(a)) {
+                        return false;
+                    }
+                }
+            }
+        for (Clause c:clauseSet) {
+            for (Atom a1 : c.getAtoms()) {
+                if (a1.equals(a)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     private Set<Clause> applyORRule() {
         Set<Clause> newClauses = new HashSet<>();
         for (Clause c: currentClauses) {
@@ -172,6 +192,9 @@ public class NaturalDeduction {
     public int getNoTotalClauses() {
         return noTotalClauses;
     }
+    public int getNoClauses() {
+        return res.size();
+    }
     public Clause getConclusion() {
         return conclusion;
     }
@@ -209,6 +232,7 @@ public class NaturalDeduction {
     public String getComplexity(){
         StringBuilder compl = new StringBuilder();
         compl.append("No. clauses total: "+getNoTotalClauses() +"\n" );
+        compl.append("No. clauses in result: "+getNoClauses() +"\n" );
         compl.append("No. atoms: "+noAtoms() +"\n" );
         compl.append("No. steps: "+getNoSteps() +"\n" );
         compl.append("No. branches: "+getNoBranches() +"\n" );
