@@ -10,7 +10,7 @@ import java.util.*;
 public class Runner {
 
     public static void main(String[] args){
-       /*
+       // Example item using Natural Deduction
        String item6Guess1 = "O_x,O_y,O_z,R_w";
         Feedback item6Feedback1 = new GGOO(item6Guess1);
         String item6Guess2 = "R_x,O_y,O_z,R_w";
@@ -26,14 +26,15 @@ public class Runner {
         List<String> item6Conclusion = new ArrayList<>();
         item6Conclusion.add("R_x,O_y,O_z,R_w");
         item6Conclusion.add("R_x,O_y,O_z,O_w");
+        //First guess:
         naturalDedFourPinDMM(item6Feedback1,item6Conclusion.get(0));
+        //Second guess:
         naturalDedFourPinDMM(item6Feedback2,item6Conclusion.get(1));
-*/
+
         //testCases4pin();
         //testCases2pin();
 
        // testAll4PpinBoolTrans();
-
        // testAll2PpinBoolTrans();
 
     }
@@ -423,25 +424,36 @@ public class Runner {
         System.out.println("------------->Nat. ded. done!<------------------");
     }
 
+    //Executing Natural Deduction  on 2-pin DMM examples
     private static void naturalDedTwoPinDMM(Feedback feedback, String conclusion) {
         NaturalDeduction natDed1 = new NaturalDeduction(feedback,conclusion);
+        System.out.println("Guees: "+ feedback.getGuess() +"\n Feedback: "+feedback.getType()
+        +"\n Boolean translation: "+feedback.getBoolTrans());
         System.out.println("Complexity: \n"+natDed1.getComplexity());
+        System.out.println("Result: \n"+natDed1.getResultString());
 
 
     }
 
+
+    //Executing Natural Deduction  on 4-pin DMM examples
     private static void naturalDedFourPinDMM(Feedback feedback, String conclusion) {
         NaturalDeduction natDed1 = new NaturalDeduction(feedback,conclusion);
         //System.out.println("Result after deduction: \n" +natDed1.getResultString()+"\n");
+        System.out.println("Guees: "+ feedback.getGuess() +"\n Feedback: "+feedback.getType()
+                +"\n Boolean translation: "+feedback.getBoolTrans());
         System.out.println("Complexity: \n"+natDed1.getComplexity());
-        System.out.println("Complexity: \n"+natDed1.getResultString());
+        System.out.println("Result: \n"+natDed1.getResultString());
 
     }
 
     //Executing resolution on 2-pin DMM examples
     private static void resolutionTwoPinDMM(Feedback feedback, boolean isMinimal) {
         Resolution resolution = new Resolution(feedback,isMinimal);
+        System.out.println("Guees: "+ feedback.getGuess() +"\n Feedback: "+feedback.getType()
+                +"\n Boolean translation: "+feedback.getBoolTrans());
         System.out.println("Complexity: \n"+resolution.getComplexity());
+        System.out.println("Result: \n"+resolution.resultString);
     }
 
     //Executing resolution on 4-pin DMM examples
@@ -450,5 +462,6 @@ public class Runner {
         System.out.println("Resolving guess " + feedback.getGuess() +" on feedback bool Trans: " +feedback.getType());
         System.out.println("Result after resolving guess: \n" +resolution.resultString+"\n");
         System.out.println("Complexity: \n"+resolution.getComplexity());
+        System.out.println("Result: \n"+resolution.resultString);
     }
 }
