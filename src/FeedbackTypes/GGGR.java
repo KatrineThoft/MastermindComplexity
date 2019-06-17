@@ -20,6 +20,8 @@ public class GGGR extends Feedback {
     }
 
 
+
+
     //Method translating a guess from into a Boolean translation
     //Saves all data in Clause objects.
     private void translate(){
@@ -83,5 +85,7 @@ public class GGGR extends Feedback {
           String res = temp2.substring(0,temp2.lastIndexOf("&&"))+ "\n";
         return res;
       }
+
+
 }
 

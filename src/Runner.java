@@ -13,7 +13,7 @@ public class Runner {
         /* 685
         {'colours':['ROYGBP', '444000'], 'pins':4, 'tried':[['OYRR', 'GGGR'],['RYRR', 'GGOR']], 'triesLeft':1}
 
-         correct: ORRR */
+         correct: ORRR
 
         String item685Guess1 = "R_x,Y_y,R_z,R_w";
         Feedback item685Feedback1 = new GGOR(item685Guess1);
@@ -21,34 +21,34 @@ public class Runner {
         Feedback item685Feedback2 = new GGGR(item685Guess2);
         String item685Conclusion1 = "O_x,Y_y,R_z,R_w";
         String item685Conclusion2 = "O_x,R_y,R_z,R_w";
-
+        System.out.println("---------> Item 685 <------------  ");
         System.out.println("---------> Boolean translation <------------  ");
         System.out.println("Guess: " + item685Guess1 +"\n Feedback: "+ item685Feedback1.getType() +"\n" +
-                "Complexity: \n"+ item685Feedback1.getComplexity() );
-        System.out.println("Guess: " + item685Guess2 +"\n Feedback: "+ item685Feedback2.getType() +"\n" +
-                "Complexity: \n"+ item685Feedback2.getComplexity()  );
+                "Complexity: \n"+ item685Feedback1.getBoolTrans() );
 
         System.out.println("---------> Resolution <------------  ");
         resolutionFourPinDMM(item685Feedback1,false);
         resolutionFourPinDMM(item685Feedback2,false);
-
          System.out.println("---------> Natural Deduction <------------ ");
         naturalDedFourPinDMM(item685Feedback1,item685Conclusion1);
+
+        System.out.println("Guess: " + item685Guess2 +"\n Feedback: "+ item685Feedback2.getType() +"\n" +
+                "Complexity: \n"+ item685Feedback2.getBoolTrans()  );
         naturalDedFourPinDMM(item685Feedback2,item685Conclusion2);
 
        /* 686:
         rating -1.62
         {'colours':['ROYGBP', '444000'], 'pins':4, 'tried':[['ROOO', 'RRRR']], 'triesLeft':1}
-        Correct: YYYY*/
+        Correct: YYYY
 
-       /*String item686Guess1 = "R_x,O_y,O_z,O_w";
+       String item686Guess1 = "R_x,O_y,O_z,O_w";
         Feedback item686Feedback1 = new RRRR(item686Guess1);
         String item686Conclusion1 = "Y_x,Y_y,Y_z,Y_w";
-
+        System.out.println("---------> Item 686 <------------  ");
 
         System.out.println("---------> Boolean translation <------------  ");
         System.out.println("Guess: " + item686Guess1 +"\n Feedback: "+ item686Feedback1.getType() +"\n" +
-                "Complexity: \n"+ item686Feedback1.getComplexity() );
+                "Complexity: \n"+ item686Feedback1.getBoolTrans() );
 
         System.out.println("---------> Resolution <------------  ");
         resolutionFourPinDMM(item686Feedback1,false);
@@ -56,14 +56,14 @@ public class Runner {
         System.out.println("---------> Natural Deduction <------------ ");
         naturalDedFourPinDMM(item686Feedback1,item686Conclusion1);
 
-*/
+
 
         /*698
         rating: 5.63
         {'colours':['ROYGBP', '444000'], 'pins':4, 'tried':[['OYYR', 'GOOR'],['RYRY', 'GORR'],['YOYY', 'GORR']], 'triesLeft':1}
         correct: OROY*/
 
-        /*String item698Guess1 = "Y_x,O_y,Y_z,Y_w";
+   /*     String item698Guess1 = "Y_x,O_y,Y_z,Y_w";
         Feedback item698Feedback1 = new GORR(item698Guess1);
         String item698Guess2 = "R_x,Y_y,R_z,Y_w";
         Feedback item698Feedback2 = new GORR(item698Guess2);
@@ -72,6 +72,7 @@ public class Runner {
         String item698Conclusion1 = "R_x,Y_y,R_z,Y_w";
         String item698Conclusion2 = "O_x,Y_y,Y_z,R_w";
         String item698Conclusion3 = "O_x,R_y,O_z,Y_w";
+        System.out.println("---------> Item 698 <------------  ");
 
         System.out.println("---------> Boolean translation <------------  ");
         System.out.println("Guess: " + item698Guess1 +"\n Feedback: "+ item698Feedback1.getType() +"\n" +
@@ -89,10 +90,23 @@ public class Runner {
         System.out.println("---------> Natural Deduction <------------ ");
         naturalDedFourPinDMM(item698Feedback1,item698Conclusion1);
         naturalDedFourPinDMM(item698Feedback2,item698Conclusion2);
-        naturalDedFourPinDMM(item698Feedback3,item698Conclusion3);*/
+        naturalDedFourPinDMM(item698Feedback3,item698Conclusion3);
 
 
 
+ Item 62 2-pin:
+        String guess1 ="Y_x,Y_y";
+        String con1 = "B_x,Y_y";
+        Feedback feed1 = new GR(guess1);
+        naturalDedTwoPinDMM(feed1,con1);
+        String guess2 = "B_x,Y_y";
+        String con2 =  "Y_x,B_y";
+        Feedback feed2 = new OO(guess2);
+        naturalDedTwoPinDMM(feed2,con2);
+
+
+*/
+        testAll4PpinBoolTrans();
     }
 
     private static void testAll2PpinBoolTrans() {
@@ -483,8 +497,8 @@ public class Runner {
     //Executing Natural Deduction  on 2-pin DMM examples
     private static void naturalDedTwoPinDMM(Feedback feedback, String conclusion) {
         NaturalDeduction natDed1 = new NaturalDeduction(feedback,conclusion);
-        System.out.println("Guees: "+ feedback.getGuess() +"\n Feedback: "+feedback.getType());
-        System.out.println("Complexity: \n"+natDed1.getComplexity());
+        System.out.println("Guess: "+ feedback.getGuess() +"\n Feedback: "+feedback.getType());
+        System.out.println("Complexity: \n"+natDed1.getResultString());
        // System.out.println("Result: \n"+natDed1.getResultString());
 
 
@@ -494,10 +508,10 @@ public class Runner {
     //Executing Natural Deduction  on 4-pin DMM examples
     private static void naturalDedFourPinDMM(Feedback feedback, String conclusion) {
         NaturalDeduction natDed1 = new NaturalDeduction(feedback,conclusion);
-        //System.out.println("Result after deduction: \n" +natDed1.getResultString()+"\n");
-        System.out.println("Guees: "+ feedback.getGuess() +"\n Feedback: "+feedback.getType());
-        System.out.println("Complexity: \n"+natDed1.getComplexity());
-     //   System.out.println("Result: \n"+natDed1.getResultString());
+
+        System.out.println("Guees: "+ feedback.getGuess() +"\n Conclusion: "+conclusion);
+       // System.out.println("Complexity: \n"+natDed1.getComplexity());
+        System.out.println("Result: \n"+natDed1.getResultString());
 
     }
 
@@ -513,7 +527,7 @@ public class Runner {
     private static void resolutionFourPinDMM(Feedback feedback, boolean isMinimal) {
         Resolution resolution = new Resolution(feedback,isMinimal);
         System.out.println("Resolving guess " + feedback.getGuess() +" on feedback bool Trans: " +feedback.getType());
-        System.out.println("Result after resolving guess: \n" +resolution.resultString+"\n");
+        //System.out.println("Result after resolving guess: \n" +resolution.resultString+"\n");
         System.out.println("Complexity: \n"+resolution.getComplexity());
         //System.out.println("Result: \n"+resolution.resultString);
     }

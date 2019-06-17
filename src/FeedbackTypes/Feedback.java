@@ -12,6 +12,7 @@ public abstract class Feedback {
     Set<Clause> clauses=new HashSet<>();
     Set<Atom> allUniqueAtoms =new HashSet<>();
 
+
     //Constructor of Feedback class
     public Feedback(String type, String guess){
         this.type = type;

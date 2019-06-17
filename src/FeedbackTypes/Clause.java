@@ -104,6 +104,15 @@ public class Clause {
         return null;
     }
 
+    public Atom getNegAtomByPos(String pos){
+        for (Atom at: atoms) {
+            if (at.getPosition().equals(pos) && at.isNegated) {
+                return at;
+            }
+        }
+        return null;
+    }
+
     @Override
     public int hashCode() {
         int res=0;

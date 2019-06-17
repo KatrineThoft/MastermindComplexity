@@ -21,18 +21,21 @@ public class NaturalDeduction {
     private int noTotalClauses;
     private String resultString;
     Set<Clause> res = new HashSet<>();
+    private Clause negClause;
 
 
     //Constructor
     public NaturalDeduction(Feedback feedback, String conclusionString){
         this.currentClauses = feedback.getClauses();
         this.conclusion = createConclusionClause(conclusionString);
-        System.out.println("Guess: "+feedback.getGuess());
         noTotalClauses = currentClauses.size();
         noBranches=0;
         this.usedClauses = new HashSet<>();
         this.allClauses = currentClauses;
-        derive();
+
+
+
+       derive();
 
     }
 
@@ -49,21 +52,36 @@ public class NaturalDeduction {
     }
 
 
+    //Finds negated atoms in relevant positions to be used in disjunctive elim
+    private void findNegPos(){
+        Clause negClause =new Clause();
+        for (Atom a:conclusion.getAtoms()) {
+            String pos = a.getPosition();
+            for (Clause c: currentClauses) {
+                if(c.getNegAtomByPos(pos)!=null){
+                    negClause.addAtom(c.getNegAtomByPos(pos));
+                    break;
+                }
+
+            }
+        }
+        System.out.println("Neg clause: "+negClause.toString());
+        this.negClause = negClause;
+    }
+
     //Method applying the rules to the given feedback clauses
     private void derive() {
+           findNegPos();
            currentClauses.addAll(applyORRule());
            removeUsedClauses();
-                res = applyANDRule(false);
-                allClauses.addAll(res);
-                allClauses.addAll(currentClauses);
-                currentClauses.addAll(res);
+            res = applyANDRule(false);
+            allClauses.addAll(res);
+            allClauses.addAll(currentClauses);
+            currentClauses.addAll(res);
                 if(res.size() <conclusion.getAtoms().size()){
                     findMissingAtoms(res);
                     Set<Clause> missing = new HashSet<>();
                     missing = searchForMissing();
-                    /*currentClauses.addAll(missing);
-                    Set<Clause> newRes=new HashSet<>();
-                    newRes.addAll(applyANDRule(true));*/
                     res.addAll(applyANDRule(true));
                     currentClauses.addAll(res);
                     allClauses.addAll(res);
@@ -111,9 +129,9 @@ public class NaturalDeduction {
             for (Atom a: atoms) {
                 if (c.contains(a) && atomNotFound(a,resultClause)){
                     noSteps++;
-                   Set<Atom> atom = new HashSet();
+                    Set<Atom> atom = new HashSet();
                     atom.add(a);
-                    resultClause.add(new Clause(atom)); //AND rule
+                    resultClause.add(new Clause(atom)); //Conjunction rule
                 }
             }
         }
@@ -174,7 +192,7 @@ public class NaturalDeduction {
     private Set<Clause> containsConclusionAtoms(Clause c) {
         Set<Clause> newClauses = new HashSet<>();
         for (Atom a:c.getAtoms()) {
-            if (conclusion.contains(a) && !a.isResolved){
+            if (conclusion.contains(a) && !a.isResolved && negClause.getNegAtomByPos(a.getPosition())!= null){
                 noSteps++;
                 Set<Atom> atomSet = new HashSet<>();
                 atomSet.add(a);
@@ -208,7 +226,6 @@ public class NaturalDeduction {
         return resultString;
     }
     public int getNoBranches(){return noBranches;}
-
     public int noAtoms(){
         int res=0;
         for (Clause c: allClauses) {
